@@ -4,9 +4,6 @@ define dhcp::pool ($network,$mask,$range,$gateway) {
 
     $dhcp_dir = $dhcp::params::dhcp_dir
 
-    #file {
-    #    "${dhcp_dir}/$name.pool":
-
     Fragment { target => 'dhcpd.pools', path => $dhcp_dir }
     fragment {
         "dhcp_${name}":
