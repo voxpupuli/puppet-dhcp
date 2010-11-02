@@ -68,12 +68,15 @@ class dhcp {
     #    path  => "${dhcp_dir}";
     #}
 
-    fragment::concat { 'dhcpd.pools':
-        owner => 'root',
-        group => 'root',
-        mode  => '0640',
-        path  => "${dhcp_dir}";
-    }
+    #fragment::concat { 'dhcpd.pools':
+    #    owner => 'root',
+    #    group => 'root',
+    #    mode  => '0640',
+    #    path  => "${dhcp_dir}";
+    #}
+	include concat::setup
+	concat { "${dhcp_dir}/dhcpd.pools": }
+	concat { "${dhcp_dir}/dhcpd.hosts": }
 
             
 }

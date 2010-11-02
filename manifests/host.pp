@@ -4,10 +4,10 @@ define dhcp::host ($host,$ip,$mac) {
 
     $dhcp_dir = $dhcp::params::dhcp_dir
 
-    fragment {
+    concat::fragment {
         "dhcp_host_${name}":
-            target => 'dhcpd.hosts',
-            path => "$dhcp_dir",
+            target => "${dhcp_dir}/dhcpd.hosts",
+            #path => "$dhcp_dir",
             content => template("dhcp/dhcpd.host.erb");
     }
 }
