@@ -32,7 +32,7 @@ class dhcp {
 			mode	=> 644,
 			require	=> Package["dhcp"],
 			#notify	=> Service["dhcpd"],
-			content	=> tempalte("dhcp/dhcpd.conf.erb");
+			content	=> template("dhcp/dhcpd.conf.erb");
 	#	"dhcp3-server":
 	#		owner		=> root,
 	#		group		=> root,
@@ -60,6 +60,20 @@ class dhcp {
 	}
 	#
 	#include dhcp::service
+
+    #fragment::concat { 'dhcpd.hosts':
+    #    owner => 'root',
+    #    group => 'root',
+    #    mode  => '0640',
+    #    path  => "${dhcp_dir}";
+    #}
+
+    fragment::concat { 'dhcpd.pools':
+        owner => 'root',
+        group => 'root',
+        mode  => '0640',
+        path  => "${dhcp_dir}";
+    }
 
             
 }
