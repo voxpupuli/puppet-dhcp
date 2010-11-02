@@ -41,39 +41,10 @@ class dhcp {
 	#		notify   => Service["dhcpd"],
 	#		path     => "/etc/default/dhcp3-server",
 	#		source	=> "puppet:///modules/dhcp/dhcp3-server";
-	#	"dhcpd.pools":
-	#		owner		=> root,
-	#		group		=> root,
-	#		mode		=> 644,
-	#		require  => Package["dhcp3-server"],
-	#		notify   => Service["dhcpd"],
-	#		path     => "/etc/dhcp3/dhcpd.pools",
-	#		source	=> "puppet:///modules/dhcp/dhcpd.pools";
-	#	"dhcpd.hosts":
-	#		owner		=> root,
-	#		group		=> root,
-	#		mode		=> 644,
-	#		require  => Package["dhcp3-server"],
-	#		notify   => Service["dhcpd"],
-	#		path     => "/etc/dhcp3/dhcpd.hosts",
-	#		source	=> "puppet:///modules/dhcp/dhcpd.hosts";
 	}
 	#
 	#include dhcp::service
 
-    #fragment::concat { 'dhcpd.hosts':
-    #    owner => 'root',
-    #    group => 'root',
-    #    mode  => '0640',
-    #    path  => "${dhcp_dir}";
-    #}
-
-    #fragment::concat { 'dhcpd.pools':
-    #    owner => 'root',
-    #    group => 'root',
-    #    mode  => '0640',
-    #    path  => "${dhcp_dir}";
-    #}
 	include concat::setup
 	concat { "${dhcp_dir}/dhcpd.pools": }
 	concat { "${dhcp_dir}/dhcpd.hosts": }

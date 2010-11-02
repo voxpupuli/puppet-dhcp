@@ -7,7 +7,6 @@ define dhcp::host ($host,$ip,$mac) {
     concat::fragment {
         "dhcp_host_${name}":
             target => "${dhcp_dir}/dhcpd.hosts",
-            #path => "$dhcp_dir",
             content => template("dhcp/dhcpd.host.erb");
     }
 }
