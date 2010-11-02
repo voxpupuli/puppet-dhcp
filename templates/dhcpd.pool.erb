@@ -1,0 +1,14 @@
+#################################
+# <%= name network mask %>
+#################################
+
+subnet <%= network %> netmask <%= mask %> {
+	pool
+	{
+        range <%= range %>;
+	}
+    option subnet-mask <%= gateway %>;
+    option routers <%= gateway %>;
+
+}
+

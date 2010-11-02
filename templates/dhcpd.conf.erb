@@ -1,0 +1,30 @@
+#dhcpd.conf
+
+ddns-update-style none;
+default-lease-time 1800;
+max-lease-time 7200;
+
+option domain-name "<%= domain %>";
+option domain-name-servers <%= nameservers %>;
+option ntp-servers <%= ntpservers %>;
+#authoritative;
+
+#allow booting;
+#allow bootp;
+
+option fqdn.no-client-update    on;  # set the "O" and "S" flag bits
+option fqdn.rcode2            255;
+option pxegrub code 150 = text ;
+
+#option option-211 code 211=string;
+#option nv-211 code 211=string;
+#option option-211 74:66:74:70;
+
+next-server <%= pxeserver %>
+filename "<%= filename %>";
+
+log-facility <%= logfacility %>;
+
+include "<%= dhcp_dir %>/dhcpd.pools";
+include "<%= dhcp_dir %>/dhcpd.hosts";
+

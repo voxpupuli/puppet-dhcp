@@ -1,4 +1,13 @@
 class dhcp {
+    include dhcp::params
+
+    $dhcp_dir = $dhcp::params::dhcp_dir
+    $domain = $dhcp::params::domain
+    $nameservers = $dhcp::params::nameservers
+    $ntpserver = $dhcp::params::ntpserver
+    $pxeserver = $dhcp::params::pxeserver
+    $filename = $dhcp::params::filename
+    $logfacility = $dhcp::params::logfacility
 
 	package {
 		"dhcp": 
@@ -17,18 +26,13 @@ class dhcp {
 	}
 	
 	file {
-		"dhcpd.conf":
+		"${dhcp_dir}/dhcpd.conf":
 			owner	=> root,
 			group	=> root,
 			mode	=> 644,
 			require	=> Package["dhcp"],
 			#notify	=> Service["dhcpd"],
-			path	=> $operatingsystem ? {
-				debian => "/etc/dhcp3/dhcpd.conf",
-				ubuntu => "/etc/dhcp3/dhcpd.conf",
-				default => "/etc/dhcpd.conf",
-			},
-			source	=> "puppet:///modules/dhcp/dhcpd.conf";
+			content	=> tempalte("dhcp/dhcpd.conf.erb");
 	#	"dhcp3-server":
 	#		owner		=> root,
 	#		group		=> root,
@@ -56,5 +60,7 @@ class dhcp {
 	}
 	#
 	#include dhcp::service
+
+            
 }
 
