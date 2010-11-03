@@ -1,4 +1,6 @@
-define dhcp::host ($host,$ip,$mac) {
+define dhcp::host ($ip,$mac) {
+
+	$host = $name
     include dhcp
     include dhcp::params
 
