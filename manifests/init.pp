@@ -48,6 +48,13 @@ class dhcp {
 	include concat::setup
 	concat { "${dhcp_dir}/dhcpd.pools": }
 	concat { "${dhcp_dir}/dhcpd.hosts": }
+   
+   service {
+      "dhcpd":
+         enable    => "true",
+         ensure    => "running",
+         require   => Package["dhcp"];
+   }
 
             
 }
