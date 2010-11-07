@@ -43,8 +43,7 @@ class dhcp {
 	#		source	=> "puppet:///modules/dhcp/dhcp3-server";
 	}
 	#
-	#include dhcp::service
-
+	
 	include concat::setup
 	concat { "${dhcp_dir}/dhcpd.pools": }
 	concat { "${dhcp_dir}/dhcpd.hosts": }
@@ -53,6 +52,7 @@ class dhcp {
       "dhcpd":
          enable    => "true",
          ensure    => "running",
+         subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"]],
          require   => Package["dhcp"];
    }
 

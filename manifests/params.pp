@@ -5,10 +5,10 @@ class dhcp::params {
         default => "/etc",
     }
 
-    $domain = 'zlan'
-    $nameservers = '10.210.18.10'
-    $ntpserver = '10.210.18.10'
-    $pxeserver = '10.210.18.32'
+    $domain = 'znet.local'
+    $nameservers = '10.210.18.51'
+    $ntpserver = '10.210.18.253'
+    $pxeserver = '10.210.18.50'
     $filename = 'pxelinux.0'
     $logfacility = 'local7'
 }
