@@ -52,7 +52,7 @@ class dhcp {
       "dhcpd":
          enable    => "true",
          ensure    => "running",
-         subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"]],
+         subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
          require   => Package["dhcp"];
    }
 
