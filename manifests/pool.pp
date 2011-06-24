@@ -1,4 +1,9 @@
-define dhcp::pool ($network,$mask,$range,$gateway) {
+define dhcp::pool (
+    $network,
+    $mask,
+    $range,
+    $gateway
+  ) {
     include dhcp
     include dhcp::params
 
@@ -6,10 +11,8 @@ define dhcp::pool ($network,$mask,$range,$gateway) {
 
     concat::fragment {
         "dhcp_pool_${name}":
-            target => "${dhcp_dir}/dhcpd.pools",
+            target  => "${dhcp_dir}/dhcpd.pools",
             content => template("dhcp/dhcpd.pool.erb");
     }
-
-
 }
 
