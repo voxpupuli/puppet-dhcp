@@ -8,10 +8,16 @@ class dhcp {
   $pxeserver   = $dhcp::params::pxeserver
   $filename    = $dhcp::params::filename
   $logfacility = $dhcp::params::logfacility
+  $packagename = $dhcp::params::packagename
+  $servicename = $dhcp::params::servicename
 
   package {
-    "isc-dhcp-server":
-      ensure => installed;
+    "$packagename":
+      ensure => installed,
+      provider => $operatingsystem ? {
+        default => undef,
+        darwin  => macports
+      }
   }
 
 # firewall { "dhcp":
@@ -23,9 +29,9 @@ class dhcp {
   file {
     "${dhcp_dir}/dhcpd.conf":
       owner   => root,
-      group   => root,
+      group   => 0,
       mode    => 644,
-      require => Package["isc-dhcp-server"],
+      require => Package["$packagename"],
       content => template("dhcp/dhcpd.conf.erb");
   }
 
@@ -34,12 +40,12 @@ class dhcp {
   concat { "${dhcp_dir}/dhcpd.hosts": }
 
   service {
-    "isc-dhcp-server":
+    "$servicename":
       enable    => "true",
       ensure    => "running",
       hasstatus => true,
       subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
-      require   => Package["isc-dhcp-server"];
+      require   => Package["$packagename"];
   }
 
 }
