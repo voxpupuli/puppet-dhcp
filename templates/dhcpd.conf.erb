@@ -5,8 +5,8 @@ default-lease-time 600;
 max-lease-time 7200;
 
 option domain-name "<%= domain %>";
-option domain-name-servers <%= nameservers %>;
-option ntp-servers <%= ntpserver %>;
+option domain-name-servers <%= nameservers.join( ', ') %>;
+option ntp-servers <%= ntpserver.join( ', ') %>;
 #authoritative;
 
 #allow booting;

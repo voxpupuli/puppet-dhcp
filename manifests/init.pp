@@ -1,13 +1,21 @@
-class dhcp {
+class dhcp(
+  $domain,
+  $nameservers,
+  $ntpservers,
+  $pxeserver,
+  $pxefilename,
+  $logfacility = 'local7'
+) {
+
   include dhcp::params
 
   $dhcp_dir    = $dhcp::params::dhcp_dir
-  $domain      = $dhcp::params::domain
-  $nameservers = $dhcp::params::nameservers
-  $ntpserver   = $dhcp::params::ntpserver
-  $pxeserver   = $dhcp::params::pxeserver
-  $filename    = $dhcp::params::filename
-  $logfacility = $dhcp::params::logfacility
+  # $domain      = $dhcp::params::domain
+  # $nameservers = $dhcp::params::nameservers
+  # $ntpserver   = $dhcp::params::ntpserver
+  # $pxeserver   = $dhcp::params::pxeserver
+  # $filename    = $dhcp::params::filename
+  # $logfacility = $dhcp::params::logfacility
   $packagename = $dhcp::params::packagename
   $servicename = $dhcp::params::servicename
 
@@ -19,12 +27,6 @@ class dhcp {
         darwin  => macports
       }
   }
-
-# firewall { "dhcp":
-#   proto => "udp",
-#   dport => "67",
-#   jump => "ACCEPT",
-# }
 
   file {
     "${dhcp_dir}/dhcpd.conf":

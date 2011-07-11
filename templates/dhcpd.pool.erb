@@ -3,12 +3,12 @@
 #################################
 
 subnet <%= network %> netmask <%= mask %> {
-	pool
-	{
-        range <%= range %>;
-	}
-    option subnet-mask <%= mask %>;
-    option routers <%= gateway %>;
+  pool
+  {
+    range <%= range %>;
+  }
 
+  option subnet-mask <%= mask %>;
+  option routers <%= gateway %>;
 }
 
