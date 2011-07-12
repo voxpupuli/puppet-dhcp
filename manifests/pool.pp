@@ -4,7 +4,7 @@ define dhcp::pool (
     $range,
     $gateway
   ) {
-    include dhcp
+    # include dhcp
     include dhcp::params
 
     $dhcp_dir = $dhcp::params::dhcp_dir
