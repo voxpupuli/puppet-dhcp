@@ -2,7 +2,7 @@ class dhcp::disable {
   include dhcp::params
 
   $dhcp_dir    = $dhcp::params::dhcp_dir
-  $domain      = $dhcp::params::domain
+  $dnsdomain   = $dhcp::params::dnsdomain
   $nameservers = $dhcp::params::nameservers
   $ntpserver   = $dhcp::params::ntpserver
   $pxeserver   = $dhcp::params::pxeserver

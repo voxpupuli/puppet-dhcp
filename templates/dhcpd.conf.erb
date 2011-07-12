@@ -16,7 +16,7 @@ zone "<%= dom %>". {
 ddns-update-style none;
 <% end -%>
 
-option domain-name "<%= domain %>";
+option domain-name "<%= dnsdomain %>";
 option domain-name-servers <%= nameservers.join( ', ') %>;
 option ntp-servers <%= ntpservers.join( ', ') %>;
 #authoritative;

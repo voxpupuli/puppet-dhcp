@@ -1,5 +1,5 @@
 class dhcp(
-  $domain,
+  $dnsdomain,
   $nameservers,
   $ntpservers,
   $dnsupdatekey = undef,

@@ -7,7 +7,7 @@ class dhcp::params {
         default => "/etc",
     }
 
-    #     $domain      = 'znet'
+    #     $dnsdomain   = 'znet'
     #     $nameservers = '10.210.18.51, 10.210.18.1'
     #     $ntpserver   = '10.210.18.1'
     #     $pxeserver   = '10.210.18.53'
