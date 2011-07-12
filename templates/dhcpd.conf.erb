@@ -1,8 +1,20 @@
 # dhcpd.conf
 
-ddns-update-style none;
 default-lease-time 600;
 max-lease-time 7200;
+
+<% if has_variable?( 'dnsupdatekey' ) -%>
+ddns-update-style interim;
+include "<%= dnsupdatekey %>";
+<% dnsdomain.each do |dom| -%>
+zone "<%= dom %>". {
+  primary <%= nameservers.first %>;
+  key "dhcp_updater";
+}
+<% end -%>
+<% else %>
+ddns-update-style none;
+<% end -%>
 
 option domain-name "<%= domain %>";
 option domain-name-servers <%= nameservers.join( ', ') %>;
@@ -15,10 +27,6 @@ option ntp-servers <%= ntpservers.join( ', ') %>;
 option fqdn.no-client-update    on;  # set the "O" and "S" flag bits
 option fqdn.rcode2            255;
 option pxegrub code 150 = text ;
-
-#option option-211 code 211=string;
-#option nv-211 code 211=string;
-#option option-211 74:66:74:70;
 
 <% if has_variable?( 'pxeserver' ) and has_variable?( 'filename' ) then -%>
 # PXE Handoff.
