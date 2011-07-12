@@ -2,8 +2,8 @@ class dhcp(
   $domain,
   $nameservers,
   $ntpservers,
-  $pxeserver,
-  $pxefilename,
+  $pxeserver = undef,
+  $pxefilename = undef,
   $logfacility = 'local7'
 ) {
 
