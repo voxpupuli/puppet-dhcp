@@ -40,6 +40,11 @@ class dhcp(
   include concat::setup
   concat { "${dhcp_dir}/dhcpd.pools": }
   concat { "${dhcp_dir}/dhcpd.hosts": }
+  concat::fragment { 'dhcp-hosts-header':
+    target  => "${dhcp_dir}/dhcpd.hosts",
+    order   => 0,
+    content => "# static DHCP hosts\n",
+  }
 
   service {
     "$servicename":
