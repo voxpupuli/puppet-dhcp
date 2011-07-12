@@ -5,7 +5,6 @@ define dhcp::host (
   ) {
 
   $host = $name
-  # include dhcp
   include dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir

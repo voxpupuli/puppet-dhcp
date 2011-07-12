@@ -10,12 +10,6 @@ class dhcp(
   include dhcp::params
 
   $dhcp_dir    = $dhcp::params::dhcp_dir
-  # $domain      = $dhcp::params::domain
-  # $nameservers = $dhcp::params::nameservers
-  # $ntpserver   = $dhcp::params::ntpserver
-  # $pxeserver   = $dhcp::params::pxeserver
-  # $filename    = $dhcp::params::filename
-  # $logfacility = $dhcp::params::logfacility
   $packagename = $dhcp::params::packagename
   $servicename = $dhcp::params::servicename
 
@@ -52,7 +46,7 @@ class dhcp(
       enable    => "true",
       ensure    => "running",
       hasstatus => true,
-      subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
+      #     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
       require   => Package["$packagename"];
   }
 
