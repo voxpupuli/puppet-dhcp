@@ -1,7 +1,7 @@
 class dhcp::params {
 
     $dhcp_dir = $operatingsystem ? {
-        debian  => "/etc/dhcp3",
+        debian  => "/etc/dhcp",
         ubuntu  => "/etc/dhcp3",
         darwin  => "/opt/local/etc/dhcp",
         default => "/etc",
