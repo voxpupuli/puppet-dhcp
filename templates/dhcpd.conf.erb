@@ -20,7 +20,7 @@ option pxegrub code 150 = text ;
 #option nv-211 code 211=string;
 #option option-211 74:66:74:70;
 
-<%= if has_variable?( 'pxeserver' ) and has_variable?( 'filename' ) then -%>
+<% if has_variable?( 'pxeserver' ) and has_variable?( 'filename' ) then -%>
 # PXE Handoff.
 next-server <%= pxeserver %>;
 filename "<%= filename %>";
