@@ -76,7 +76,7 @@ class dhcp(
       enable    => "true",
       ensure    => "running",
       hasstatus => true,
-      #     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
+      subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
       require   => Package["$packagename"];
   }
 
