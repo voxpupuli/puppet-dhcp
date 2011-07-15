@@ -7,9 +7,9 @@ max-lease-time 7200;
 ddns-update-style interim;
 include "<%= dnsupdatekey %>";
 <% dnsdomain.each do |dom| -%>
-zone "<%= dom %>". {
+zone <%= dom %>. {
   primary <%= nameservers.first %>;
-  key "dhcp_updater";
+  key dhcp_updater;
 }
 <% end -%>
 <% else %>
