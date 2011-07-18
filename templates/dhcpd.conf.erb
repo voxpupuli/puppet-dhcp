@@ -16,7 +16,7 @@ include "<%= dnsupdatekey %>";
 <% dnsdomain.each do |dom| -%>
 zone <%= dom %>. {
   primary <%= nameservers.first %>;
-  key dhcp_updater;
+  key <%= dnsupdatekey.split('/').last %>;
 }
 <% end -%>
 <% else %>
