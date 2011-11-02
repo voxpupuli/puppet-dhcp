@@ -23,7 +23,7 @@ zone <%= dom %> {
 ddns-update-style none;
 <% end -%>
 
-option domain-name "<%= dnsdomain.first %>";
+option domain-name "<%= dnsdomain %>";
 option domain-name-servers <%= nameservers.join( ', ') %>;
 option ntp-servers <%= ntpservers.join( ', ') %>;
 
