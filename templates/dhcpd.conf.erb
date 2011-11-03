@@ -34,10 +34,10 @@ option fqdn.no-client-update    on;  # set the "O" and "S" flag bits
 option fqdn.rcode2            255;
 option pxegrub code 150 = text ;
 
-<% if has_variable?( 'pxeserver' ) and has_variable?( 'filename' ) then -%>
+<% if has_variable?( 'pxeserver' ) and has_variable?( 'pxefilename' ) then -%>
 # PXE Handoff.
 next-server <%= pxeserver %>;
-filename "<%= filename %>";
+filename "<%= pxefilename %>";
 <% end -%>
 
 log-facility <%= logfacility %>;
