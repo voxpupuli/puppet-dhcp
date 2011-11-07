@@ -4,7 +4,6 @@ authoritative;
 default-lease-time 600;
 max-lease-time 7200;
 
-
 <% if has_variable?( 'dnsupdatekey' ) -%>
 ddns-updates on;
 ddns-update-style interim;
@@ -14,7 +13,7 @@ use-host-decl-names on;
 # Key from bind
 include "<%= dnsupdatekey %>";
 <% dnsdomain.each do |dom| -%>
-zone <%= dom %> {
+zone <%= dom %>. {
   primary <%= nameservers.first %>;
   key <%= dnsupdatekey.split('/').last %>;
 }
