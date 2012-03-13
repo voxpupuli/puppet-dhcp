@@ -1,13 +1,14 @@
-class dhcp(
-  $dnsdomain,
-  $nameservers,
-  $ntpservers,
-  $interfaces = undef,
-  $interface = "NOTSET",
-  $dnsupdatekey = undef,
-  $pxeserver = undef,
-  $pxefilename = undef,
-  $logfacility = 'local7'
+class dhcp (
+    $dnsdomain,
+    $nameservers,
+    $ntpservers,
+    $interfaces   = undef,
+    $interface    = "NOTSET",
+    $dnsupdatekey = undef,
+    $pxeserver    = undef,
+    $pxefilename  = undef,
+    $logfacility  = 'local7',
+    $dhcp_monitor = true
 ) {
 
   include dhcp::params
@@ -22,7 +23,7 @@ class dhcp(
   if $interface != "NOTSET" and $interfaces == undef {
     $dhcp_interfaces = [ $interface ]
   } elsif $interface == "NOTSET" and $interfaces == undef {
-    fail( "You need to set \$interfaces in $module_name")
+    fail ("You need to set \$interfaces in $module_name")
   } else {
     $dhcp_interfaces = $interfaces
   }
@@ -60,7 +61,6 @@ class dhcp(
     }
   }
 
-
   include concat::setup
   concat { "${dhcp_dir}/dhcpd.pools": }
 
@@ -79,6 +79,8 @@ class dhcp(
       subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
       require   => Package["$packagename"];
   }
+
+  if $dhcp_monitor == true { include dhcp::monitor }
 
 }
 
