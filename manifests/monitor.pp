@@ -1,6 +1,6 @@
 # ------------
 # Monitoring
 # ------------
-class bind::monitor {
+class dhcp::monitor {
   include munin::dhcp
 }
