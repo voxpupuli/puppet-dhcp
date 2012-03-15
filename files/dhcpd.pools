@@ -1,0 +1,33 @@
+
+#subnet 10.132.6.0 netmask 255.255.255.0 {
+#
+#  pool {
+#       failover peer "dhcp-failover";
+#       deny dynamic bootp clients;
+#       range 10.132.6.21 10.132.6.239 ;
+#  }
+
+#  option subnet-mask 255.255.255.0;
+#  option domain-name "eng.vmware.com";
+#  option routers 10.132.6.253;
+#  default-lease-time 1800;
+#  max-lease-time 7200;
+
+#}
+
+#################################
+#	10.210.18.0/24
+#################################
+
+subnet 10.210.18.0 netmask 255.255.255.0 {
+	pool
+	{
+		#failover peer "dhcp-failover";
+		range 10.210.18.175 10.210.18.199;
+	}
+	option subnet-mask 255.255.255.0;
+	option routers 10.210.18.253;
+
+}
+
+

@@ -1,0 +1,51 @@
+host vs1.zlan { # eth
+   hardware ethernet 08:00:27:d4:ba:f7;
+   fixed-address    10.210.18.31;
+}
+host vs2.zlan { # eth
+   hardware ethernet 08:00:27:45:8c:7b;
+   fixed-address    10.210.18.32;
+}
+
+host carbon.wifi.zlan { # wifi
+   hardware ethernet 00:1f:f3:fa:88:e2;
+   fixed-address    10.210.18.50;
+}
+host carbon.zlan { # eth
+   hardware ethernet 00:1f:f3:45:18:5b;
+   fixed-address    10.210.18.50;
+}
+host wks2.zlan { # eth
+   hardware ethernet 00:26:bb:4c:66:e6;
+   fixed-address    10.210.18.122;
+}
+
+host lt1.wifi.zlan { #wifi
+   hardware ethernet f8:1e:df:e6:82:47;
+   fixed-address    10.210.18.125;
+}
+host lt1.zlan { #eth
+   hardware ethernet 7c:6d:62:8f:e6:3f;
+   fixed-address    10.210.18.125;
+}
+host lt2.zlan { #wifi
+   hardware ethernet 00:18:de:37:27:98;
+   fixed-address    10.210.18.126;
+}
+host zachbook { #wifi
+	hardware ethernet 60:33:4b:2a:ba:b6;
+	fixed-address	10.210.18.127;
+}
+host ps3.zlan { #wifi
+   hardware ethernet 00:1f:a7:1a:16:6e;
+   fixed-address    10.210.18.130;
+}
+host touch1.zlan {
+   hardware ethernet 90:27:e4:66:9d:c3;
+   fixed-address    10.210.18.131;
+}
+host touch2.zlan {
+   hardware ethernet 00:22:41:61:56:26;
+   fixed-address    10.210.18.132;
+}
+

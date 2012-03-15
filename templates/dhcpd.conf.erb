@@ -1,0 +1,46 @@
+# dhcpd.conf
+authoritative;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+<% if has_variable?( 'dnsupdatekey' ) -%>
+ddns-updates on;
+ddns-update-style interim;
+update-static-leases on;
+use-host-decl-names on;
+
+# Key from bind
+include "<%= dnsupdatekey %>";
+<% dnsdomain.each do |dom| -%>
+zone <%= dom %>. {
+  primary <%= nameservers.first %>;
+  key <%= dnsupdatekey.split('/').last %>;
+}
+<% end -%>
+<% else %>
+ddns-update-style none;
+<% end -%>
+
+option domain-name "<%= dnsdomain.first %>";
+option domain-name-servers <%= nameservers.join( ', ') %>;
+option ntp-servers <%= ntpservers.join( ', ') %>;
+
+#allow booting;
+#allow bootp;
+
+option fqdn.no-client-update    on;  # set the "O" and "S" flag bits
+option fqdn.rcode2            255;
+option pxegrub code 150 = text ;
+
+<% if has_variable?( 'pxeserver' ) and has_variable?( 'pxefilename' ) then -%>
+# PXE Handoff.
+next-server <%= pxeserver %>;
+filename "<%= pxefilename %>";
+<% end -%>
+
+log-facility <%= logfacility %>;
+
+include "<%= dhcp_dir %>/dhcpd.pools";
+include "<%= dhcp_dir %>/dhcpd.hosts";
+
