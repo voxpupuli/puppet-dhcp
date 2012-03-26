@@ -1,8 +1,8 @@
 # dhcpd.conf
 authoritative;
 
-default-lease-time 600;
-max-lease-time 7200;
+default-lease-time <%= default_lease_time %>;
+max-lease-time <%= max_lease_time %>;
 
 <% if has_variable?( 'dnsupdatekey' ) -%>
 ddns-updates on;
