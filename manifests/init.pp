@@ -82,7 +82,7 @@ class dhcp (
       require   => Package["$packagename"];
   }
 
-  if $dhcp_monitor == true { include dhcp::monitor }
+  include dhcp::monitor
 
 }
 
