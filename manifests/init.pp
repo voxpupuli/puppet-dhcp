@@ -2,13 +2,15 @@ class dhcp (
     $dnsdomain,
     $nameservers,
     $ntpservers,
-    $interfaces   = undef,
-    $interface    = "NOTSET",
-    $dnsupdatekey = undef,
-    $pxeserver    = undef,
-    $pxefilename  = undef,
-    $logfacility  = 'local7',
-    $dhcp_monitor = true
+    $interfaces         = undef,
+    $interface          = "NOTSET",
+    $dnsupdatekey       = undef,
+    $pxeserver          = undef,
+    $pxefilename        = undef,
+    $logfacility        = 'local7',
+    $default_lease_time = 3600,
+    $max_lease_time     = 86400,
+    $dhcp_monitor       = true
 ) {
 
   include dhcp::params
@@ -80,7 +82,7 @@ class dhcp (
       require   => Package["$packagename"];
   }
 
-  if $dhcp_monitor == true { include dhcp::monitor }
+  include dhcp::monitor
 
 }
 

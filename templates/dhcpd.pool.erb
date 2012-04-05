@@ -4,7 +4,9 @@
 subnet <%= network %> netmask <%= mask %> {
   pool
   {
-    range <%= range %>;
+<% range.each do |r| -%>
+    range <%= r %>;
+<% end -%>
   }
 
   option subnet-mask <%= mask %>;
