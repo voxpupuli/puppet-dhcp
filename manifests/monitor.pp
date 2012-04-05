@@ -2,5 +2,5 @@
 # Monitoring
 # ------------
 class dhcp::monitor {
-  include munin::dhcp
+  #include munin::dhcp
 }

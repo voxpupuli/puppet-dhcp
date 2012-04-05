@@ -9,8 +9,7 @@ class dhcp (
     $pxefilename        = undef,
     $logfacility        = 'local7',
     $default_lease_time = 3600,
-    $max_lease_time     = 86400,
-    $dhcp_monitor       = true
+    $max_lease_time     = 86400
 ) {
 
   include dhcp::params
@@ -30,8 +29,7 @@ class dhcp (
     $dhcp_interfaces = $interfaces
   }
 
-  package {
-    "$packagename":
+  package { $packagename:
       ensure => installed,
       provider => $operatingsystem ? {
         default => undef,
@@ -39,8 +37,7 @@ class dhcp (
       }
   }
 
-  file {
-    "${dhcp_dir}/dhcpd.conf":
+  file { "${dhcp_dir}/dhcpd.conf":
       owner   => root,
       group   => 0,
       mode    => 644,
@@ -73,13 +70,12 @@ class dhcp (
     order   => 01,
   }
 
-  service {
-    "$servicename":
+  service { $servicename:
       enable    => "true",
       ensure    => "running",
       hasstatus => true,
       subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
-      require   => Package["$packagename"];
+      require   => Package[$packagename];
   }
 
   include dhcp::monitor
