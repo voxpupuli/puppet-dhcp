@@ -4,7 +4,7 @@ authoritative;
 default-lease-time <%= default_lease_time %>;
 max-lease-time <%= max_lease_time %>;
 
-<% if has_variable?( 'dnsupdatekey' ) -%>
+<% if has_variable?( dnsupdatekey ) -%>
 ddns-updates on;
 ddns-update-style interim;
 update-static-leases on;
