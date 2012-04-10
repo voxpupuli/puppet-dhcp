@@ -54,7 +54,7 @@ class dhcp (
   }
 
   include concat::setup
-  Concat { require Package[$packagename] }
+  Concat { require => Package[$packagename] }
 
   # dhcpd.conf
   concat {  "${dhcp_dir}/dhcpd.conf": }
