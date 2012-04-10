@@ -21,7 +21,7 @@ failover peer "dhcp-failover" {
         load balance max seconds <%= load_balance %>;
 <% if role == "primary" -%>
         mclt <%= mclt %>;
-        split <%= split %>;
+        split <%= load_split %>;
 <% end -%>
 };
 
