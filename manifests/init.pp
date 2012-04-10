@@ -9,7 +9,8 @@ class dhcp (
     $pxefilename        = undef,
     $logfacility        = 'local7',
     $default_lease_time = 3600,
-    $max_lease_time     = 86400
+    $max_lease_time     = 86400,
+    $failover           = ''
 ) {
 
   include dhcp::params
@@ -37,14 +38,6 @@ class dhcp (
     }
   }
 
-  file { "${dhcp_dir}/dhcpd.conf":
-    owner   => root,
-    group   => 0,
-    mode    => 644,
-    require => Package[$packagename],
-    content => template("dhcp/dhcpd.conf.erb");
-  }
-
   # Only debian and ubuntu have this style of defaults for startup.
   case $operatingsystem {
     'debian','ubuntu': {
@@ -61,8 +54,39 @@ class dhcp (
   }
 
   include concat::setup
-  concat { "${dhcp_dir}/dhcpd.pools": }
+  Concat { require Package[$packagename] }
 
+  # dhcpd.conf
+  concat {  "${dhcp_dir}/dhcpd.conf": }
+  concat::fragment { 'dhcp-conf-header':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template("dhcp/dhcpd.conf-header.erb"),
+      order   => 01,
+  }
+  concat::fragment { 'dhcp-conf-ddns':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template("dhcp/dhcpd.conf-ddns.erb"),
+  }
+  concat::fragment { 'dhcp-conf-pxe':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template("dhcp/dhcpd.conf-pxe.erb"),
+  }
+  concat::fragment { 'dhcp-conf-extra':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template("dhcp/dhcpd.conf-extra.erb"),
+      order   => 99,
+  }
+
+
+  # dhcpd.pool
+  concat { "${dhcp_dir}/dhcpd.pools": }
+  concat::fragment { 'dhcp-pools-header':
+    target  => "${dhcp_dir}/dhcpd.pools",
+    content => "# DHCP Pools\n",
+    order   => 01,
+  }
+
+  # dhcpd.hosts
   concat { "${dhcp_dir}/dhcpd.hosts": }
   concat::fragment { 'dhcp-hosts-header':
     target  => "${dhcp_dir}/dhcpd.hosts",
