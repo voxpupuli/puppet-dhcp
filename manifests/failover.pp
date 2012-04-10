@@ -1,6 +1,6 @@
 class dhcp::failover (
   $role                = "primary",
-  $address             = $fqdn,
+  $address             = $ipaddress,
   $peer_address,
   $port                = '519',
   $max_response_delay  = '30',
