@@ -65,7 +65,7 @@ class dhcp (
   }
   concat::fragment { 'dhcp-conf-ddns':
       target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf-ddns.erb"),
+      content => template("dhcp/dhcpd.conf.ddns.erb"),
   }
   concat::fragment { 'dhcp-conf-pxe':
       target  => "${dhcp_dir}/dhcpd.conf",
