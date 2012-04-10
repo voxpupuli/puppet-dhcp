@@ -30,19 +30,19 @@ class dhcp (
   }
 
   package { $packagename:
-      ensure => installed,
-      provider => $operatingsystem ? {
-        default => undef,
-        darwin  => macports
-      }
+    ensure   => installed,
+    provider => $operatingsystem ? {
+      default => undef,
+      darwin  => macports
+    }
   }
 
   file { "${dhcp_dir}/dhcpd.conf":
-      owner   => root,
-      group   => 0,
-      mode    => 644,
-      require => Package[$packagename],
-      content => template("dhcp/dhcpd.conf.erb");
+    owner   => root,
+    group   => 0,
+    mode    => 644,
+    require => Package[$packagename],
+    content => template("dhcp/dhcpd.conf.erb");
   }
 
   # Only debian and ubuntu have this style of defaults for startup.
@@ -71,11 +71,11 @@ class dhcp (
   }
 
   service { $servicename:
-      enable    => "true",
-      ensure    => "running",
-      hasstatus => true,
-      subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
-      require   => Package[$packagename];
+    enable    => "true",
+    ensure    => "running",
+    hasstatus => true,
+    subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
+    require   => Package[$packagename];
   }
 
   include dhcp::monitor
