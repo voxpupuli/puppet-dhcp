@@ -1,10 +1,16 @@
+# ----------
 # dhcpd.conf
+# ----------
+
 authoritative;
 
 default-lease-time <%= default_lease_time %>;
 max-lease-time <%= max_lease_time %>;
 
 <% if has_variable?( 'dnsupdatekey' ) -%>
+# ----------
+# Dynamic DNS Updates
+# ----------
 ddns-updates on;
 ddns-update-style interim;
 update-static-leases on;
@@ -18,29 +24,36 @@ zone <%= dom %>. {
   key <%= dnsupdatekey.split('/').last %>;
 }
 <% end -%>
-<% else %>
+<% else -%>
 ddns-update-style none;
 <% end -%>
 
+# ----------
+# Options
+# ----------
 option domain-name "<%= dnsdomain.first %>";
-option domain-name-servers <%= nameservers.join( ', ') %>;
-option ntp-servers <%= ntpservers.join( ', ') %>;
-
-#allow booting;
-#allow bootp;
-
-option fqdn.no-client-update    on;  # set the "O" and "S" flag bits
-option fqdn.rcode2            255;
-option pxegrub code 150 = text ;
+option domain-name-servers <%= nameservers.join(', ') %>;
+option ntp-servers <%= ntpservers.join(', ') %>;
+option fqdn.no-client-update on;  # set the "O" and "S" flag bits
+option fqdn.rcode2 255;
+option pxegrub code 150 = text;
 
 <% if has_variable?( 'pxeserver' ) and has_variable?( 'pxefilename' ) then -%>
-# PXE Handoff.
+# ----------
+# PXE Handoff
+# ----------
 next-server <%= pxeserver %>;
 filename "<%= pxefilename %>";
 <% end -%>
 
+# ----------
+# Logging
+# ----------
 log-facility <%= logfacility %>;
 
+# ----------
+# Extra Configs
+# ----------
 include "<%= dhcp_dir %>/dhcpd.pools";
 include "<%= dhcp_dir %>/dhcpd.hosts";
 
