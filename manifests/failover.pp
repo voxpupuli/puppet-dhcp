@@ -11,6 +11,9 @@ class dhcp::failover (
   $omapi_key           = ''
 ) {
 
+  include dhcp::params
+  $dhcp_dir = $dhcp::params::dhcp_dir
+
   concat::fragment { 'dhcp-conf-failover':
       target  => "${dhcp_dir}/dhcpd.conf",
       content => template("dhcp/dhcpd.conf.failover.erb"),
