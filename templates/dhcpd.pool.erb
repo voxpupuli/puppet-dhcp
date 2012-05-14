@@ -14,5 +14,12 @@ subnet <%= network %> netmask <%= mask %> {
 
   option subnet-mask <%= mask %>;
   option routers <%= gateway %>;
+<% if options.is_a? Array -%>
+<%   options.each do |opt| -%>
+  option <%= opt %>;
+<%   end -%>
+<% elsif options != '' -%>
+  option <%= options %>;
+<% end -%>
 }
 
