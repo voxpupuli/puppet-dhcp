@@ -3,8 +3,9 @@ define dhcp::pool (
     $mask,
     $range,
     $gateway,
-    $failover = '',
-    $options  = '',
+    $failover    = '',
+    $options     = '',
+    $parameters  = '',
 ) {
 
   include dhcp::params

@@ -21,5 +21,12 @@ subnet <%= network %> netmask <%= mask %> {
 <% elsif options != '' -%>
   option <%= options %>;
 <% end -%>
+<% if parameters.is_a? Array -%>
+<%   parameters.each do |param| -%>
+  <%= param %>;
+<%   end -%>
+<% elsif parameters != '' -%>
+  <%= parameters %>;
+<% end -%>
 }
 
