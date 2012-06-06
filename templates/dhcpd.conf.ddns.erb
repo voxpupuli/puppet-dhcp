@@ -1,0 +1,21 @@
+<% if has_variable?( 'dnsupdatekey' ) -%>
+# ----------
+# Dynamic DNS Updates
+# ----------
+ddns-updates on;
+ddns-update-style interim;
+update-static-leases on;
+use-host-decl-names on;
+
+# Key from bind
+include "<%= dnsupdatekey %>";
+<% dnsdomain.each do |dom| -%>
+zone <%= dom %>. {
+  primary <%= nameservers.first %>;
+  key <%= dnsupdatekey.split('/').last %>;
+}
+<% end -%>
+<% else -%>
+ddns-update-style none;
+<% end -%>
+

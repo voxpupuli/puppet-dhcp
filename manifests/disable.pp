@@ -1,24 +1,21 @@
+# ----------
+# Remove and Disable the DHCP server
+# ----------
 class dhcp::disable {
   include dhcp::params
 
-  $dhcp_dir    = $dhcp::params::dhcp_dir
-  $dnsdomain   = $dhcp::params::dnsdomain
-  $nameservers = $dhcp::params::nameservers
-  $ntpserver   = $dhcp::params::ntpserver
-  $pxeserver   = $dhcp::params::pxeserver
-  $filename    = $dhcp::params::filename
-  $logfacility = $dhcp::params::logfacility
+  $packagename = $dhcp::params::packagename
+  $servicename = $dhcp::params::servicename
 
-  package {
-    "isc-dhcp-server":
-      ensure => absent;
+  package { $packagename:
+    ensure => absent;
   }
-  service {
-    "isc-dhcp-server":
-      enable    => false,
-      ensure    => "stopped",
-      hasstatus => true,
-      require   => Package["isc-dhcp-server"];
+
+  service { $servicename:
+    enable    => false,
+    ensure    => stopped,
+    hasstatus => true,
+    require   => Package[$packagename];
   }
 
 }
