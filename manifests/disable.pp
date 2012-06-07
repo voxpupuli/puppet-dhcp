@@ -8,14 +8,14 @@ class dhcp::disable {
   $servicename = $dhcp::params::servicename
 
   package { $packagename:
-    ensure => absent;
+    ensure => absent,
   }
 
   service { $servicename:
-    enable    => false,
     ensure    => stopped,
+    enable    => false,
     hasstatus => true,
-    require   => Package[$packagename];
+    require   => Package[$packagename],
   }
 
 }
