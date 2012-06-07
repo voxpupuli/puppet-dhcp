@@ -1,8 +1,6 @@
-<% if has_variable?( 'pxeserver' ) and has_variable?( 'pxefilename' ) then -%>
-# ----------
-# PXE Handoff
-# ----------
-next-server <%= pxeserver %>;
-filename "<%= pxefilename %>";
+# BEGIN PXE Section
+<% if @pxeserver and @pxefilename then -%>
+next-server <%= @pxeserver %>;
+filename "<%= @pxefilename %>";
 <% end -%>
-
+# END PXE Section
