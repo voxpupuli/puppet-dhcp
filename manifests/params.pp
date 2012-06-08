@@ -7,7 +7,11 @@ class dhcp::params {
       $servicename = 'isc-dhcp-server'
     }
     'ubuntu': {
-      $dhcp_dir    = '/etc/dhcp3'
+      if versioncmp($::operatingsystemrelease, '12.04') >= 0 {
+        $dhcp_dir    = '/etc/dhcp'
+      } else {
+        $dhcp_dir    = '/etc/dhcp3'
+      }
       $packagename = 'isc-dhcp-server'
       $servicename = 'isc-dhcp-server'
     }
