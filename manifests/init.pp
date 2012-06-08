@@ -2,20 +2,20 @@ class dhcp (
   $dnsdomain,
   $nameservers,
   $ntpservers,
-  $dhcp_conf_header   = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns     = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra    = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
   $dhcp_conf_fragments = {},
-  $interfaces         = undef,
-  $interface          = 'NOTSET',
-  $dnsupdatekey       = undef,
-  $pxeserver          = undef,
-  $pxefilename        = undef,
-  $logfacility        = 'daemon',
-  $default_lease_time = 3600,
-  $max_lease_time     = 86400,
-  $failover           = ''
+  $interfaces          = undef,
+  $interface           = 'NOTSET',
+  $dnsupdatekey        = undef,
+  $pxeserver           = undef,
+  $pxefilename         = undef,
+  $logfacility         = 'daemon',
+  $default_lease_time  = 3600,
+  $max_lease_time      = 86400,
+  $failover            = ''
 ) {
 
   include dhcp::params
