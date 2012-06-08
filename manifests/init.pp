@@ -7,7 +7,7 @@ class dhcp (
   $dnsupdatekey       = undef,
   $pxeserver          = undef,
   $pxefilename        = undef,
-  $logfacility        = 'local7',
+  $logfacility        = 'daemon',
   $default_lease_time = 3600,
   $max_lease_time     = 86400,
   $failover           = ''
@@ -76,7 +76,6 @@ class dhcp (
     content => template('dhcp/dhcpd.conf-extra.erb'),
     order   => 99,
   }
-
 
   # dhcpd.pool
   concat { "${dhcp_dir}/dhcpd.pools": }
