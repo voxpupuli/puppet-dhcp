@@ -1,5 +1,5 @@
 class dhcp::failover (
-  $role                = "primary",
+  $role                = 'primary',
   $address             = $ipaddress,
   $peer_address,
   $port                = '519',
@@ -15,8 +15,8 @@ class dhcp::failover (
   $dhcp_dir = $dhcp::params::dhcp_dir
 
   concat::fragment { 'dhcp-conf-failover':
-      target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf.failover.erb"),
+    target  => "${dhcp_dir}/dhcpd.conf",
+    content => template('dhcp/dhcpd.conf.failover.erb'),
   }
 
 }

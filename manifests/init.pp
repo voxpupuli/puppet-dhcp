@@ -1,16 +1,16 @@
 class dhcp (
-    $dnsdomain,
-    $nameservers,
-    $ntpservers,
-    $interfaces         = undef,
-    $interface          = "NOTSET",
-    $dnsupdatekey       = undef,
-    $pxeserver          = undef,
-    $pxefilename        = undef,
-    $logfacility        = 'local7',
-    $default_lease_time = 3600,
-    $max_lease_time     = 86400,
-    $failover           = ''
+  $dnsdomain,
+  $nameservers,
+  $ntpservers,
+  $interfaces         = undef,
+  $interface          = 'NOTSET',
+  $dnsupdatekey       = undef,
+  $pxeserver          = undef,
+  $pxefilename        = undef,
+  $logfacility        = 'local7',
+  $default_lease_time = 3600,
+  $max_lease_time     = 86400,
+  $failover           = ''
 ) {
 
   include dhcp::params
@@ -22,10 +22,10 @@ class dhcp (
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
   # and deserves what they get.
-  if $interface != "NOTSET" and $interfaces == undef {
+  if $interface != 'NOTSET' and $interfaces == undef {
     $dhcp_interfaces = [ $interface ]
-  } elsif $interface == "NOTSET" and $interfaces == undef {
-    fail ("You need to set \$interfaces in $module_name")
+  } elsif $interface == 'NOTSET' and $interfaces == undef {
+    fail ("You need to set \$interfaces in ${module_name}")
   } else {
     $dhcp_interfaces = $interfaces
   }
@@ -59,22 +59,22 @@ class dhcp (
   # dhcpd.conf
   concat {  "${dhcp_dir}/dhcpd.conf": }
   concat::fragment { 'dhcp-conf-header':
-      target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf-header.erb"),
-      order   => 01,
+    target  => "${dhcp_dir}/dhcpd.conf",
+    content => template('dhcp/dhcpd.conf-header.erb'),
+    order   => 01,
   }
   concat::fragment { 'dhcp-conf-ddns':
-      target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf.ddns.erb"),
+    target  => "${dhcp_dir}/dhcpd.conf",
+    content => template('dhcp/dhcpd.conf.ddns.erb'),
   }
   concat::fragment { 'dhcp-conf-pxe':
-      target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf.pxe.erb"),
+    target  => "${dhcp_dir}/dhcpd.conf",
+    content => template('dhcp/dhcpd.conf.pxe.erb'),
   }
   concat::fragment { 'dhcp-conf-extra':
-      target  => "${dhcp_dir}/dhcpd.conf",
-      content => template("dhcp/dhcpd.conf-extra.erb"),
-      order   => 99,
+    target  => "${dhcp_dir}/dhcpd.conf",
+    content => template('dhcp/dhcpd.conf-extra.erb'),
+    order   => 99,
   }
 
 
@@ -95,14 +95,13 @@ class dhcp (
   }
 
   service { $servicename:
-    enable    => "true",
-    ensure    => "running",
+    ensure    => running,
+    enable    => true,
     hasstatus => true,
     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
-    require   => Package[$packagename];
+    require   => Package[$packagename],
   }
 
   include dhcp::monitor
 
 }
-
