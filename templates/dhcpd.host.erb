@@ -1,5 +1,9 @@
 host <%= host %> {
   hardware ethernet   <%= mac %>;
   fixed-address       <%= ip %>;
-  ddns-hostname       "<%= name %>";
+  # Send the client hostname to be used if hostname not set on the client.
+  option host-name    "<%= name %>";
+  # Set the client hostname for the DHCP server DDNS update.
+  # TEST: Does this get the dhcp server to send the hostname?
+  # ddns-hostname       "<%= name %>";
 }
