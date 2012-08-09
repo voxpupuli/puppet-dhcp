@@ -5,7 +5,7 @@ subnet <%= network %> netmask <%= mask %> {
   pool
   {
 <% if failover != '' -%>
-    failover peer "<%= failover %>";
+    failover peer "dhcp-failover";
 <% end -%>
 <% range.each do |r| -%>
     range <%= r %>;
