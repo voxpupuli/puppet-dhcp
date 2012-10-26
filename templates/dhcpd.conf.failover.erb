@@ -1,4 +1,6 @@
-# BEGIN DHCP Failover
+# ----------
+# DHCP Failover
+# ----------
 failover peer "dhcp-failover" {
         <%= role %>;
         address <%= address %>;
@@ -13,4 +15,4 @@ failover peer "dhcp-failover" {
         split <%= load_split %>;
 <% end -%>
 }
-# END DHCP Failover
+

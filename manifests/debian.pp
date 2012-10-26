@@ -1,4 +1,6 @@
+# ----------
 # Debian specific configuration items.
+# ----------
 class dhcp::debian {
   include dhcp::params
 

@@ -1,8 +1,7 @@
-# BEGIN ddns (Dynamic DNS Updates)
-<% if @dnsupdatekey -%>
 # ----------
 # Dynamic DNS Updates
 # ----------
+<% if @dnsupdatekey -%>
 ddns-updates on;
 ddns-update-style interim;
 update-static-leases on;
@@ -15,8 +14,9 @@ zone <%= dom %>. {
   primary <%= nameservers.first %>;
   key <%= dnsupdatekey.split('/').last %>;
 }
+
 <% end -%>
 <% else -%>
 ddns-update-style none;
+
 <% end -%>
-# END ddns (Dynamic DNS Updates)

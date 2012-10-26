@@ -1,3 +1,6 @@
+# ----------
+# Host Reservation
+# ----------
 define dhcp::host (
   $ip,
   $mac,

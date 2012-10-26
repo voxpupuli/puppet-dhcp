@@ -1,11 +1,14 @@
+# ----------
+# DHCP Server Configuration
+# ----------
 class dhcp (
   $dnsdomain,
   $nameservers,
   $ntpservers,
-  $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_header    = 'dhcp/dhcpd.conf-header.erb', # default template
+  $dhcp_conf_ddns      = 'dhcp/dhcpd.conf.ddns.erb',   # default template
+  $dhcp_conf_pxe       = 'dhcp/dhcpd.conf.pxe.erb',    # default template
+  $dhcp_conf_extra     = 'dhcp/dhcpd.conf-extra.erb',  # default template
   $dhcp_conf_fragments = {},
   $interfaces          = undef,
   $interface           = 'NOTSET',
@@ -35,35 +38,8 @@ class dhcp (
     $dhcp_interfaces = $interfaces
   }
 
-  # JJM Decide where to pull the fragment content from.  Either this module, or
-  # from the end user.  This makes the module much more re-usable by 3rd
-  # parties without modifying the module itself.
-  #
-  # NOTE: These templates should be evaluated after all other local variables
-  # have been set.
-  $dhcp_conf_header_real = $dhcp_conf_header ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-header.erb'),
-    default           => $dhcp_conf_header,
-  }
-  $dhcp_conf_ddns_real = $dhcp_conf_ddns ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.ddns.erb'),
-    default           => $dhcp_conf_ddns,
-  }
-  $dhcp_conf_pxe_real = $dhcp_conf_pxe ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.pxe.erb'),
-    default           => $dhcp_conf_pxe,
-  }
-  $dhcp_conf_extra_real = $dhcp_conf_extra ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-extra.erb'),
-    default           => $dhcp_conf_extra,
-  }
-
   package { $packagename:
-    ensure   => installed,
-    provider => $operatingsystem ? {
-      default => undef,
-      darwin  => macports
-    }
+    ensure => installed,
   }
 
   # OS Specificis
@@ -82,25 +58,25 @@ class dhcp (
 
   concat::fragment { 'dhcp-conf-header':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_header_real,
+    content => template($dhcp_conf_header),
     order   => 01,
   }
 
   concat::fragment { 'dhcp-conf-ddns':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_ddns_real,
+    content => template($dhcp_conf_ddns),
     order   => 10,
   }
 
   concat::fragment { 'dhcp-conf-pxe':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_pxe_real,
+    content => template($dhcp_conf_pxe),
     order   => 20,
   }
 
   concat::fragment { 'dhcp-conf-extra':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_extra_real,
+    content => template($dhcp_conf_extra),
     order   => 99,
   }
 

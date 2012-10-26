@@ -1,6 +1,6 @@
 class dhcp::params {
 
-  case $::operatingsystem {
+  case $operatingsystem {
     'debian': {
       $dhcp_dir    = '/etc/dhcp'
       $packagename = 'isc-dhcp-server'
