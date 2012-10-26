@@ -66,41 +66,38 @@ class dhcp (
     }
   }
 
-  # Only debian and ubuntu have this style of defaults for startup.
+  # OS Specificis
   case $operatingsystem {
     'debian','ubuntu': {
-      file{ '/etc/default/isc-dhcp-server':
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        before  => Package[$packagename],
-        notify  => Service[$servicename],
-        content => template('dhcp/debian/default_isc-dhcp-server'),
-      }
+      include dhcp::debian
     }
   }
 
   include concat::setup
   Concat { require => Package[$packagename] }
 
-  # dhcpd.conf
+  #
+  # Build up the dhcpd.conf
   concat {  "${dhcp_dir}/dhcpd.conf": }
+
   concat::fragment { 'dhcp-conf-header':
     target  => "${dhcp_dir}/dhcpd.conf",
     content => $dhcp_conf_header_real,
     order   => 01,
   }
+
   concat::fragment { 'dhcp-conf-ddns':
     target  => "${dhcp_dir}/dhcpd.conf",
     content => $dhcp_conf_ddns_real,
     order   => 10,
   }
+
   concat::fragment { 'dhcp-conf-pxe':
     target  => "${dhcp_dir}/dhcpd.conf",
     content => $dhcp_conf_pxe_real,
     order   => 20,
   }
+
   concat::fragment { 'dhcp-conf-extra':
     target  => "${dhcp_dir}/dhcpd.conf",
     content => $dhcp_conf_extra_real,
@@ -120,16 +117,20 @@ class dhcp (
   # }
   create_resources('concat::fragment', $dhcp_conf_fragments)
 
-  # dhcpd.pool
+  #
+  # Build the dhcpd.pools
   concat { "${dhcp_dir}/dhcpd.pools": }
+
   concat::fragment { 'dhcp-pools-header':
     target  => "${dhcp_dir}/dhcpd.pools",
     content => "# DHCP Pools\n",
     order   => 01,
   }
 
-  # dhcpd.hosts
+  #
+  # Build the dhcpd.hosts
   concat { "${dhcp_dir}/dhcpd.hosts": }
+
   concat::fragment { 'dhcp-hosts-header':
     target  => "${dhcp_dir}/dhcpd.hosts",
     content => "# static DHCP hosts\n",
