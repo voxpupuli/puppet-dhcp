@@ -25,6 +25,7 @@ class dhcp (
   $dhcp_dir    = $dhcp::params::dhcp_dir
   $packagename = $dhcp::params::packagename
   $servicename = $dhcp::params::servicename
+  $dhcpd       = $dhcp::params::dhcpd
 
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
@@ -118,6 +119,7 @@ class dhcp (
     hasstatus => true,
     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
     require   => Package[$packagename],
+    restart   => "${dhcpd} -t && service ${servicename} restart",
   }
 
   include dhcp::monitor
