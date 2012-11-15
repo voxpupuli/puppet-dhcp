@@ -1,21 +1,23 @@
+# ----------
+# DHCP Server Configuration
+# ----------
 class dhcp (
   $dnsdomain,
   $nameservers,
   $ntpservers,
-  $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_header    = 'dhcp/dhcpd.conf-header.erb', # default template
+  $dhcp_conf_pxe       = 'dhcp/dhcpd.conf.pxe.erb',    # default template
+  $dhcp_conf_extra     = 'dhcp/dhcpd.conf-extra.erb',  # default template
   $dhcp_conf_fragments = {},
   $interfaces          = undef,
   $interface           = 'NOTSET',
-  $dnsupdatekey        = undef,
   $pxeserver           = undef,
   $pxefilename         = undef,
   $logfacility         = 'daemon',
   $default_lease_time  = 3600,
   $max_lease_time      = 86400,
-  $failover            = ''
+  $failover            = '',
+  $ddns                = false
 ) {
 
   include dhcp::params
@@ -23,6 +25,7 @@ class dhcp (
   $dhcp_dir    = $dhcp::params::dhcp_dir
   $packagename = $dhcp::params::packagename
   $servicename = $dhcp::params::servicename
+  $dhcpd       = $dhcp::params::dhcpd
 
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
@@ -35,76 +38,46 @@ class dhcp (
     $dhcp_interfaces = $interfaces
   }
 
-  # JJM Decide where to pull the fragment content from.  Either this module, or
-  # from the end user.  This makes the module much more re-usable by 3rd
-  # parties without modifying the module itself.
-  #
-  # NOTE: These templates should be evaluated after all other local variables
-  # have been set.
-  $dhcp_conf_header_real = $dhcp_conf_header ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-header.erb'),
-    default           => $dhcp_conf_header,
-  }
-  $dhcp_conf_ddns_real = $dhcp_conf_ddns ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.ddns.erb'),
-    default           => $dhcp_conf_ddns,
-  }
-  $dhcp_conf_pxe_real = $dhcp_conf_pxe ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.pxe.erb'),
-    default           => $dhcp_conf_pxe,
-  }
-  $dhcp_conf_extra_real = $dhcp_conf_extra ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-extra.erb'),
-    default           => $dhcp_conf_extra,
-  }
-
   package { $packagename:
-    ensure   => installed,
-    provider => $operatingsystem ? {
-      default => undef,
-      darwin  => macports
-    }
+    ensure => installed,
   }
 
-  # Only debian and ubuntu have this style of defaults for startup.
+  # OS Specifics
   case $operatingsystem {
     'debian','ubuntu': {
-      file{ '/etc/default/isc-dhcp-server':
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        before  => Package[$packagename],
-        notify  => Service[$servicename],
-        content => template('dhcp/debian/default_isc-dhcp-server'),
-      }
+      include dhcp::debian
     }
   }
 
   include concat::setup
   Concat { require => Package[$packagename] }
 
-  # dhcpd.conf
+  #
+  # Build up the dhcpd.conf
   concat {  "${dhcp_dir}/dhcpd.conf": }
+
   concat::fragment { 'dhcp-conf-header':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_header_real,
+    content => template($dhcp_conf_header),
     order   => 01,
   }
-  concat::fragment { 'dhcp-conf-ddns':
-    target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_ddns_real,
-    order   => 10,
-  }
+
   concat::fragment { 'dhcp-conf-pxe':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_pxe_real,
+    content => template($dhcp_conf_pxe),
     order   => 20,
   }
+
   concat::fragment { 'dhcp-conf-extra':
     target  => "${dhcp_dir}/dhcpd.conf",
-    content => $dhcp_conf_extra_real,
+    content => template($dhcp_conf_extra),
     order   => 99,
+  }
+
+  # Using DDNS will require a dhcp::ddns class composition, else, we should
+  # turn it off.
+  unless ( $ddns ) {
+    class { "dhcp::ddns": enable => false; }
   }
 
   # Any additional dhcpd.conf fragments the user passed in as a hash for
@@ -120,16 +93,20 @@ class dhcp (
   # }
   create_resources('concat::fragment', $dhcp_conf_fragments)
 
-  # dhcpd.pool
+  #
+  # Build the dhcpd.pools
   concat { "${dhcp_dir}/dhcpd.pools": }
+
   concat::fragment { 'dhcp-pools-header':
     target  => "${dhcp_dir}/dhcpd.pools",
     content => "# DHCP Pools\n",
     order   => 01,
   }
 
-  # dhcpd.hosts
+  #
+  # Build the dhcpd.hosts
   concat { "${dhcp_dir}/dhcpd.hosts": }
+
   concat::fragment { 'dhcp-hosts-header':
     target  => "${dhcp_dir}/dhcpd.hosts",
     content => "# static DHCP hosts\n",
@@ -142,6 +119,7 @@ class dhcp (
     hasstatus => true,
     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
     require   => Package[$packagename],
+    restart   => "${dhcpd} -t && service ${servicename} restart",
   }
 
   include dhcp::monitor

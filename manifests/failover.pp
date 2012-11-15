@@ -1,3 +1,6 @@
+# ----------
+# Failover Configuration
+# ----------
 class dhcp::failover (
   $role                = 'primary',
   $address             = $ipaddress,
