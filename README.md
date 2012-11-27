@@ -56,4 +56,5 @@ Create host reservations.
 ## Contributors
 Zach Leslie <zach.leslie@gmail.com>
 Ben Hughes <git@mumble.org.uk>
+Sam Dunster <sdunster@uow.edu.au>
 
