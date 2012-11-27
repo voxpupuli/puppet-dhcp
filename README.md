@@ -5,6 +5,7 @@ Installs and manages a DHCP server.
 * Multiple subnet support
 * Host reservations
 * Secure dynamic DNS updates when combined with Bind
+* Can create a dummy (ignored) subnet so that the server can be used only as a helper-address target
 
 ## Usage
 Define the server and the zones it will be responsible for.
@@ -31,6 +32,15 @@ Define the pool attributes
       mask    => '255.255.255.0',
       range   => '10.0.1.100 10.0.1.200',
       gateway => '10.0.1.1',
+    }
+
+### dhcp::ignoredsubnet
+Define a subnet that will be ignored - useful for making the DHCP server only respond to
+requests forwarded by switches etc.
+
+    dhcp::pool{ 'eth0':
+      network => '10.0.0.0',
+      mask    => '255.255.255.0',
     }
 
 
