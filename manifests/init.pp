@@ -92,6 +92,17 @@ class dhcp (
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
     }
+    'redhat','centos','fedora','Scientific': {
+      file{ '/etc/sysconfig/dhcpd':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        before  => Package[$packagename],
+        notify  => Service[$servicename],
+        content => template('dhcp/redhat/sysconfig-dhcpd'),
+      }
+    }
   }
 
   include concat::setup
