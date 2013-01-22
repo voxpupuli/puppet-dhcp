@@ -1,10 +1,10 @@
-name 'puppetlabs-dhcp'
+name 'puppetlabs-isc_dhcp'
 version '0.1.0'
-source 'git://github.com/puppetlabs/puppetlabs-dhcp.git'
+source 'git://github.com/puppetlabs/puppetlabs-isc_dhcp.git'
 author 'puppetlabs'
 license 'Apache License Version 2.0'
 summary 'Manage the ISC DHCP Daemon'
 description 'A Puppet module to deploy and manage the ISC DHCP server.'
-project_page 'https://github.com/puppetlabs/puppet-dhcp'
+project_page 'https://github.com/puppetlabs/puppetlabs-isc_dhcp'
 
 dependency 'ripienaar/concat', '>= 0.1.0'

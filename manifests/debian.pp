@@ -1,12 +1,11 @@
 # ----------
 # Debian specific configuration items.
 # ----------
-class dhcp::debian {
-  include dhcp::params
-
-  $packagename     = $dhcp::params::packagename
-  $servicename     = $dhcp::params::servicename
-  $dhcp_interfaces = $dhcp::dhcp_interfaces
+class isc_dhcp::debian(
+  $packagename     = $isc_dhcp::params::packagename,
+  $servicename     = $isc_dhcp::params::servicename,
+  $dhcp_interfaces = $isc_dhcp::params::dhcp_interfaces,
+) inherits isc_dhcp::params {
 
   case $operatingsystem {
     'debian','ubuntu': {
@@ -17,7 +16,7 @@ class dhcp::debian {
         mode    => '0644',
         before  => Package[$packagename],
         notify  => Service[$servicename],
-        content => template('dhcp/debian/default_isc-dhcp-server'),
+        content => template("${module_name}/debian/default_isc-dhcp-server"),
       }
     }
   }

@@ -1,13 +1,13 @@
 # ----------
 # DHCP Server Configuration
 # ----------
-class dhcp (
+class isc_dhcp (
   $dnsdomain,
   $nameservers,
   $ntpservers,
-  $dhcp_conf_header    = 'dhcp/dhcpd.conf-header.erb', # default template
-  $dhcp_conf_pxe       = 'dhcp/dhcpd.conf.pxe.erb',    # default template
-  $dhcp_conf_extra     = 'dhcp/dhcpd.conf-extra.erb',  # default template
+  $dhcp_conf_header    = "${module_name}/dhcpd.conf-header.erb",
+  $dhcp_conf_pxe       = "${module_name}/dhcpd.conf.pxe.erb",
+  $dhcp_conf_extra     = "${module_name}/dhcpd.conf-extra.erb",
   $dhcp_conf_fragments = {},
   $interfaces          = undef,
   $interface           = 'NOTSET',
@@ -17,15 +17,12 @@ class dhcp (
   $default_lease_time  = 3600,
   $max_lease_time      = 86400,
   $failover            = '',
-  $ddns                = false
-) {
-
-  include dhcp::params
-
-  $dhcp_dir    = $dhcp::params::dhcp_dir
-  $packagename = $dhcp::params::packagename
-  $servicename = $dhcp::params::servicename
-  $dhcpd       = $dhcp::params::dhcpd
+  $ddns                = false,
+  $dhcp_dir            = $isc_dhcp::params::dhcp_dir,
+  $packagename         = $isc_dhcp::params::packagename,
+  $servicename         = $isc_dhcp::params::servicename,
+  $dhcpd               = $isc_dhcp::params::dhcpd,
+) inherits isc_dhcp::params {
 
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
@@ -45,7 +42,7 @@ class dhcp (
   # OS Specifics
   case $operatingsystem {
     'debian','ubuntu': {
-      include dhcp::debian
+      include isc_dhcp::debian
     }
   }
 
@@ -76,8 +73,8 @@ class dhcp (
 
   # Using DDNS will require a dhcp::ddns class composition, else, we should
   # turn it off.
-  unless ( $ddns ) {
-    class { "dhcp::ddns": enable => false; }
+  unless $ddns {
+    class { "isc_dhcp::ddns": enable => false; }
   }
 
   # Any additional dhcpd.conf fragments the user passed in as a hash for
@@ -121,7 +118,4 @@ class dhcp (
     require   => Package[$packagename],
     restart   => "${dhcpd} -t && service ${servicename} restart",
   }
-
-  include dhcp::monitor
-
 }
