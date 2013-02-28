@@ -12,7 +12,6 @@ log-facility <%= logfacility %>;
 # ----------
 option domain-name "<%= dnsdomain.first %>";
 option domain-name-servers <%= nameservers.join(', ') %>;
-option ntp-servers <%= ntpservers.join(', ') %>;
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;
 option pxegrub code 150 = text;
