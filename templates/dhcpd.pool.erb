@@ -17,7 +17,9 @@ subnet <%= network %> netmask <%= mask %> {
 <% end -%>
 
   option subnet-mask <%= mask %>;
+<% if gateway != '' -%>
   option routers <%= gateway %>;
+<% end -%>
 <% if options.is_a? Array -%>
 <%   options.each do |opt| -%>
   option <%= opt %>;
