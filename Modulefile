@@ -7,4 +7,5 @@ summary 'Manage the ISC DHCP Daemon'
 description 'A Puppet module to deploy and manage the ISC DHCP server.'
 project_page 'https://github.com/puppetlabs/puppet-dhcp'
 
+dependency 'puppetlabs/stdlib', '>= 2.0.0'
 dependency 'ripienaar/concat', '>= 0.1.0'
