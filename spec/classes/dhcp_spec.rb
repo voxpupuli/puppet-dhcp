@@ -34,6 +34,14 @@ describe 'dhcp', :type => :class do
        default_params
     end
     context 'input validation' do
+      ['dnsdomain','nameservers','ntpservers'].each do |arrays|
+        context "when #{arrays} is not an array" do
+          it 'should fail' do
+            params.merge!({ arrays => 'BOGON'})
+            expect { subject }.to raise_error(Puppet::Error, /"BOGON" is not an Array.  It looks to be a String/)
+          end
+        end
+      end
     end
     context 'coverage tests' do
       ['dhcp','dhcp::monitor'].each do |dhclasses|

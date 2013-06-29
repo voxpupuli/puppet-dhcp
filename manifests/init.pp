@@ -17,6 +17,10 @@ class dhcp (
   $max_lease_time      = 86400,
   $failover            = ''
 ) {
+  #input validation
+  validate_array($dnsdomain)
+  validate_array($nameservers)
+  validate_array($ntpservers)
 
   include dhcp::params
 
