@@ -8,6 +8,19 @@ max-lease-time <%= max_lease_time %>;
 log-facility <%= logfacility %>;
 
 # ----------
+# omapi
+# ----------
+<% if has_variable?( 'omapi' ) and @omapi -%>
+omapi-port <%= omapiport %>;
+<% if has_variable?( 'omapikey' ) and @omapikey -%>
+key omapi_key {
+	algorithm hmac-md5;
+        secret "<%= omapikey %>";
+};
+<% end -%>
+<% end -%>
+
+# ----------
 # Options
 # ----------
 option domain-name "<%= dnsdomain.first %>";
