@@ -1,7 +1,8 @@
+# Class dhcp
 class dhcp (
-  $dnsdomain,
-  $nameservers,
-  $ntpservers,
+  $dnsdomain           = undef,
+  $nameservers         = undef,
+  $ntpservers          = undef,
   $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
   $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
@@ -15,7 +16,10 @@ class dhcp (
   $logfacility         = 'daemon',
   $default_lease_time  = 3600,
   $max_lease_time      = 86400,
-  $failover            = ''
+  $failover            = '',
+  $omapi               = false,
+  $omapiport           = 7911,
+  $omapikey            = '',
 ) {
   #input validation
   validate_array($dnsdomain)
@@ -62,16 +66,18 @@ class dhcp (
     default           => $dhcp_conf_extra,
   }
 
+  $package_provider = $::operatingsystem ? {
+    default      => undef,
+    darwin => macports
+  }
+
   package { $packagename:
     ensure   => installed,
-    provider => $operatingsystem ? {
-      default => undef,
-      darwin  => macports
-    }
+    provider => $package_provider,
   }
 
   # Only debian and ubuntu have this style of defaults for startup.
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian','ubuntu': {
       file{ '/etc/default/isc-dhcp-server':
         ensure  => present,
@@ -82,6 +88,8 @@ class dhcp (
         notify  => Service[$servicename],
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
+    }
+    default: {
     }
   }
 

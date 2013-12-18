@@ -1,3 +1,4 @@
+# Define dhcp::host
 define dhcp::host (
   $ip,
   $mac,

@@ -1,3 +1,4 @@
+# Class
 class dhcp::params {
 
   case $::operatingsystem {
@@ -29,6 +30,8 @@ class dhcp::params {
       $dhcp_dir    = '/etc/dhcp'
       $packagename = 'dhcp'
       $servicename = 'dhcpd'
+    }
+    default: {
     }
   }
 
