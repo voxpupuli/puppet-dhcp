@@ -43,6 +43,22 @@ Create host reservations.
       'server3': mac => "00:50:56:00:00:03", ip => "10.0.1.53";
     }
 
+Create host reservations from a Hiera YAML file, e.g.:
+
+    dhcp::hosts :
+        server1 : 
+            mac : "00:50:56:00:00:01"
+            ip  : "10.0.1.51"
+        server2 : 
+            mac : "00:50:56:00:00:02"
+            ip  : "10.0.1.52";
+
+Add to your Puppet configuration:
+
+    $hosts = hiera_hash('dhcp::hosts')
+    create_resources(dhcp::host, $hosts)
+
+
 ## Contributors
 Zach Leslie <zach.leslie@gmail.com>
 Ben Hughes <git@mumble.org.uk>
