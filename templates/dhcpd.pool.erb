@@ -2,15 +2,19 @@
 # <%= name network mask %>
 #################################
 subnet <%= network %> netmask <%= mask %> {
+<% if range != '' or failover != '' -%>
   pool
   {
 <% if failover != '' -%>
     failover peer "<%= failover %>";
 <% end -%>
+<% if range != '' -%>
 <% range.each do |r| -%>
     range <%= r %>;
 <% end -%>
+<% end -%>
   }
+<% end -%>
 
   option subnet-mask <%= mask %>;
   option routers <%= gateway %>;
