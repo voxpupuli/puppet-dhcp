@@ -1,0 +1,7 @@
+# BEGIN NTP Section
+<% if @ntpservers -%>
+option ntp-servers <%= ntpservers.join(', ') %>;
+<% else -%>
+option ntp-servers none;
+<% end -%>
+# END NTP Section
