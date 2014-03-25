@@ -4,7 +4,7 @@ class dhcp (
   $ntpservers          = undef,
   $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ntp      = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_ntp       = 'INTERNAL_TEMPLATE',
   $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
   $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
   $dhcp_conf_fragments = {},
