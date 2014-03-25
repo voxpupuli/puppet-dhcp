@@ -15,8 +15,7 @@ class dhcp (
   $pxefilename         = undef,
   $logfacility         = 'daemon',
   $default_lease_time  = 3600,
-  $max_lease_time      = 86400,
-  $failover            = ''
+  $max_lease_time      = 86400
 ) {
   #input validation
   validate_array($dnsdomain)
