@@ -9,11 +9,11 @@ update-static-leases on;
 use-host-decl-names on;
 
 # Key from bind
-include "<%= dnsupdatekey %>";
-<% dnsdomain.each do |dom| -%>
+include "<%= @dnsupdatekey %>";
+<% @dnsdomain.each do |dom| -%>
 zone <%= dom %>. {
-  primary <%= nameservers.first %>;
-  key <%= dnsupdatekey.split('/').last %>;
+  primary <%= @nameservers.first %>;
+  key <%= @dnsupdatekey.split('/').last %>;
 }
 <% end -%>
 <% else -%>
