@@ -105,7 +105,6 @@ class dhcp (
     }
   }
 
-  include concat::setup
   Concat { require => Package[$packagename] }
 
   # dhcpd.conf
