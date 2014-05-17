@@ -15,7 +15,8 @@ class dhcp (
   $pxefilename         = undef,
   $logfacility         = 'daemon',
   $default_lease_time  = 3600,
-  $max_lease_time      = 86400
+  $max_lease_time      = 86400,
+  $service_ensure      = running
 ) {
   #input validation
   validate_array($dnsdomain)
@@ -165,7 +166,7 @@ class dhcp (
   }
 
   service { $servicename:
-    ensure    => running,
+    ensure    => $service_ensure,
     enable    => true,
     hasstatus => true,
     subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
