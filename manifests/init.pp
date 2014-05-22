@@ -74,6 +74,11 @@ class dhcp (
     }
   }
 
+  file { $dhcp_dir:
+    mode    => '0755',
+    require => Package[$packagename],
+  }
+
   # Only debian and ubuntu have this style of defaults for startup.
   case $operatingsystem {
     'debian','ubuntu': {
