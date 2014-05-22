@@ -74,6 +74,11 @@ class dhcp (
     }
   }
 
+  file { $dhcp_dir:
+    mode    => '0755',
+    require => Package[$packagename],
+  }
+
   # Only debian and ubuntu have this style of defaults for startup.
   case $operatingsystem {
     'debian','ubuntu': {
@@ -85,6 +90,17 @@ class dhcp (
         before  => Package[$packagename],
         notify  => Service[$servicename],
         content => template('dhcp/debian/default_isc-dhcp-server'),
+      }
+    }
+    'redhat','centos','fedora','Scientific': {
+      file{ '/etc/sysconfig/dhcpd':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        before  => Package[$packagename],
+        notify  => Service[$servicename],
+        content => template('dhcp/redhat/sysconfig-dhcpd'),
       }
     }
   }
