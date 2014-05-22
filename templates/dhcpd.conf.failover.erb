@@ -1,16 +1,16 @@
 # BEGIN DHCP Failover
 failover peer "dhcp-failover" {
-        <%= role %>;
-        address <%= address %>;
-        port <%= port %>;
-        peer address <%= peer_address %>;
-        peer port <%= port %>;
-        max-response-delay <%= max_response_delay %>; 
-        max-unacked-updates <%= max_unacked_updates %>; 
-        load balance max seconds <%= load_balance %>;
-<% if role == "primary" -%>
-        mclt <%= mclt %>;
-        split <%= load_split %>;
+        <%= @role %>;
+        address <%= @address %>;
+        port <%= @port %>;
+        peer address <%= @peer_address %>;
+        peer port <%= @port %>;
+        max-response-delay <%= @max_response_delay %>;
+        max-unacked-updates <%= @max_unacked_updates %>;
+        load balance max seconds <%= @load_balance %>;
+<% if @role == "primary" -%>
+        mclt <%= @mclt %>;
+        split <%= @load_split %>;
 <% end -%>
 }
 # END DHCP Failover
