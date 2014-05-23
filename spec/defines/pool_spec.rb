@@ -4,7 +4,7 @@ describe 'dhcp::pool', :type => :define do
   let :title do
     'test_pool'
   end
-  let :facts do
+  let(:facts) do
     {
       :concat_basedir => '/dne',
       :osfamily       => 'RedHat',
@@ -19,7 +19,5 @@ describe 'dhcp::pool', :type => :define do
     }
   end
 
-  it {
-    should contain_concat__fragment("dhcp_pool_#{title}")
-  }
+  it { should contain_concat__fragment("dhcp_pool_#{title}") }
 end
