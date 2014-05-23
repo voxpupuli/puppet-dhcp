@@ -4,7 +4,11 @@ describe 'dhcp::pool', :type => :define do
   let :title do
     'test_pool'
   end
-  let(:facts) {{ :concat_basedir => '/dne' }}
+  let(:facts) do
+    { :concat_basedir => '/dne',
+      :operatingsystem => 'debian',
+    }
+  end
   let :params do
     {
       'gateway'  => '1.1.1.1',
@@ -14,7 +18,5 @@ describe 'dhcp::pool', :type => :define do
     }
   end
 
-  it {
-    should contain_concat__fragment("dhcp_pool_#{title}")
-  }
+  it { should contain_concat__fragment("dhcp_pool_#{title}") }
 end

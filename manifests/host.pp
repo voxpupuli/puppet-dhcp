@@ -1,3 +1,5 @@
+# == Define: dhcp::host
+#
 define dhcp::host (
   $ip,
   $mac,
@@ -5,6 +7,7 @@ define dhcp::host (
 ) {
 
   $host = $name
+
   include dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
@@ -15,4 +18,3 @@ define dhcp::host (
     order   => 10,
   }
 }
-

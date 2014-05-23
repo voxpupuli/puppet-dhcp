@@ -5,6 +5,7 @@ describe 'dhcp', :type => :class do
     let :facts do
       {
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
       }
@@ -27,7 +28,6 @@ describe 'dhcp', :type => :class do
         'logfacility'         => 'daemon',
         'default_lease_time'  => '3600',
         'max_lease_time'      => '86400',
-        'failover'            => ''
       }
     end
     let :params do
@@ -47,14 +47,11 @@ describe 'dhcp', :type => :class do
       ['dhcp','dhcp::monitor'].each do |dhclasses|
         it {should contain_class(dhclasses)}
       end
-      ['/dhcpd.pools','/dhcpd.hosts'].each do |concats|
+      ['/etc/dhcp/dhcpd.pools','/etc/dhcp/dhcpd.hosts'].each do |concats|
         it {should contain_concat(concats)}
       end
       ['dhcp-conf-pxe','dhcp-conf-extra'].each do |frags|
         it {should contain_concat__fragment(frags)}
-      end
-      ['/dhcpd.conf','/dhcpd.pools'].each do |files|
-        it {should contain_file (files)}
       end
     end
   end
