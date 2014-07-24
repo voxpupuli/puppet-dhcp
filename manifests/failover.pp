@@ -1,9 +1,9 @@
 # == Class: dhcp::failover
 #
 class dhcp::failover (
+  $peer_address,
   $role                = 'primary',
   $address             = $::ipaddress,
-  $peer_address        = undef,
   $port                = '519',
   $max_response_delay  = '30',
   $max_unacked_updates = '10',
@@ -16,10 +16,6 @@ class dhcp::failover (
   include dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
-
-  if $peer_address == undef {
-    fail('dhcp::failover::peer_address is undef and must be defined. Suggest adding the key to Hiera.')
-  }
 
   concat::fragment { 'dhcp-conf-failover':
     target  => "${dhcp_dir}/dhcpd.conf",
