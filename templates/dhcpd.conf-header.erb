@@ -10,7 +10,7 @@ log-facility <%= @logfacility %>;
 # ----------
 # Options
 # ----------
-option domain-name "<%= @dnsdomain.first %>";
+option domain-name "<%= @dnsdomain_real.first %>";
 option domain-name-servers <%= @nameservers.join(', ') %>;
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;

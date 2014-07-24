@@ -1,7 +1,7 @@
 # == Class: dhcp
 #
 class dhcp (
-  $dnsdomain           = [ $::domain ],
+  $dnsdomain           = undef,
   $nameservers         = [ '8.8.8.8', '8.8.4.4' ],
   $ntpservers          = undef,
   $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
@@ -20,8 +20,18 @@ class dhcp (
   $max_lease_time      = 86400,
   $service_ensure      = running,
 ) {
-  #input validation
-  validate_array($dnsdomain)
+
+  if $dnsdomain == undef {
+    if $::domain {
+      $dnsdomain_real = [ $::domain ]
+    } else {
+      fail('dhcp::dnsdomain must be set and domain fact is missing to use as a default value.')
+    }
+  } else {
+    $dnsdomain_real = $dnsdomain
+  }
+  validate_array($dnsdomain_real)
+
   validate_array($nameservers)
   validate_array($ntpservers)
 
