@@ -10,7 +10,7 @@ use-host-decl-names on;
 
 # Key from bind
 include "<%= @dnsupdatekey %>";
-<% @dnsdomain.each do |dom| -%>
+<% @dnsdomain_real.each do |dom| -%>
 zone <%= dom %>. {
   primary <%= @nameservers.first %>;
   key <%= @dnsupdatekey.split('/').last %>;
