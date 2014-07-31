@@ -46,24 +46,24 @@ class dhcp (
   # NOTE: These templates should be evaluated after all other local variables
   # have been set.
   $dhcp_conf_header_real = $dhcp_conf_header ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-header.erb'),
-    default           => $dhcp_conf_header,
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf-header.erb'),
+    default             => $dhcp_conf_header,
   }
   $dhcp_conf_ntp_real = $dhcp_conf_ntp ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.ntp.erb'),
-    default           => $dhcp_conf_ntp,
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.ntp.erb'),
+    default             => $dhcp_conf_ntp,
   }
   $dhcp_conf_ddns_real = $dhcp_conf_ddns ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.ddns.erb'),
-    default           => $dhcp_conf_ddns,
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.ddns.erb'),
+    default             => $dhcp_conf_ddns,
   }
   $dhcp_conf_pxe_real = $dhcp_conf_pxe ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf.pxe.erb'),
-    default           => $dhcp_conf_pxe,
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.pxe.erb'),
+    default             => $dhcp_conf_pxe,
   }
   $dhcp_conf_extra_real = $dhcp_conf_extra ? {
-    INTERNAL_TEMPLATE => template('dhcp/dhcpd.conf-extra.erb'),
-    default           => $dhcp_conf_extra,
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf-extra.erb'),
+    default             => $dhcp_conf_extra,
   }
 
   package { $packagename:
