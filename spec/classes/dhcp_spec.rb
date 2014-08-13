@@ -6,7 +6,7 @@ describe 'dhcp', :type => :class do
       'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
       'nameservers'         => ['1.1.1.1'],
       'ntpservers'          => ['time.sample.com'],
-      'dhcp_conf_header'    => 'eth0',
+      'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
       'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
       'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
       'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
@@ -125,4 +125,36 @@ describe 'dhcp', :type => :class do
       end
     end
   end
+
+  context 'with globaloptions parameter set' do
+    let :facts do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystem        => 'Ubuntu',
+        :operatingsystemrelease => '12.04',
+        :concat_basedir         => '/dne',
+      }
+    end
+    context 'globaloptions set to a string' do
+      let :params do
+        default_params.merge({
+          :interface     => 'eth0',
+          :globaloptions => 'root-path "/opt/ltsp/i386"',
+        })
+      end
+      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
+    end
+
+    context 'globaloptions set to an array' do
+      let :params do
+        default_params.merge({
+          :interface     => 'eth0',
+          :globaloptions => [ 'tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"', ]
+        })
+      end
+      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
+      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option tftp-server-name "1.2.3.4";$} }
+    end
+  end
+
 end

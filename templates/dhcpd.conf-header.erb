@@ -15,4 +15,11 @@ option domain-name-servers <%= @nameservers.join(', ') %>;
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;
 option pxegrub code 150 = text;
+<% if @globaloptions.is_a? Array -%>
+<%   @globaloptions.each do |opt| -%>
+option <%= opt %>;
+<%   end -%>
+<% elsif @globaloptions != '' -%>
+option <%= @globaloptions %>;
+<% end -%>
 # END DHCP Header
