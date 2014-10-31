@@ -27,7 +27,6 @@ describe 'dhcp', :type => :class do
         'logfacility'         => 'daemon',
         'default_lease_time'  => '3600',
         'max_lease_time'      => '86400',
-        'failover'            => ''
       }
     end
     let :params do
