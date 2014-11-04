@@ -10,17 +10,18 @@ Installs and manages a DHCP server.
 Define the server and the zones it will be responsible for.
 
     class { 'dhcp':
-      dnsdomain    => [
+      service_ensure => running,
+      dnsdomain      => [
         'dc1.example.net',
         '1.0.10.in-addr.arpa',
         ],
-      nameservers  => ['10.0.1.20'],
-      ntpservers   => ['us.pool.ntp.org'],
-      interfaces   => ['eth0'],
-      dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
-      require      => Bind::Key[ $ddnskeyname ],
-      pxeserver    => '10.0.1.50',
-      pxefilename  => 'pxelinux.0',
+      nameservers    => ['10.0.1.20'],
+      ntpservers     => ['us.pool.ntp.org'],
+      interfaces     => ['eth0'],
+      dnsupdatekey   => "/etc/bind/keys.d/$ddnskeyname",
+      require        => Bind::Key[ $ddnskeyname ],
+      pxeserver      => '10.0.1.50',
+      pxefilename    => 'pxelinux.0',
     }
 
 ### dhcp::pool
