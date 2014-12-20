@@ -13,7 +13,7 @@ Define the server and the zones it will be responsible for.
       dnsdomain    => [
         'dc1.example.net',
         '1.0.10.in-addr.arpa',
-        ],
+      ],
       nameservers  => ['10.0.1.20'],
       ntpservers   => ['us.pool.ntp.org'],
       interfaces   => ['eth0'],
@@ -37,13 +37,13 @@ Define the pool attributes
 ### dhcp::host
 Create host reservations.
 
-    dhcp::host {
-      'server1': mac => "00:50:56:00:00:01", ip => "10.0.1.51";
-      'server2': mac => "00:50:56:00:00:02", ip => "10.0.1.52";
-      'server3': mac => "00:50:56:00:00:03", ip => "10.0.1.53";
+    dhcp::host { 'server1':
+      mac => '00:50:56:00:00:01',
+      ip  => '10.0.1.51',
     }
 
 ## Contributors
 Zach Leslie <zach.leslie@gmail.com>
 Ben Hughes <git@mumble.org.uk>
+Garrett Honeycutt <gh@learnpuppet.com>
 

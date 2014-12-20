@@ -4,7 +4,11 @@ describe 'dhcp::host', :type => :define do
   let :title do
     'test_host'
   end
-  let(:facts) {{ :concat_basedir => '/dne' }}
+  let(:facts) do
+    { :concat_basedir  => '/dne',
+      :operatingsystem => 'debian',
+    }
+  end
   let :params do
     {
       'ip'      => '1.2.3.4',
@@ -13,7 +17,5 @@ describe 'dhcp::host', :type => :define do
     }
   end
 
-  it {
-    should contain_concat__fragment("dhcp_host_#{title}")
-  }
+  it { should contain_concat__fragment("dhcp_host_#{title}") }
 end
