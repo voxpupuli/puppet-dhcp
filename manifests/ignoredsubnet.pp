@@ -1,6 +1,6 @@
 define dhcp::ignoredsubnet (
   $network,
-  $mask
+  $mask,
 ) {
 
   include dhcp::params

@@ -38,7 +38,7 @@ Define the pool attributes
 Define a subnet that will be ignored - useful for making the DHCP server only respond to
 requests forwarded by switches etc.
 
-    dhcp::pool{ 'eth0':
+    dhcp::ignoredsubnet{ 'eth0':
       network => '10.0.0.0',
       mask    => '255.255.255.0',
     }
