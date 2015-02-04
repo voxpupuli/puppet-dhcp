@@ -8,6 +8,7 @@ define dhcp::pool (
   $parameters  = '',
   $nameservers = undef,
   $pxeserver   = undef,
+  $domain_name = '',
 ) {
 
   include dhcp::params
