@@ -35,9 +35,6 @@ class dhcp::params {
       $packageprov = undef
       $servicename = 'dhcpd'
     }
-    default: {
-      fail("${::operatingsystem} not supported in ${::module_name}")
-    }
   }
 
 }
