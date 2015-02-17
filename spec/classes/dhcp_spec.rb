@@ -5,6 +5,7 @@ describe 'dhcp', :type => :class do
     let :facts do
       {
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
       }
@@ -19,7 +20,7 @@ describe 'dhcp', :type => :class do
         'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
         'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
         'dhcp_conf_fragments' => {},
-        'interfaces'          => 'undef',
+        'interfaces'          => ['eth0','eth1'],
         'interface'           => 'NOTSET',
         'dnsupdatekey'        => 'undef',
         'pxeserver'           => 'undef',
@@ -28,7 +29,6 @@ describe 'dhcp', :type => :class do
         'default_lease_time'  => '3600',
         'max_lease_time'      => '86400',
         'service_ensure'      => 'running',
-        'failover'            => ''
       }
     end
     let :params do
@@ -48,14 +48,14 @@ describe 'dhcp', :type => :class do
       ['dhcp','dhcp::monitor'].each do |dhclasses|
         it {should contain_class(dhclasses)}
       end
-      ['/dhcpd.pools','/dhcpd.hosts'].each do |concats|
+      ['/etc/dhcp/dhcpd.pools','/etc/dhcp/dhcpd.hosts'].each do |concats|
         it {should contain_concat(concats)}
       end
       ['dhcp-conf-pxe','dhcp-conf-extra'].each do |frags|
         it {should contain_concat__fragment(frags)}
       end
-      ['/dhcpd.conf','/dhcpd.pools'].each do |files|
-        it {should contain_file (files)}
+      ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools'].each do |files|
+        it {should contain_file(files) }
       end
     end
   end
