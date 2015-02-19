@@ -55,7 +55,7 @@ describe 'dhcp', :type => :class do
         it {should contain_concat__fragment(frags)}
       end
       ['/dhcpd.conf','/dhcpd.pools'].each do |files|
-        it {should contain_file (files)}
+        it {should contain_file(files)}
       end
     end
   end
