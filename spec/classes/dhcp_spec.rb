@@ -28,7 +28,6 @@ describe 'dhcp', :type => :class do
         'default_lease_time'  => '3600',
         'max_lease_time'      => '86400',
         'service_ensure'      => 'running',
-        'failover'            => ''
       }
     end
     let :params do
@@ -55,7 +54,7 @@ describe 'dhcp', :type => :class do
         it {should contain_concat__fragment(frags)}
       end
       ['/dhcpd.conf','/dhcpd.pools'].each do |files|
-        it {should contain_file (files)}
+        it {should contain_file(files)}
       end
     end
   end
