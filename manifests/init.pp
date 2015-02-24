@@ -27,6 +27,7 @@ class dhcp (
 
   $dhcp_dir    = $dhcp::params::dhcp_dir
   $packagename = $dhcp::params::packagename
+  $packageprov = $dhcp::params::pachageprov
   $servicename = $dhcp::params::servicename
 
   # Incase people set interface instead of interfaces work around
@@ -69,10 +70,7 @@ class dhcp (
 
   package { $packagename:
     ensure   => installed,
-    provider => $operatingsystem ? {
-      default => undef,
-      darwin  => macports
-    }
+    provider => $packageprov,
   }
 
   file { $dhcp_dir:
@@ -81,8 +79,8 @@ class dhcp (
   }
 
   # Only debian and ubuntu have this style of defaults for startup.
-  case $operatingsystem {
-    'debian','ubuntu': {
+  case $::osfamily {
+    debian: {
       file{ '/etc/default/isc-dhcp-server':
         ensure  => present,
         owner   => 'root',
@@ -93,7 +91,7 @@ class dhcp (
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
     }
-    'redhat','centos','fedora','Scientific': {
+    redhat: {
       file{ '/etc/sysconfig/dhcpd':
         ensure  => present,
         owner   => 'root',
@@ -104,6 +102,7 @@ class dhcp (
         content => template('dhcp/redhat/sysconfig-dhcpd'),
       }
     }
+    default: { }
   }
 
   Concat { require => Package[$packagename] }
