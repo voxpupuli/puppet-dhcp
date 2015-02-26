@@ -5,7 +5,7 @@ class dhcp::params {
       fail("${::osfamily} not spupprted in ${module_name}")
     }
     debian: {
-      if ( $::operatingsytem == 'ubuntu' ) {
+      if ( $::operatingsystem == 'ubuntu' ) {
         if versioncmp($::operatingsystemrelease, '12.04') >= 0 {
           $dhcp_dir    = '/etc/dhcp'
         } else {
