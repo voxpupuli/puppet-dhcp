@@ -14,7 +14,7 @@ describe 'dhcp', :type => :class do
         'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
         'nameservers'         => ['1.1.1.1'],
         'ntpservers'          => ['time.sample.com'],
-        'dhcp_conf_header'    => 'eth0',
+        'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
         'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
         'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
         'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
@@ -28,6 +28,7 @@ describe 'dhcp', :type => :class do
         'default_lease_time'  => '3600',
         'max_lease_time'      => '86400',
         'service_ensure'      => 'running',
+        'omapi_port'          => '4711'
       }
     end
     let :params do
@@ -42,6 +43,8 @@ describe 'dhcp', :type => :class do
           end
         end
       end
+
+      it { should contain_concat__fragment('dhcp-conf-header').with_content(/omapi-port 4711;/) }
     end
     context 'coverage tests' do
       ['dhcp','dhcp::monitor'].each do |dhclasses|
