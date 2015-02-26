@@ -15,4 +15,7 @@ option domain-name-servers <%= @nameservers.join(', ') %>;
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;
 option pxegrub code 150 = text;
+<% if @omapi_port -%>
+option omapi-port <%= @omapi_port %>;
+<% end %>
 # END DHCP Header
