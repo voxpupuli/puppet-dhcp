@@ -27,7 +27,7 @@ class dhcp (
 
   $dhcp_dir    = $dhcp::params::dhcp_dir
   $packagename = $dhcp::params::packagename
-  $packageprov = $dhcp::params::pachageprov
+  $packageprov = $dhcp::params::packageprov
   $servicename = $dhcp::params::servicename
 
   # Incase people set interface instead of interfaces work around
