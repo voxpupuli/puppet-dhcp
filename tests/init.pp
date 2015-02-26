@@ -12,6 +12,7 @@ class { 'dhcp':
   require      => Bind::Key[ $ddnskeyname ],
   pxeserver    => '10.1.1.5',
   pxefilename  => 'pxelinux.0',
+  omapi_port   => '7911',
 }
 
 dhcp::pool{ 'example.com':
