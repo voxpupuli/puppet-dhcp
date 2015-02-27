@@ -4,7 +4,12 @@ describe 'dhcp::host', :type => :define do
   let :title do
     'test_host'
   end
-  let(:facts) {{ :concat_basedir => '/dne' }}
+  let :facts do
+    {
+      :concat_basedir => '/dne',
+      :osfamily       => 'RedHat',
+    }
+  end
   let :params do
     {
       'ip'      => '1.2.3.4',

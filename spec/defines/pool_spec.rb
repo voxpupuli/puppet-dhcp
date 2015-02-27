@@ -4,7 +4,12 @@ describe 'dhcp::pool', :type => :define do
   let :title do
     'test_pool'
   end
-  let(:facts) {{ :concat_basedir => '/dne' }}
+  let :facts do
+    {
+      :concat_basedir => '/dne',
+      :osfamily       => 'RedHat',
+    }
+  end
   let :params do
     {
       'gateway'  => '1.1.1.1',
