@@ -8,7 +8,7 @@ class { 'dhcp':
   nameservers  => ['10.1.1.10'],
   ntpservers   => ['us.pool.ntp.org'],
   interfaces   => ['eth0'],
-  dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
+  dnsupdatekey => "/etc/bind/keys.d/${ddnskeyname}",
   require      => Bind::Key[ $ddnskeyname ],
   pxeserver    => '10.1.1.5',
   pxefilename  => 'pxelinux.0',
@@ -23,7 +23,6 @@ dhcp::pool{ 'example.com':
 
 dhcp::host {
   'gateway':
-    mac => "00:11:22:33:44:55",
-    ip  => "10.1.1.1",
+    mac => '00:11:22:33:44:55',
+    ip  => '10.1.1.1',
 }
-

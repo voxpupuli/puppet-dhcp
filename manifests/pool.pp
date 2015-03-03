@@ -1,3 +1,5 @@
+# == Define: dhcp::pool
+#
 define dhcp::pool (
   $network,
   $mask,
@@ -19,6 +21,4 @@ define dhcp::pool (
     target  => "${dhcp_dir}/dhcpd.pools",
     content => template('dhcp/dhcpd.pool.erb'),
   }
-
 }
-

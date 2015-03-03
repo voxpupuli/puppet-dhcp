@@ -1,13 +1,22 @@
 require 'spec_helper'
 require 'puppetlabs_spec_helper/module_spec_helper'
 describe 'dhcp', :type => :class do
-  let :default_params do
+  let(:default_params) do
     {
-      'dnsdomain'   => ['sampledomain.com','1.1.1.in-addr.arpa'],
-      'nameservers' => ['1.1.1.1'],
-      'ntpservers'  => ['time.sample.com'],
+      'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
+      'nameservers'         => ['1.1.1.1'],
+      'ntpservers'          => ['time.sample.com'],
+      'dhcp_conf_header'    => 'eth0',
+      'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
+      'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
+      'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
+      'dhcp_conf_fragments' => {},
+      'logfacility'         => 'daemon',
+      'default_lease_time'  => '3600',
+      'max_lease_time'      => '86400',
     }
   end
+
   context 'on a RedHat OS' do
     let :facts do
       {
@@ -17,20 +26,15 @@ describe 'dhcp', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    context 'called with defaults and mandatory params' do
-      let :params do
-        default_params
-      end
-      it 'should fail to compile' do
-        expect { should compile }.to raise_error()
-      end
-      context 'input validation' do
-        ['dnsdomain','nameservers','ntpservers'].each do |arrays|
-          context "when #{arrays} is not an array" do
-            it 'should fail' do
-              params.merge!({ arrays => 'BOGON'})
-              expect { subject }.to raise_error(Puppet::Error, /"BOGON" is not an Array.  It looks to be a String/)
-            end
+    let :params do
+       default_params
+    end
+    context 'input validation' do
+      ['dnsdomain','nameservers','ntpservers'].each do |arrays|
+        context "when #{arrays} is not an array" do
+          it 'should fail' do
+            params.merge!({ arrays => 'BOGON'})
+            expect { subject }.to raise_error(Puppet::Error, /"BOGON" is not an Array.  It looks to be a String/)
           end
         end
       end
