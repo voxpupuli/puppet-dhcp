@@ -1,5 +1,5 @@
 host <%= @host %> {
-  hardware ethernet   <%= @mac %>;
+  hardware ethernet   <%= @mac.upcase %>;
   fixed-address       <%= @ip %>;
   option host-name    "<%= @name %>";
 }
