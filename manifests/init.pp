@@ -1,6 +1,7 @@
 class dhcp (
   $dnsdomain,
   $nameservers,
+  $searchdomains       = undef,
   $ntpservers          = [],
   $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',

@@ -16,6 +16,9 @@ omapi-port <%= @omapi_port %>;
 # ----------
 option domain-name "<%= @dnsdomain.first %>";
 option domain-name-servers <%= @nameservers.join(', ') %>;
+<% if @searchdomains -%>
+option domain-search <%= @searchdomains %>;
+<% end -%>
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;
 option pxegrub code 150 = text;
