@@ -19,6 +19,7 @@ class dhcp (
   $default_lease_time  = 3600,
   $max_lease_time      = 86400,
   $service_ensure      = running,
+  $globaloptions       = '',
 ) {
 
   if $dnsdomain == undef {
