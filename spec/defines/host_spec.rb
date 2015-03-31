@@ -27,7 +27,7 @@ describe 'dhcp::host', :type => :define do
       "host #{title} {",
       "  hardware ethernet   #{params['mac']};",
       "  fixed-address       #{params['ip']};",
-      "  option host-name    \"#{title}\";",
+      "  ddns-hostname       \"#{title}\";",
       '}',
     ]
     expect(content.split("\n")).to eq(expected_lines)
@@ -49,7 +49,7 @@ describe 'dhcp::host', :type => :define do
         "host #{title} {",
         "  hardware ethernet   #{params['mac']};",
         "  fixed-address       #{params['ip']};",
-        "  option host-name    \"#{title}\";",
+        "  ddns-hostname       \"#{title}\";",
         "  option domain-name-servers 10.0.0.1;",
         "  option vendor-encapsulated-options 01:04:31:41:50:43;",
         '}',
