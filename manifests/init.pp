@@ -13,6 +13,7 @@ class dhcp (
   $interfaces          = undef,
   $interface           = 'NOTSET',
   $dnsupdatekey        = undef,
+  $dnskeyname          = undef,
   $pxeserver           = undef,
   $pxefilename         = undef,
   $logfacility         = 'daemon',
@@ -53,6 +54,14 @@ class dhcp (
     fail ("You need to set \$interfaces in ${module_name}")
   } else {
     $dhcp_interfaces = $interfaces
+  }
+
+  if $dnsupdatekey {
+    $_dnsupdatekey_split    = split($dnsupdatekey, '[/]')
+    $_dnsupdatekey_basename = $_dnsupdatekey_split[-1]
+    $_dnskeyname            = pick($dnskeyname, $_dnsupdatekey_basename)
+  } else {
+    $_dnskeyname            = $dnskeyname
   }
 
   # JJM Decide where to pull the fragment content from.  Either this module, or

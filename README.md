@@ -19,8 +19,9 @@ Define the server and the zones it will be responsible for.
       nameservers  => ['10.0.1.20'],
       ntpservers   => ['us.pool.ntp.org'],
       interfaces   => ['eth0'],
-      dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
-      require      => Bind::Key[ $ddnskeyname ],
+      dnsupdatekey => '/etc/bind/keys.d/rndc.key',
+      dnskeyname   => 'rndc-key',
+      require      => Bind::Key['rndc-key'],
       pxeserver    => '10.0.1.50',
       pxefilename  => 'pxelinux.0',
     }

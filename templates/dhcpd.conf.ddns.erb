@@ -13,7 +13,7 @@ include "<%= @dnsupdatekey %>";
 <% @dnsdomain_real.each do |dom| -%>
 zone <%= dom %>. {
   primary <%= @nameservers.first %>;
-  key <%= @dnsupdatekey.split('/').last %>;
+  key <%= @_dnskeyname %>;
 }
 <% end -%>
 <% else -%>
