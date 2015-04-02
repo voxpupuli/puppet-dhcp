@@ -2,4 +2,9 @@ host <%= @host %> {
   hardware ethernet   <%= @mac.upcase %>;
   fixed-address       <%= @ip %>;
   option host-name    "<%= @name %>";
+<% if not @options.empty? -%>
+<% @options.keys.sort.each do |option| -%>
+  option <%= option %> <%= @options[option] %>;
+<% end -%>
+<% end -%>
 }
