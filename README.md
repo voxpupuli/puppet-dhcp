@@ -24,6 +24,7 @@ Define the server and the zones it will be responsible for.
       require      => Bind::Key['rndc-key'],
       pxeserver    => '10.0.1.50',
       pxefilename  => 'pxelinux.0',
+      omapi_port   => 7911,
     }
 
 ### dhcp::pool

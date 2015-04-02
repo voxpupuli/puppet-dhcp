@@ -3,6 +3,9 @@
 # dhcpd.conf
 # ----------
 authoritative;
+<% if @omapi_port -%>
+omapi-port <%= @omapi_port %>;
+<% end -%>
 default-lease-time <%= @default_lease_time %>;
 max-lease-time <%= @max_lease_time %>;
 log-facility <%= @logfacility %>;

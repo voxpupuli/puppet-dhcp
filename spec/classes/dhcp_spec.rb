@@ -58,6 +58,43 @@ describe 'dhcp', :type => :class do
       end
     end
 
+    context 'header' do
+      let :params do
+        default_params.merge({
+          :interfaces => ['eth0'],
+        })
+      end
+
+      it 'defines dhcp header contents' do
+        verify_concat_fragment_exact_contents(subject, 'dhcp-conf-header', [
+          'authoritative;',
+          'default-lease-time 3600;',
+          'max-lease-time 86400;',
+          'log-facility daemon;',
+          'option domain-name "sampledomain.com";',
+          'option domain-name-servers 1.1.1.1;',
+          'option fqdn.no-client-update on;  # set the "O" and "S" flag bits',
+          'option fqdn.rcode2 255;',
+          'option pxegrub code 150 = text;',
+        ])
+      end
+
+      context 'omapi_port => 7911' do
+        let :params do
+          default_params.merge({
+            :interfaces => ['eth0'],
+            :omapi_port => 7911,
+          })
+        end
+
+        it 'defines dhcp header contents' do
+          verify_concat_fragment_contents(subject, 'dhcp-conf-header', [
+            'omapi-port 7911;',
+          ])
+        end
+      end
+    end
+
     context 'ntp' do
       let :params do
         default_params.merge({
