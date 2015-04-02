@@ -58,6 +58,60 @@ describe 'dhcp', :type => :class do
         it {should contain_file(files)}
       end
     end
+    context 'ddns' do
+      let :params do
+        default_params.merge({
+          :interface => 'eth0',
+        })
+      end
+
+      it do
+        should contain_concat__fragment('dhcp-conf-ddns').with_content(/^ddns-update-style none;$/)
+      end
+
+      context 'dnsupdatekey defined' do
+        let :params do
+          default_params.merge({
+            :interface => 'eth0',
+            :dnsupdatekey => '/etc/rndc.key',
+          })
+        end
+
+        it do
+          content = subject.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
+          expected_lines = [
+            'ddns-updates on;',
+            'ddns-update-style interim;',
+            'update-static-leases on;',
+            'use-host-decl-names on;',
+            'include "/etc/rndc.key";',
+            "zone #{params['dnsdomain'].first}. {",
+            "  primary #{params['nameservers'].first};",
+            '  key rndc.key;',
+            '}',
+            "zone #{params['dnsdomain'].last}. {",
+            "  primary #{params['nameservers'].first};",
+            '  key rndc.key;',
+            '}',
+          ]
+          expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+        end
+
+        context 'dnskeyname defined' do
+          let :params do
+            default_params.merge({
+              :interface => 'eth0',
+              :dnsupdatekey => '/etc/rndc.key',
+              :dnskeyname => 'rndc-key',
+            })
+          end
+
+          it do
+            should contain_concat__fragment('dhcp-conf-ddns').with_content(/^  key rndc-key;$/)
+          end
+        end
+      end
+    end
   end
   context 'on a Dawin OS' do
     let :facts do
