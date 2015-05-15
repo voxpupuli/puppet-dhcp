@@ -5,7 +5,6 @@ describe 'dhcp', :type => :class do
     {
       'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
       'nameservers'         => ['1.1.1.1'],
-      'ntpservers'          => ['time.sample.com'],
       'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
       'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
       'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
@@ -58,6 +57,32 @@ describe 'dhcp', :type => :class do
         it {should contain_file(files)}
       end
     end
+
+    context 'ntp' do
+      let :params do
+        default_params.merge({
+          :interfaces => ['eth0'],
+        })
+      end
+
+      it 'sets ntp-servers to none' do
+        should contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers none;$/)
+      end
+
+      context 'ntpservers defined' do
+        let :params do
+          default_params.merge({
+            :interfaces => ['eth0'],
+            :ntpservers => ['time.sample.com'],
+          })
+        end
+
+        it 'sets ntp-servers' do
+          should contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers time.sample.com;$/)
+        end
+      end
+    end
+
     context 'ddns' do
       let :params do
         default_params.merge({

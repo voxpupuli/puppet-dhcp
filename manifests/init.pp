@@ -3,7 +3,7 @@
 class dhcp (
   $dnsdomain           = undef,
   $nameservers         = [ '8.8.8.8', '8.8.4.4' ],
-  $ntpservers          = undef,
+  $ntpservers          = [],
   $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ntp       = 'INTERNAL_TEMPLATE',
