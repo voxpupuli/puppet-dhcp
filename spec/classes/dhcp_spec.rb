@@ -5,10 +5,6 @@ describe 'dhcp', :type => :class do
     {
       'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
       'nameservers'         => ['1.1.1.1'],
-      'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
-      'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
-      'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
-      'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
       'dhcp_conf_fragments' => {},
       'logfacility'         => 'daemon',
       'default_lease_time'  => '3600',

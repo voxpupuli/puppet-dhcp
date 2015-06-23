@@ -4,11 +4,11 @@ class dhcp (
   $dnsdomain           = undef,
   $nameservers         = [ '8.8.8.8', '8.8.4.4' ],
   $ntpservers          = [],
-  $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ntp       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_header    = 'dhcp/dhcpd.conf-header.erb',
+  $dhcp_conf_ddns      = 'dhcp/dhcpd.conf.ddns.erb',
+  $dhcp_conf_ntp       = 'dhcp/dhcpd.conf.ntp.erb',
+  $dhcp_conf_pxe       = 'dhcp/dhcpd.conf.pxe.erb',
+  $dhcp_conf_extra     = 'dhcp/dhcpd.conf-extra.erb',
   $dhcp_conf_fragments = {},
   $interfaces          = undef,
   $interface           = 'NOTSET',
@@ -70,27 +70,12 @@ class dhcp (
   #
   # NOTE: These templates should be evaluated after all other local variables
   # have been set.
-  $dhcp_conf_header_real = $dhcp_conf_header ? {
-    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf-header.erb'),
-    default             => $dhcp_conf_header,
-  }
-  $dhcp_conf_ntp_real = $dhcp_conf_ntp ? {
-    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.ntp.erb'),
-    default             => $dhcp_conf_ntp,
-  }
-  $dhcp_conf_ddns_real = $dhcp_conf_ddns ? {
-    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.ddns.erb'),
-    default             => $dhcp_conf_ddns,
-  }
-  $dhcp_conf_pxe_real = $dhcp_conf_pxe ? {
-    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.pxe.erb'),
-    default             => $dhcp_conf_pxe,
-  }
-  $dhcp_conf_extra_real = $dhcp_conf_extra ? {
-    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf-extra.erb'),
-    default             => $dhcp_conf_extra,
-  }
-
+  $dhcp_conf_header_real = template($dhcp_conf_header)
+  $dhcp_conf_ddns_real   = template($dhcp_conf_ddns)
+  $dhcp_conf_ntp_real    = template($dhcp_conf_ntp)
+  $dhcp_conf_pxe_real    = template($dhcp_conf_pxe)
+  $dhcp_conf_extra_real  = template($dhcp_conf_extra)
+    
   package { $packagename:
     ensure   => installed,
     provider => $package_provider,
@@ -105,7 +90,7 @@ class dhcp (
   case $::osfamily {
     'debian': {
       file{ '/etc/default/isc-dhcp-server':
-        ensure  => present,
+        ensure  => file,
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
@@ -116,7 +101,7 @@ class dhcp (
     }
     'redhat': {
       file{ '/etc/sysconfig/dhcpd':
-        ensure  => present,
+        ensure  => file,
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
