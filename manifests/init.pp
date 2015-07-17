@@ -199,7 +199,7 @@ class dhcp (
     ensure    => $service_ensure,
     enable    => true,
     hasstatus => true,
-    subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], File["${dhcp_dir}/dhcpd.conf"]],
+    subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], Concat["${dhcp_dir}/dhcpd.conf"]],
     require   => Package[$packagename],
   }
 }
