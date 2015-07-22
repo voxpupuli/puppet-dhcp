@@ -21,6 +21,7 @@ class dhcp (
   $max_lease_time      = 86400,
   $service_ensure      = running,
   $globaloptions       = '',
+  $omapi_port          = undef,
 ) {
 
   if $dnsdomain == undef {
