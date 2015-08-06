@@ -11,6 +11,7 @@ define dhcp::pool (
   $nameservers = undef,
   $pxeserver   = undef,
   $domain_name = '',
+  $ignore_unknown = undef,
 ) {
 
   include dhcp::params
