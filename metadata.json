@@ -1,6 +1,6 @@
 {
     "name": "puppetlabs-dhcp",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "source": "https://github.com/puppetlabs/puppetlabs-dhcp",
     "author": "Puppet Labs",
     "license": "Apache-2.0",
