@@ -1,3 +1,27 @@
+2015-09-15 Release 0.4.0
+
+Backwards incompatible changes:
+- Updated to set `ddns-hostname` instead of `option host-name`.
+
+Features:
+- Adds ability to ignore subnets.
+- Adds service_ensure to manage state of dhcp service.
+- Allows users to specify different nameservers and PXE-server.
+- ALlows overriding of the domain name per pool.
+- Modernizes module with lint, testing, metadata updates.
+- Allows adding of abitrary global options to the main `dhcpd.conf`.
+- Allows additional options to be specified for `dhcp::host`.
+- Allows setting of the `dnskeyname` parameter in `dhcpd.conf`.
+- Adds ability to define `omapi_port`.
+- Adds ability to ignore unknown-clients.
+
+Bugfixes:
+- Normalizes MAC addresses to be printed in upper case.
+- Fixes default ntpservers value to not fail validation.
+- Fix in documentation for dhcp::pool. range should be array instead of string.
+- Fixes dhcpd.conf file dependency error.
+- Fix to properly wrap `domain-name` in quotes.
+
 2014-07-23 Release 0.3.0
 
 Backwards incompatible changes:

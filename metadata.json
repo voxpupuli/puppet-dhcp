@@ -1,13 +1,14 @@
 {
-    "name": "puppetlabs-dhcp",
-    "version": "0.3.0",
-    "source": "https://github.com/puppetlabs/puppetlabs-dhcp",
-    "author": "Puppet Labs",
-    "license": "Apache-2.0",
-    "project_page": "https://github.com/puppetlabs/puppetlabs-dhcp",
-    "summary": "Manage the ISC dhcp daemon",
-    "dependencies": [
-      { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.0.0" },
-      { "name": "puppetlabs/concat", "version_requirement": ">= 1.1.0" }
-    ]
+  "name": "puppetlabs-dhcp",
+  "version": "0.4.0",
+  "author": "Puppet Labs",
+  "summary": "Manage the ISC dhcp daemon",
+  "license": "Apache-2.0",
+  "source": "https://github.com/puppetlabs/puppetlabs-dhcp",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-dhcp",
+  "issues_url": "https://github.com/puppetlabs/puppetlabs-dhcp/issues",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 2.0.0 < 5.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.1.0 < 2.0.0"}
+  ]
 }
