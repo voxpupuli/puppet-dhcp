@@ -8,6 +8,9 @@ subnet <%= @network %> netmask <%= @mask %> {
 <% if @failover != '' -%>
     failover peer "<%= @failover %>";
 <% end -%>
+<% if @ignore_unknown == true -%>
+    ignore unknown-clients ;
+<% end -%>
 <% if @range and @range.is_a? Array -%>
 <% @range.each do |r| -%>
     range <%= r %>;
