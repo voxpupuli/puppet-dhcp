@@ -151,7 +151,9 @@ class dhcp (
   Concat { require => Package[$packagename] }
 
   # dhcpd.conf
-  concat {  "${dhcp_dir}/dhcpd.conf": }
+  concat {  "${dhcp_dir}/dhcpd.conf":
+    notify => Service[$servicename],
+  }
   concat::fragment { 'dhcp-conf-header':
     target  => "${dhcp_dir}/dhcpd.conf",
     content => $dhcp_conf_header_real,
@@ -192,7 +194,9 @@ class dhcp (
   create_resources('concat::fragment', $dhcp_conf_fragments)
 
   # dhcpd.pool
-  concat { "${dhcp_dir}/dhcpd.pools": }
+  concat { "${dhcp_dir}/dhcpd.pools":
+    notify => Service[$servicename],
+  }
   concat::fragment { 'dhcp-pools-header':
     target  => "${dhcp_dir}/dhcpd.pools",
     content => "# DHCP Pools\n",
@@ -200,7 +204,9 @@ class dhcp (
   }
 
   # dhcpd.ignoredsubnets
-  concat { "${dhcp_dir}/dhcpd.ignoredsubnets": }
+  concat { "${dhcp_dir}/dhcpd.ignoredsubnets":
+    notify => Service[$servicename],
+  }
   concat::fragment { 'dhcp-ignoredsubnets-header':
     target  => "${dhcp_dir}/dhcpd.ignoredsubnets",
     content => "# DHCP Subnets (ignored)\n",
@@ -208,7 +214,9 @@ class dhcp (
   }
 
   # dhcpd.hosts
-  concat { "${dhcp_dir}/dhcpd.hosts": }
+  concat { "${dhcp_dir}/dhcpd.hosts":
+    notify => Service[$servicename],
+  }
   concat::fragment { 'dhcp-hosts-header':
     target  => "${dhcp_dir}/dhcpd.hosts",
     content => "# static DHCP hosts\n",
@@ -247,7 +255,6 @@ class dhcp (
     ensure    => $service_ensure,
     enable    => true,
     hasstatus => true,
-    subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], Concat["${dhcp_dir}/dhcpd.conf"]],
     require   => Package[$packagename],
   }
 }
