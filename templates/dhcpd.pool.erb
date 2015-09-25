@@ -40,7 +40,7 @@ subnet <%= @network %> netmask <%= @mask %> {
   <%= @parameters %>;
 <% end -%>
 <% if @nameservers and @nameservers.is_a? Array -%>
-  option domain-name-servers <%= @nameservers.sort.join(', ') %>;
+  option domain-name-servers <%= @nameservers.join(', ') %>;
 <% elsif @nameservers -%>
   option domain-name-servers <%= @nameservers %>;
 <% end -%>
