@@ -273,4 +273,41 @@ describe 'dhcp', :type => :class do
     end
   end
 
+  context 'pxeserver defined' do
+    let :params do
+      default_params.merge({
+        :pxeserver   => '1.2.3.4',
+        :pxefilename => 'pxelinux.0',
+      })
+    end
+
+    it do
+      content = subject.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
+      expected_lines = [ 'filename "pxelinux.0"', 'next-server 1.2.3.4' ]
+      expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+    end
+
+    context 'ipxefilename defined' do
+      let :params do
+        default_params.merge({
+          :ipxe_filename  => 'undionly-20140116.kpxe',
+          :ipxe_bootstrap => 'bootstrap.kpxe',
+        })
+      end
+
+      it do
+        content = subject.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
+        expected_lines = [
+          'if exists user-class and option user-class = "iPXE" {',
+          'filename "bootstrap.kpxe";',
+          '} else {',
+          'filename "undionly-20140116.kpxe";',
+          '}',
+          'next-server 1.2.3.4',
+        ]
+        expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+      end
+    end
+  end
+
 end

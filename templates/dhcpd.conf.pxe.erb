@@ -1,6 +1,14 @@
 # BEGIN PXE Section
-<% if @pxeserver and @pxefilename then -%>
-next-server <%= @pxeserver %>;
+<% if @ipxe_filename and @ipxe_bootstrap then -%>
+if exists user-class and option user-class = "iPXE" {
+      filename "<%= @ipxe_bootstrap %>";
+} else {
+      filename "<%= @ipxe_filename %>";
+}
+<% elsif @pxefilename then -%>
 filename "<%= @pxefilename %>";
+<% end -%>
+<% if @pxeserver then -%>
+next-server <%= @pxeserver %>;
 <% end -%>
 # END PXE Section
