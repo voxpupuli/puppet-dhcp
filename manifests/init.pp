@@ -22,6 +22,7 @@ class dhcp (
   $service_ensure      = running,
   $globaloptions       = '',
   $omapi_port          = undef,
+  $extra_config        = '',
 ) {
 
   if $dnsdomain == undef {
