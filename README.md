@@ -51,6 +51,7 @@ requests forwarded by switches etc.
 Create host reservations.
 
     dhcp::host { 'server1':
+      comment => 'Optional descriptive comment',
       mac => '00:50:56:00:00:01',
       ip  => '10.0.1.51',
     }
