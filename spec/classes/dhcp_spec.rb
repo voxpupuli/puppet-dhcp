@@ -175,7 +175,7 @@ describe 'dhcp', :type => :class do
       end
     end
   end
-  context 'on a Dawin OS' do
+  context 'on a Darwin OS' do
     let :facts do
       {
         :osfamily               => 'Darwin',
