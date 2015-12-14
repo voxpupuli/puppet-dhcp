@@ -16,6 +16,8 @@ class dhcp (
   $dnskeyname          = undef,
   $pxeserver           = undef,
   $pxefilename         = undef,
+  $ipxe_filename       = undef,
+  $ipxe_bootstrap      = undef,
   $logfacility         = 'daemon',
   $default_lease_time  = 3600,
   $max_lease_time      = 86400,
@@ -38,6 +40,18 @@ class dhcp (
 
   validate_array($nameservers)
   validate_array($ntpservers)
+
+  if $pxeserver or $pxefilename {
+    if ! $pxeserver or ! $pxefilename {
+      fail( '$pxeserver and $pxefilename are required when enabling pxe' )
+    }
+  }
+
+  if $ipxe_filename or $ipxe_bootstrap {
+    if ! $ipxe_filename or ! $ipxe_bootstrap {
+      fail( '$ipxe_filename and $ipxe_bootstrap are required when enabling ipxe' )
+    }
+  }
 
   include dhcp::params
   include dhcp::monitor
