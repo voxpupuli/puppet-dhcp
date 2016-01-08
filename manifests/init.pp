@@ -9,6 +9,7 @@ class dhcp (
   $dhcp_conf_ntp       = 'INTERNAL_TEMPLATE',
   $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
   $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_failover  = 'INTERNAL_TEMPLATE',
   $dhcp_conf_fragments = {},
   $interfaces          = undef,
   $interface           = 'NOTSET',
@@ -25,6 +26,15 @@ class dhcp (
   $globaloptions       = '',
   $omapi_port          = undef,
   $extra_config        = '',
+  $peer_address        = undef,
+  $role                = undef,
+  $port                = undef,
+  $max_response_delay  = undef,
+  $max_unacked_updates = undef,
+  $mclt                = undef,
+  $load_split          = undef,
+  $load_balance        = undef,
+  $omapi_key           = undef,
 ) {
 
   if $dnsdomain == undef {
@@ -55,6 +65,7 @@ class dhcp (
 
   include dhcp::params
   include dhcp::monitor
+  include dhcp::failover
 
   $dhcp_dir         = $dhcp::params::dhcp_dir
   $packagename      = $dhcp::params::packagename
@@ -105,6 +116,10 @@ class dhcp (
   $dhcp_conf_extra_real = $dhcp_conf_extra ? {
     'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf-extra.erb'),
     default             => $dhcp_conf_extra,
+  }
+  $dhcp_conf_failover_real = $dhcp_conf_failover ? {
+    'INTERNAL_TEMPLATE' => template('dhcp/dhcpd.conf.failover.erb'),
+    default             => $dhcp_conf_failover,
   }
 
   package { $packagename:
