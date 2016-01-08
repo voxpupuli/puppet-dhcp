@@ -6,6 +6,7 @@ Installs and manages a DHCP server.
 * Host reservations
 * Secure dynamic DNS updates when combined with Bind
 * Can create a dummy (ignored) subnet so that the server can be used only as a helper-address target
+* Supports failover, A single pair of servers, you can enable multiple pools 
 
 ## Usage
 Define the server and the zones it will be responsible for.
@@ -37,6 +38,7 @@ Define the pool attributes
       gateway => '10.0.1.1',
     }
 
+
 ### dhcp::ignoredsubnet
 Define a subnet that will be ignored - useful for making the DHCP server only respond to
 requests forwarded by switches etc.
@@ -55,6 +57,37 @@ Create host reservations.
       ip  => '10.0.1.51',
     }
 
+### dhcp::failover
+First setup the failover attributes for the primary and secondary servers
+
+    dhcp::failover{ 'dhcp-failover':
+      role         => 'primary',
+      peer_address => '10.0.1.50',
+      port         => '519',
+      peer_port    => '519',
+    }
+
+    dhcp::failover{ 'dhcp-failover':
+      role         => 'secondary',
+      peer_address => '10.0.1.51',
+      port         => '519',
+      peer_port    => '519',
+    }
+
+
+Enable the failover attribute for a pool        
+
+    dhcp::pool{ 'ops.dc1.example.net':
+      network  => '10.0.1.0',
+      mask     => '255.255.255.0',
+      range    => ['10.0.1.100', '10.0.1.200'],
+      gateway  => '10.0.1.1',
+      failover => 'dhcp-failover',
+    }
+
+This module does not configure the DHCP failover ports in the firewall.
+For more information se [isc.org](https://kb.isc.org/article/AA-00502/0/A-Basic-Guide-to-Configuring-DHCP-Failover.html).
+
 ### parameters
 Parameters are available to configure pxe or ipxe
 
@@ -66,6 +99,7 @@ For more information see [ipxe.org](http://ipxe.org/howto/chainloading).
       ipxe_bootstrap => 'bootstrap.kpxe',
       pxeserver      => '10.0.1.50',
     }
+
 
 ## Contributors
 Zach Leslie <zach.leslie@gmail.com>

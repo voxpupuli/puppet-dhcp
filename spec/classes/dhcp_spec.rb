@@ -9,6 +9,7 @@ describe 'dhcp', :type => :class do
       'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
       'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
       'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
+      'dhcp_conf_failover'  => 'INTERNAL_TEMPLATE',
       'dhcp_conf_fragments' => {},
       'logfacility'         => 'daemon',
       'default_lease_time'  => '3600',
@@ -120,6 +121,66 @@ describe 'dhcp', :type => :class do
       end
     end
 
+    context 'failover' do
+      let :failover_params do
+        default_params.merge({
+          :interface           => 'eth0',
+          :failover            => 'dhcp-failover',
+          :peer_address        => '192.168.1.2',
+          :role                => 'primary',
+          :port                => '519',
+          :max_response_delay  => '30',
+          :max_unacked_updates => '10',
+          :mclt                => '300',
+          :load_split          => '128',
+          :load_balance        => '3',
+          :omapi_key           => '',
+        })
+      end
+
+      context 'primary' do
+        let :params do
+          failover_params
+        end
+
+        it do
+          content = subject.resource('concat::fragment', 'dhcp-conf-failover').send(:parameters)[:content]
+          expected_lines = [
+            'failover peer "dhcp-failover" {',
+            'primary;',
+            'port 519;',
+            'peer address 192.168.1.2;',
+            'peer port 519;',
+            'max-response-delay 30;',
+            'max-unacked-updates 10;',
+            'load balance max seconds 3;',
+            'mclt 300;',
+            'split 128;',
+            '}',
+          ]
+          expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+        end
+      end
+
+    context 'secondary' do
+      let :params do
+        failover_params.merge({
+          :role => 'secondary',
+        })
+      end
+
+      it do
+        content = subject.resource('concat::fragment', 'dhcp-conf-failover').send(:parameters)[:content]
+        expected_lines = [
+            'failover peer "dhcp-failover" {',
+            'secondary;',
+            'port 519;',
+            '}',
+        ]
+        expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+      end
+    end
+
     context 'ddns' do
       let :params do
         default_params.merge({
@@ -175,6 +236,9 @@ describe 'dhcp', :type => :class do
       end
     end
   end
+
+  end
+
   context 'on a Darwin OS' do
     let :facts do
       {
