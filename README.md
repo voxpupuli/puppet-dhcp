@@ -28,7 +28,7 @@ Define the server and the zones it will be responsible for.
     }
 
 ### dhcp::pool
-Define the pool attributes. This example will create a pool, which serves IPs of to different ranges in the same network.
+Define the pool attributes. This example will create a pool, which serves IPs of two different ranges in the same network.
 
     dhcp::pool{ 'ops.dc1.example.net':
       network => '10.0.1.0',
