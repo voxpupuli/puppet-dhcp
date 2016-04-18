@@ -39,7 +39,7 @@ class dhcp::params {
       $dhcp_dir         = '/etc'
       $packagename      = 'dhcp'
       $servicename      = ['dhcpd4.service', 'dhcpd6.service']
-      $package_provider = 'systemd'
+      $package_provider = 'pacman'
     }
     default: {
       fail('dhcp is supported on the following OS\'s: Debian, Ubuntu, Darwin, FreeBSD, RedHat, Fedora, and CentOS.')
