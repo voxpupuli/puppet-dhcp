@@ -10,5 +10,15 @@
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 2.0.0 < 5.0.0"},
     {"name":"puppetlabs/concat","version_requirement":">= 1.1.0 < 2.0.0"}
+  ],
+  "operatingsystem_support": [
+    { "operatingsystem":"Debian" },
+    { "operatingsystem":"Ubuntu" },
+    { "operatingsystem":"Darwin" },
+    { "operatingsystem":"FreeBSD" },
+    { "operatingsystem":"RedHat" },
+    { "operatingsystem":"Fedora" },
+    { "operatingsystem":"CentOS" },
+    { "operatingsystem":"Archlinux" }
   ]
 }
