@@ -38,7 +38,9 @@ class dhcp::params {
     'Archlinux': {
       $dhcp_dir         = '/etc'
       $packagename      = 'dhcp'
-      $servicename      = ['dhcpd4.service', 'dhcpd6.service']
+      # we currently do not manage the dhcpd6 config
+      #$servicename      = ['dhcpd4.service', 'dhcpd6.service']
+      $servicename      = ['dhcpd4.service']
       $package_provider = 'pacman'
     }
     default: {
