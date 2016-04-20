@@ -245,6 +245,7 @@ class dhcp (
       target  => "${dhcp_dir}/dhcpd.conf",
       content => template('dhcp/dhcpd.conf-ldap.erb'),
       order   => '90',
+    }
   }
 
   service { $servicename:
