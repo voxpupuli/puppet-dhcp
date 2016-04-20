@@ -25,6 +25,14 @@ class dhcp (
   $globaloptions       = '',
   $omapi_port          = undef,
   $extra_config        = '',
+  $ldap_port           = 389,
+  $ldap_server         = 'localhost',
+  $ldap_username       = 'cn=root, dc=example, dc=com',
+  $ldap_password       = '',
+  $ldap_base_dn        = 'dc=example, dc=com',
+  $ldap_method         = 'dynamic',
+  $ldap_debug_file     = '/var/log/dhcp-ldap-startup.log',
+  $use_ldap            = false,
 ) {
 
   if $dnsdomain == undef {
@@ -209,6 +217,34 @@ class dhcp (
     target  => "${dhcp_dir}/dhcpd.hosts",
     content => "# static DHCP hosts\n",
     order   => '01',
+  }
+
+  if $ldap_method {
+    unless ($ldap_method in ['dynamic', 'static']) {
+      fail('$ldap_method must be dynamic or static')
+    }
+    if ($ldap_password == '') {
+      fail('you must set $ldap_password')
+    }
+    unless (is_integer($ldap_port)) {
+      fail('$ldap_port must be an integer')
+    }
+    if ($ldap_server == '') {
+      fail('you must set $ldap_server')
+    }
+    if ($ldap_username == '') {
+      fail('you must set $ldap_username')
+    }
+    if ($ldap_base_dn == '') {
+      fail('you must set $ldap_username')
+    }
+    unless (validate_absolute_path($ldap_debug_file)) {
+      fail('$ldap_debug_file must be a valid path')
+    }
+    concat::fragment { 'dhcp-conf-ldap':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template('dhcp/dhcpd.conf-ldap.erb'),
+      order   => '90',
   }
 
   service { $servicename:
