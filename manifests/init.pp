@@ -220,8 +220,8 @@ class dhcp (
   }
 
   # check if this is really a bool
-  validate_bool($ldap_method)
-  if $ldap_method {
+  validate_bool($use_ldap)
+  if $use_ldap {
     unless ($ldap_method in ['dynamic', 'static']) {
       fail('$ldap_method must be dynamic or static')
     }
