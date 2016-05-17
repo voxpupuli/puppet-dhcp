@@ -310,4 +310,26 @@ describe 'dhcp', :type => :class do
     end
   end
 
+  context 'ldap enabled' do
+    let :params do
+      default_params.merge({
+        :use_ldap       => true,
+        :ldap_password  => 'passw0rd',
+      })
+    end
+
+    it do
+      content = subject.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+      expected_lines = [
+        'ldap-port 389;',
+        'ldap-server "localhost";',
+        'ldap-username "cn=root, dc=example, dc=com";',
+        'ldap-password "passw0rd";',
+        'ldap-base-dn "dc=example, dc=com";',
+        'ldap-method dynamic;',
+        'ldap-debug-file "/var/log/dhcp-ldap-startup.log"',
+      ]
+      expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+    end
+  end
 end
