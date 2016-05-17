@@ -196,7 +196,7 @@ class dhcp (
   concat::fragment { 'dhcp-ignoredsubnets-header':
     target  => "${dhcp_dir}/dhcpd.ignoredsubnets",
     content => "# DHCP Subnets (ignored)\n",
-    order   => 01,
+    order   => '01',
   }
 
   # dhcpd.hosts
