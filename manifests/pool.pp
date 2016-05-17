@@ -14,7 +14,7 @@ define dhcp::pool (
   $ignore_unknown = undef,
 ) {
 
-  include dhcp::params
+  include ::dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 
