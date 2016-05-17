@@ -33,7 +33,7 @@ describe 'dhcp', :type => :class do
         context "when #{arrays} is not an array" do
           it 'should fail' do
             params.merge!({ arrays => 'BOGON'})
-            expect { subject }.to raise_error(Puppet::Error, /"BOGON" is not an Array.  It looks to be a String/)
+            it {is_expected.not_to compile}
           end
         end
       end
