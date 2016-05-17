@@ -1,31 +1,35 @@
 # == Class: dhcp
 #
 class dhcp (
-  $dnsdomain           = undef,
-  $nameservers         = [ '8.8.8.8', '8.8.4.4' ],
-  $ntpservers          = [],
-  $dhcp_conf_header    = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ntp       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra     = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_fragments = {},
-  $interfaces          = undef,
-  $interface           = 'NOTSET',
-  $dnsupdatekey        = undef,
-  $dnskeyname          = undef,
-  $pxeserver           = undef,
-  $pxefilename         = undef,
-  $ipxe_filename       = undef,
-  $ipxe_bootstrap      = undef,
-  $logfacility         = 'daemon',
-  $default_lease_time  = 3600,
-  $max_lease_time      = 86400,
-  $service_ensure      = running,
-  $globaloptions       = '',
-  $omapi_port          = undef,
-  $extra_config        = '',
-) {
+  $dnsdomain            = undef,
+  $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
+  $ntpservers           = [],
+  $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_ddns       = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
+  $dhcp_conf_fragments  = {},
+  $interfaces           = undef,
+  $interface            = 'NOTSET',
+  $dnsupdatekey         = undef,
+  $dnskeyname           = undef,
+  $pxeserver            = undef,
+  $pxefilename          = undef,
+  $ipxe_filename        = undef,
+  $ipxe_bootstrap       = undef,
+  $logfacility          = 'daemon',
+  $default_lease_time   = 3600,
+  $max_lease_time       = 86400,
+  $service_ensure       = running,
+  $globaloptions        = '',
+  $omapi_port           = undef,
+  $extra_config         = '',
+  $dhcp_dir             = $dhcp::params::dhcp_dir,
+  $packagename          = $dhcp::params::packagename,
+  $servicename          = $dhcp::params::servicename,
+  $package_provider     = $dhcp::params::package_provider,
+) inherits dhcp::params {
 
   if $dnsdomain == undef {
     if $::domain {
@@ -54,12 +58,7 @@ class dhcp (
   }
 
   include dhcp::params
-  include dhcp::monitor
-
-  $dhcp_dir         = $dhcp::params::dhcp_dir
-  $packagename      = $dhcp::params::packagename
-  $servicename      = $dhcp::params::servicename
-  $package_provider = $dhcp::params::package_provider
+  include ::dhcp::monitor
 
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise

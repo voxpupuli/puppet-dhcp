@@ -1,11 +1,12 @@
 # ----------
 # Remove and Disable the DHCP server
 # ----------
-class dhcp::disable {
-  include dhcp::params
+class dhcp::disable (
+  $packagename = $dhcp::params::packagename,
+  $servicename = $dhcp::params::servicename,
+) inherits dhcp::params {
 
-  $packagename = $dhcp::params::packagename
-  $servicename = $dhcp::params::servicename
+
 
   package { $packagename:
     ensure => absent,
