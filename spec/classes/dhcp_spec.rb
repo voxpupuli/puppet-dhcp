@@ -44,7 +44,7 @@ describe 'dhcp', :type => :class do
           :interface => 'eth0',
         })
        end
-      ['dhcp','dhcp::monitor'].each do |dhclasses|
+      ['dhcp'].each do |dhclasses|
         it {should contain_class(dhclasses)}
       end
       ['/etc/dhcp/dhcpd.pools','/etc/dhcp/dhcpd.hosts'].each do |concats|
