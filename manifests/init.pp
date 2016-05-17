@@ -57,9 +57,6 @@ class dhcp (
     }
   }
 
-  include dhcp::params
-  include ::dhcp::monitor
-
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
   # and deserves what they get.
