@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'puppetlabs_spec_helper/module_spec_helper'
 describe 'dhcp', :type => :class do
   let(:default_params) do
     {
@@ -31,10 +30,12 @@ describe 'dhcp', :type => :class do
     context 'input validation' do
       ['dnsdomain','nameservers','ntpservers'].each do |arrays|
         context "when #{arrays} is not an array" do
-          it 'should fail' do
-            params.merge!({ arrays => 'BOGON'})
-            it {is_expected.not_to compile}
+          let :params do
+            super().merge(
+              arrays => 'BOGON'
+            )
           end
+          it {is_expected.not_to compile}
         end
       end
     end
