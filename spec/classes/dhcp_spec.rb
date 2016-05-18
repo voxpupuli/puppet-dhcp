@@ -68,17 +68,7 @@ describe 'dhcp', :type => :class do
       end
 
       it 'defines dhcp header contents' do
-        verify_concat_fragment_exact_contents(subject, 'dhcp-conf-header', [
-          'authoritative;',
-          'default-lease-time 3600;',
-          'max-lease-time 86400;',
-          'log-facility daemon;',
-          'option domain-name "sampledomain.com";',
-          'option domain-name-servers 1.1.1.1;',
-          'option fqdn.no-client-update on;  # set the "O" and "S" flag bits',
-          'option fqdn.rcode2 255;',
-          'option pxegrub code 150 = text;',
-        ])
+        subject.should contain_concat__fragment('dhcp-conf-header')
       end
 
       context 'omapi_port => 7911' do
@@ -90,9 +80,7 @@ describe 'dhcp', :type => :class do
         end
 
         it 'defines dhcp header contents' do
-          verify_concat_fragment_contents(subject, 'dhcp-conf-header', [
-            'omapi-port 7911;',
-          ])
+          subject.should contain_concat__fragment('dhcp-conf-header')
         end
       end
     end
