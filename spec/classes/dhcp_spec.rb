@@ -54,8 +54,8 @@ describe 'dhcp', :type => :class do
       ['dhcp-conf-pxe','dhcp-conf-extra'].each do |frags|
         it {should contain_concat__fragment(frags)}
       end
-      ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools'].each do |files|
-        it {should contain_file(files)}
+      ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
+        it {should contain_concat(file)}
       end
     end
 
@@ -192,6 +192,9 @@ describe 'dhcp', :type => :class do
     it { should contain_package('dhcp') \
       .with_provider('macports')
     }
+    ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
+      it { should contain_concat(file) }
+    end
   end
   context 'on a Debian based OS' do
     let :default_facts do
@@ -229,7 +232,9 @@ describe 'dhcp', :type => :class do
             :operatingsystemrelease => '12.04',
           })
         end
-        it { should contain_file('/etc/dhcp/dhcpd.conf') }
+        ['/etc/dhcp/dhcpd.hosts', '/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.ignoredsubnets', '/etc/dhcp/dhcpd.pools'].each do |file|
+          it { should contain_concat(file) }
+        end
       end
       context '10.04' do
         let :facts do
@@ -238,7 +243,9 @@ describe 'dhcp', :type => :class do
             :operatingsystemrelease => '10.04',
           })
         end
-        it { should contain_file('/etc/dhcp3/dhcpd.conf') }
+        ['/etc/dhcp3/dhcpd.hosts', '/etc/dhcp3/dhcpd.conf', '/etc/dhcp3/dhcpd.ignoredsubnets', '/etc/dhcp3/dhcpd.pools'].each do |file|
+          it { should contain_concat(file) }
+        end
       end
     end
   end
