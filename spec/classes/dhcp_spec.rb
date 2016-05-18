@@ -57,6 +57,7 @@ describe 'dhcp', :type => :class do
       ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
         it {should contain_concat(file)}
       end
+      it { is_expected.to compile.with_all_deps }
     end
 
     context 'header' do
@@ -188,7 +189,7 @@ describe 'dhcp', :type => :class do
         :interface => 'eth0',
       })
     end
-    it { should compile }
+    it { is_expected.to compile.with_all_deps }
     it { should contain_package('dhcp') \
       .with_provider('macports')
     }
@@ -214,6 +215,7 @@ describe 'dhcp', :type => :class do
           :interface => 'eth0',
         })
       end
+      it { is_expected.to compile.with_all_deps }
       it { should contain_package('isc-dhcp-server') }
       it { should contain_file('/etc/default/isc-dhcp-server') \
         .with_content(/INTERFACES=\"eth0\"/)
@@ -232,6 +234,7 @@ describe 'dhcp', :type => :class do
             :operatingsystemrelease => '12.04',
           })
         end
+        it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp/dhcpd.hosts', '/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.ignoredsubnets', '/etc/dhcp/dhcpd.pools'].each do |file|
           it { should contain_concat(file) }
         end
@@ -243,6 +246,7 @@ describe 'dhcp', :type => :class do
             :operatingsystemrelease => '10.04',
           })
         end
+        it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp3/dhcpd.hosts', '/etc/dhcp3/dhcpd.conf', '/etc/dhcp3/dhcpd.ignoredsubnets', '/etc/dhcp3/dhcpd.pools'].each do |file|
           it { should contain_concat(file) }
         end
