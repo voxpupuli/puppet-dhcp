@@ -25,7 +25,7 @@ describe 'dhcp', type: :class do
       }
     end
     let :params do
-       default_params
+      default_params
     end
     context 'input validation' do
       ['dnsdomain', 'nameservers', 'ntpservers'].each do |arrays|
