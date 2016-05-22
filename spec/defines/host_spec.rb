@@ -50,8 +50,8 @@ describe 'dhcp::host', type: :define do
         "  hardware ethernet   #{params['mac']};",
         "  fixed-address       #{params['ip']};",
         "  ddns-hostname       \"#{title}\";",
-        "  option domain-name-servers 10.0.0.1;",
-        "  option vendor-encapsulated-options 01:04:31:41:50:43;",
+        '  option domain-name-servers 10.0.0.1;',
+        '  option vendor-encapsulated-options 01:04:31:41:50:43;',
         '}',
       ]
       expect(content.split("\n")).to eq(expected_lines)
