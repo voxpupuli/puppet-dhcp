@@ -2,7 +2,7 @@ require 'spec_helper'
 describe 'dhcp', type: :class do
   let(:default_params) do
     {
-      'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
+      'dnsdomain'           => ['sampledomain.com', '1.1.1.in-addr.arpa'],
       'nameservers'         => ['1.1.1.1'],
       'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
       'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
@@ -28,7 +28,7 @@ describe 'dhcp', type: :class do
        default_params
     end
     context 'input validation' do
-      ['dnsdomain','nameservers','ntpservers'].each do |arrays|
+      ['dnsdomain', 'nameservers', 'ntpservers'].each do |arrays|
         context "when #{arrays} is not an array" do
           let :params do
             super().merge(
@@ -48,13 +48,13 @@ describe 'dhcp', type: :class do
       ['dhcp'].each do |dhclasses|
         it { is_expected.to contain_class(dhclasses)}
       end
-      ['/etc/dhcp/dhcpd.pools','/etc/dhcp/dhcpd.hosts'].each do |concats|
+      ['/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.hosts'].each do |concats|
         it { is_expected.to contain_concat(concats)}
       end
-      ['dhcp-conf-pxe','dhcp-conf-extra'].each do |frags|
+      ['dhcp-conf-pxe', 'dhcp-conf-extra'].each do |frags|
         it { is_expected.to contain_concat__fragment(frags)}
       end
-      ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
+      ['/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
         it { is_expected.to contain_concat(file)}
       end
       it { is_expected.to compile.with_all_deps }

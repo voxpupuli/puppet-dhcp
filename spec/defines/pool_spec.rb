@@ -15,7 +15,7 @@ describe 'dhcp::pool', type: :define do
       'gateway'  => '1.1.1.1',
       'mask'     => '255.255.255.0',
       'network'  => '1.1.1.0',
-      'range'    => ['1.1.1.100','1.1.1.110']
+      'range'    => ['1.1.1.100', '1.1.1.110']
     }
   end
 
