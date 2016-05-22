@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'dhcp::pool', :type => :define do
+describe 'dhcp::pool', type: :define do
   let :title do
     'test_pool'
   end
   let(:facts) do
     {
-      :concat_basedir => '/dne',
-      :osfamily       => 'RedHat',
+      concat_basedir: '/dne',
+      osfamily: 'RedHat',
     }
   end
   let :params do
@@ -15,7 +15,7 @@ describe 'dhcp::pool', :type => :define do
       'gateway'  => '1.1.1.1',
       'mask'     => '255.255.255.0',
       'network'  => '1.1.1.0',
-      'range'    => ['1.1.1.100','1.1.1.110']
+      'range'    => ['1.1.1.100', '1.1.1.110']
     }
   end
 
