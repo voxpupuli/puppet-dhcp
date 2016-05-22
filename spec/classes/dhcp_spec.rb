@@ -302,5 +302,4 @@ describe 'dhcp', type: :class do
       end
     end
   end
-
 end
