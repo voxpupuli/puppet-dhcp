@@ -249,7 +249,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(
           interface: 'eth0',
-          globaloptions: [ 'tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"', ]
+          globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"',]
         )
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
@@ -276,7 +276,7 @@ describe 'dhcp', type: :class do
 
     it do
       content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
-      expected_lines = [ 'filename "pxelinux.0";', 'next-server 1.2.3.4;' ]
+      expected_lines = ['filename "pxelinux.0";', 'next-server 1.2.3.4;']
       expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
     end
 
