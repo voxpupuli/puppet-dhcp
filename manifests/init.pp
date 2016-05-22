@@ -9,7 +9,7 @@ class dhcp (
   $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
   $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
   $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_fragments  = {},
+  $dhcp_conf_fragments = {},
   $interfaces           = undef,
   $interface            = 'NOTSET',
   $dnsupdatekey         = undef,
@@ -29,6 +29,14 @@ class dhcp (
   $packagename          = $dhcp::params::packagename,
   $servicename          = $dhcp::params::servicename,
   $package_provider     = $dhcp::params::package_provider,
+  $ldap_port            = 389,
+  $ldap_server          = 'localhost',
+  $ldap_username        = 'cn=root, dc=example, dc=com',
+  $ldap_password        = '',
+  $ldap_base_dn         = 'dc=example, dc=com',
+  $ldap_method          = 'dynamic',
+  $ldap_debug_file      = '/var/log/dhcp-ldap-startup.log',
+  $use_ldap             = false,
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
