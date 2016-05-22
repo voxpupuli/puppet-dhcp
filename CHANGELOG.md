@@ -1,4 +1,4 @@
-2015-09-15 Release 0.4.0
+## 2015-09-15 Release 0.4.0
 
 Backwards incompatible changes:
 - Updated to set `ddns-hostname` instead of `option host-name`.
@@ -22,7 +22,8 @@ Bugfixes:
 - Fixes dhcpd.conf file dependency error.
 - Fix to properly wrap `domain-name` in quotes.
 
-2014-07-23 Release 0.3.0
+
+## 2014-07-23 Release 0.3.0
 
 Backwards incompatible changes:
 - Now requires puppetlabs/concat >= 1.1.0
@@ -36,7 +37,8 @@ Bugfixes:
 - Update templates to remove deprecation warnings
 - Ensure $dhcp_dir exists
 
-2014-03-25 Release 0.2.0
+
+## 2014-03-25 Release 0.2.0
 
 Backwards incompatible changes:
 - Update concat dependency to puppetlabs/concat
