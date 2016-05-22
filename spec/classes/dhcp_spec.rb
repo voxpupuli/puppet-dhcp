@@ -322,7 +322,7 @@ describe 'dhcp', type: :class do
         'ldap-method dynamic;',
         'ldap-debug-file "/var/log/dhcp-ldap-startup.log"',
       ]
-      expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+      expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
     end
   end
 end
