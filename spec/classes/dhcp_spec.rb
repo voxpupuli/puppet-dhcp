@@ -253,7 +253,7 @@ describe 'dhcp', type: :class do
         )
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
-      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option tftp-server-name "1.2.3.4";$} }
+      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^option tftp-server-name "1\.2\.3\.4";$/) }
     end
   end
 
