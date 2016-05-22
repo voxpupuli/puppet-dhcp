@@ -156,6 +156,29 @@ describe 'dhcp', type: :class do
         end
       end
     end
+    context 'ldap enabled' do
+      let :params do
+        default_params.merge(
+          interface: 'eth0',
+          use_ldap: true,
+          ldap_password: 'passw0rd'
+        )
+      end
+
+      it do
+        content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+        expected_lines = [
+          'ldap-port 389;',
+          'ldap-server "localhost";',
+          'ldap-username "cn=root, dc=example, dc=com";',
+          'ldap-password "passw0rd";',
+          'ldap-base-dn "dc=example, dc=com";',
+          'ldap-method dynamic;',
+          'ldap-debug-file "/var/log/dhcp-ldap-startup.log"'
+        ]
+        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+      end
+    end
   end
   context 'on a Darwin OS' do
     let :facts do
@@ -204,6 +227,7 @@ describe 'dhcp', type: :class do
       context '12.04' do
         let :facts do
           default_facts.merge(
+            osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '12.04'
           )
@@ -216,6 +240,7 @@ describe 'dhcp', type: :class do
       context '10.04' do
         let :facts do
           default_facts.merge(
+            osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '10.04'
           )
@@ -302,29 +327,6 @@ describe 'dhcp', type: :class do
         ]
         expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
       end
-    end
-  end
-
-  context 'ldap enabled' do
-    let :params do
-      default_params.merge(
-        use_ldap: true,
-        ldap_password: 'passw0rd'
-      )
-    end
-
-    it do
-      content = subject.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
-      expected_lines = [
-        'ldap-port 389;',
-        'ldap-server "localhost";',
-        'ldap-username "cn=root, dc=example, dc=com";',
-        'ldap-password "passw0rd";',
-        'ldap-base-dn "dc=example, dc=com";',
-        'ldap-method dynamic;',
-        'ldap-debug-file "/var/log/dhcp-ldap-startup.log"'
-      ]
-      expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
     end
   end
 end
