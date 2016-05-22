@@ -115,7 +115,7 @@ class dhcp (
 
   # Only debian and ubuntu have this style of defaults for startup.
   case $::osfamily {
-    'debian': {
+    'Debian': {
       file{ '/etc/default/isc-dhcp-server':
         ensure  => present,
         owner   => 'root',
@@ -126,7 +126,7 @@ class dhcp (
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
     }
-    'redhat': {
+    'RedHat': {
       file{ '/etc/sysconfig/dhcpd':
         ensure  => present,
         owner   => 'root',
