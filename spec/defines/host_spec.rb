@@ -7,7 +7,7 @@ describe 'dhcp::host', type: :define do
   let(:facts) do
     {
       concat_basedir: '/dne',
-      osfamily: 'RedHat',
+      osfamily: 'RedHat'
     }
   end
   let :default_params do
@@ -28,7 +28,7 @@ describe 'dhcp::host', type: :define do
       "  hardware ethernet   #{params['mac']};",
       "  fixed-address       #{params['ip']};",
       "  ddns-hostname       \"#{title}\";",
-      '}',
+      '}'
     ]
     expect(content.split("\n")).to eq(expected_lines)
   end
@@ -38,7 +38,7 @@ describe 'dhcp::host', type: :define do
       default_params.merge(
         options: {
           'vendor-encapsulated-options' => '01:04:31:41:50:43',
-          'domain-name-servers'         => '10.0.0.1',
+          'domain-name-servers'         => '10.0.0.1'
         }
       )
     end
@@ -52,7 +52,7 @@ describe 'dhcp::host', type: :define do
         "  ddns-hostname       \"#{title}\";",
         '  option domain-name-servers 10.0.0.1;',
         '  option vendor-encapsulated-options 01:04:31:41:50:43;',
-        '}',
+        '}'
       ]
       expect(content.split("\n")).to eq(expected_lines)
     end

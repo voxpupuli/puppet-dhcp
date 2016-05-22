@@ -7,7 +7,7 @@ describe 'dhcp::pool', type: :define do
   let(:facts) do
     {
       concat_basedir: '/dne',
-      osfamily: 'RedHat',
+      osfamily: 'RedHat'
     }
   end
   let :params do
