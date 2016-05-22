@@ -236,7 +236,7 @@ class dhcp (
     if ($ldap_base_dn == '') {
       fail('you must set $ldap_username')
     }
-    unless (validate_absolute_path($ldap_debug_file)) {
+    if ($ldap_debug_file == '') {
       fail('$ldap_debug_file must be a valid path')
     }
     concat::fragment { 'dhcp-conf-ldap':
