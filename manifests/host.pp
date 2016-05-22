@@ -4,19 +4,17 @@ define dhcp::host (
   $ip,
   $mac,
   $options = {},
-  $comment=''
+  $comment = '',
+  $host    = $name,
 ) {
+  if ! defined(Class['dhcp']) {
+    fail('You must include the dhcp base class before using any dhcp defined resources')
+  }
 
   validate_hash($options)
 
-  $host = $name
-
-  include ::dhcp::params
-
-  $dhcp_dir = $dhcp::params::dhcp_dir
-
   concat::fragment { "dhcp_host_${name}":
-    target  => "${dhcp_dir}/dhcpd.hosts",
+    target  => "${::dhcp::dhcp_dir}/dhcpd.hosts",
     content => template('dhcp/dhcpd.host.erb'),
     order   => '10',
   }
