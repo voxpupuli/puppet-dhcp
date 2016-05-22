@@ -11,7 +11,7 @@ define dhcp::host (
 
   $host = $name
 
-  include dhcp::params
+  include ::dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 

@@ -1,6 +1,6 @@
 $ddnskeyname = 'dhcp_updater'
 
-class { 'dhcp':
+class { '::dhcp':
   dnsdomain      => [
     'example.com',
     '1.1.10.in-addr.arpa',

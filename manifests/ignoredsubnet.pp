@@ -3,7 +3,7 @@ define dhcp::ignoredsubnet (
   $mask,
 ) {
 
-  include dhcp::params
+  include ::dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 
