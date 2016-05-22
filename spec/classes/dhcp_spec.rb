@@ -306,8 +306,8 @@ describe 'dhcp', type: :class do
   context 'ldap enabled' do
     let :params do
       default_params.merge({
-        :use_ldap       => true,
-        :ldap_password  => 'passw0rd',
+        use_ldap: true,
+        ldap_password: 'passw0rd',
       })
     end
 
