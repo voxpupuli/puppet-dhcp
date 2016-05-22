@@ -168,8 +168,9 @@ describe 'dhcp', type: :class do
       default_params.merge(interface: 'eth0')
     end
     it { is_expected.to compile.with_all_deps }
-    it do should contain_package('dhcp') \
-      .with_provider('macports')
+    it do
+      should contain_package('dhcp') \
+        .with_provider('macports')
     end
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
       it { is_expected.to contain_concat(file) }
@@ -191,8 +192,9 @@ describe 'dhcp', type: :class do
       end
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_package('isc-dhcp-server') }
-      it do is_expected.to contain_file('/etc/default/isc-dhcp-server') \
-        .with_content(/INTERFACES=\"eth0\"/)
+      it do
+        is_expected.to contain_file('/etc/default/isc-dhcp-server') \
+          .with_content(/INTERFACES=\"eth0\"/)
       end
     end
     context 'Ubuntu' do
