@@ -1,3 +1,15 @@
+## 2016.05.22 Release 0.5.0
+
+- First release in the voxpupuli namespace
+- Drop Ruby1.8 support
+- Add support for STRICT_VARIABLES
+- modulesync with latest voxpupuli defaults
+- do not sort pool dns servers list
+- add generic support for custom config options
+- Add support for iPXE chain loading
+- Fix wrong fact values in case blocks (init.pp/params.pp)
+
+
 ## 2015-09-15 Release 0.4.0
 
 Backwards incompatible changes:
