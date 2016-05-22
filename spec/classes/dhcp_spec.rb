@@ -35,7 +35,7 @@ describe 'dhcp', type: :class do
               arrays => 'BOGON'
             )
           end
-          it {is_expected.not_to compile}
+          it { is_expected.not_to compile }
         end
       end
     end
@@ -44,16 +44,16 @@ describe 'dhcp', type: :class do
         default_params.merge(interface: 'eth0')
       end
       ['dhcp'].each do |dhclasses|
-        it { is_expected.to contain_class(dhclasses)}
+        it { is_expected.to contain_class(dhclasses) }
       end
       ['/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.hosts'].each do |concats|
-        it { is_expected.to contain_concat(concats)}
+        it { is_expected.to contain_concat(concats) }
       end
       ['dhcp-conf-pxe', 'dhcp-conf-extra'].each do |frags|
-        it { is_expected.to contain_concat__fragment(frags)}
+        it { is_expected.to contain_concat__fragment(frags) }
       end
       ['/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
-        it { is_expected.to contain_concat(file)}
+        it { is_expected.to contain_concat(file) }
       end
       it { is_expected.to compile.with_all_deps }
     end
@@ -138,7 +138,7 @@ describe 'dhcp', type: :class do
             '  key rndc.key;',
             '}',
           ]
-          expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+          expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
         end
 
         context 'dnskeyname defined' do
@@ -277,7 +277,7 @@ describe 'dhcp', type: :class do
     it do
       content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
       expected_lines = [ 'filename "pxelinux.0";', 'next-server 1.2.3.4;' ]
-      expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+      expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
     end
 
     context 'ipxefilename defined' do
@@ -298,7 +298,7 @@ describe 'dhcp', type: :class do
           '      filename "undionly-20140116.kpxe";',
           '}',
         ]
-        expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
       end
     end
   end
