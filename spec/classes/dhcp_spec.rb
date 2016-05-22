@@ -28,7 +28,7 @@ describe 'dhcp', type: :class do
       default_params
     end
     context 'input validation' do
-      ['dnsdomain', 'nameservers', 'ntpservers'].each do |arrays|
+      %w(dnsdomain nameservers ntpservers).each do |arrays|
         context "when #{arrays} is not an array" do
           let :params do
             super().merge(
