@@ -22,7 +22,7 @@ describe 'dhcp::host', :type => :define do
   it { should contain_concat__fragment("dhcp_host_#{title}") }
 
   it 'creates a host declaration' do
-    content = subject.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+    content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
     expected_lines = [
       "host #{title} {",
       "  hardware ethernet   #{params['mac']};",
@@ -44,7 +44,7 @@ describe 'dhcp::host', :type => :define do
     end
 
     it 'creates a host declaration with options' do
-      content = subject.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
       expected_lines = [
         "host #{title} {",
         "  hardware ethernet   #{params['mac']};",

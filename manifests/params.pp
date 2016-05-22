@@ -3,8 +3,8 @@
 class dhcp::params {
 
   case $::osfamily {
-    'debian': {
-      if ( $::operatingsystem == 'ubuntu' ) {
+    'Debian': {
+      if ( $::operatingsystem == 'Ubuntu' ) {
         if (versioncmp($::operatingsystemrelease, '12.04') >= 0) {
           $dhcp_dir    = '/etc/dhcp'
         } else {
@@ -17,19 +17,19 @@ class dhcp::params {
       $servicename      = 'isc-dhcp-server'
       $package_provider = undef
     }
-    'darwin': {
+    'Darwin': {
       $dhcp_dir         = '/opt/local/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'org.macports.dhcpd'
       $package_provider = 'macports'
     }
-    'freebsd': {
+    'FreeBSD': {
       $dhcp_dir         = '/usr/local/etc'
       $packagename      = 'net/isc-dhcp42-server'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
     }
-    'redhat': {
+    'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'dhcpd'

@@ -46,16 +46,16 @@ describe 'dhcp', :type => :class do
         })
        end
       ['dhcp'].each do |dhclasses|
-        it {should contain_class(dhclasses)}
+        it { is_expected.to contain_class(dhclasses)}
       end
       ['/etc/dhcp/dhcpd.pools','/etc/dhcp/dhcpd.hosts'].each do |concats|
-        it {should contain_concat(concats)}
+        it { is_expected.to contain_concat(concats)}
       end
       ['dhcp-conf-pxe','dhcp-conf-extra'].each do |frags|
-        it {should contain_concat__fragment(frags)}
+        it { is_expected.to contain_concat__fragment(frags)}
       end
       ['/etc/dhcp/dhcpd.conf','/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
-        it {should contain_concat(file)}
+        it { is_expected.to contain_concat(file)}
       end
       it { is_expected.to compile.with_all_deps }
     end
@@ -68,7 +68,7 @@ describe 'dhcp', :type => :class do
       end
 
       it 'defines dhcp header contents' do
-        subject.should contain_concat__fragment('dhcp-conf-header')
+        is_expected.to contain_concat__fragment('dhcp-conf-header')
       end
 
       context 'omapi_port => 7911' do
@@ -80,7 +80,7 @@ describe 'dhcp', :type => :class do
         end
 
         it 'defines dhcp header contents' do
-          subject.should contain_concat__fragment('dhcp-conf-header')
+          is_expected.to contain_concat__fragment('dhcp-conf-header')
         end
       end
     end
@@ -93,7 +93,7 @@ describe 'dhcp', :type => :class do
       end
 
       it 'sets ntp-servers to none' do
-        should contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers none;$/)
+        is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers none;$/)
       end
 
       context 'ntpservers defined' do
@@ -105,7 +105,7 @@ describe 'dhcp', :type => :class do
         end
 
         it 'sets ntp-servers' do
-          should contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers time.sample.com;$/)
+          is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers time.sample.com;$/)
         end
       end
     end
@@ -118,7 +118,7 @@ describe 'dhcp', :type => :class do
       end
 
       it do
-        should contain_concat__fragment('dhcp-conf-ddns').with_content(/^ddns-update-style none;$/)
+        is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(/^ddns-update-style none;$/)
       end
 
       context 'dnsupdatekey defined' do
@@ -130,7 +130,7 @@ describe 'dhcp', :type => :class do
         end
 
         it do
-          content = subject.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
+          content = catalogue.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
           expected_lines = [
             'ddns-updates on;',
             'ddns-update-style interim;',
@@ -159,7 +159,7 @@ describe 'dhcp', :type => :class do
           end
 
           it do
-            should contain_concat__fragment('dhcp-conf-ddns').with_content(/^  key rndc-key;$/)
+            is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(/^  key rndc-key;$/)
           end
         end
       end
@@ -182,7 +182,7 @@ describe 'dhcp', :type => :class do
       .with_provider('macports')
     }
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
-      it { should contain_concat(file) }
+      it { is_expected.to contain_concat(file) }
     end
   end
   context 'on a Debian based OS' do
@@ -204,8 +204,8 @@ describe 'dhcp', :type => :class do
         })
       end
       it { is_expected.to compile.with_all_deps }
-      it { should contain_package('isc-dhcp-server') }
-      it { should contain_file('/etc/default/isc-dhcp-server') \
+      it { is_expected.to contain_package('isc-dhcp-server') }
+      it { is_expected.to contain_file('/etc/default/isc-dhcp-server') \
         .with_content(/INTERFACES=\"eth0\"/)
       }
     end
@@ -224,7 +224,7 @@ describe 'dhcp', :type => :class do
         end
         it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp/dhcpd.hosts', '/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.ignoredsubnets', '/etc/dhcp/dhcpd.pools'].each do |file|
-          it { should contain_concat(file) }
+          it { is_expected.to contain_concat(file) }
         end
       end
       context '10.04' do
@@ -236,7 +236,7 @@ describe 'dhcp', :type => :class do
         end
         it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp3/dhcpd.hosts', '/etc/dhcp3/dhcpd.conf', '/etc/dhcp3/dhcpd.ignoredsubnets', '/etc/dhcp3/dhcpd.pools'].each do |file|
-          it { should contain_concat(file) }
+          it { is_expected.to contain_concat(file) }
         end
       end
     end
@@ -258,7 +258,7 @@ describe 'dhcp', :type => :class do
           :globaloptions => 'root-path "/opt/ltsp/i386"',
         })
       end
-      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
+      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
     end
 
     context 'globaloptions set to an array' do
@@ -268,22 +268,31 @@ describe 'dhcp', :type => :class do
           :globaloptions => [ 'tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"', ]
         })
       end
-      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
-      it { should contain_concat__fragment('dhcp-conf-header').with_content %r{^option tftp-server-name "1.2.3.4";$} }
+      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
+      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option tftp-server-name "1.2.3.4";$} }
     end
   end
 
   context 'pxeserver defined' do
+    let :facts do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystem        => 'Ubuntu',
+        :operatingsystemrelease => '12.04',
+        :concat_basedir         => '/dne',
+      }
+    end
     let :params do
       default_params.merge({
         :pxeserver   => '1.2.3.4',
         :pxefilename => 'pxelinux.0',
+        :interface   => 'eth0',
       })
     end
 
     it do
-      content = subject.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
-      expected_lines = [ 'filename "pxelinux.0"', 'next-server 1.2.3.4' ]
+      content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
+      expected_lines = [ 'filename "pxelinux.0";', 'next-server 1.2.3.4;' ]
       expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
     end
 
@@ -292,18 +301,18 @@ describe 'dhcp', :type => :class do
         default_params.merge({
           :ipxe_filename  => 'undionly-20140116.kpxe',
           :ipxe_bootstrap => 'bootstrap.kpxe',
+          :interface      => 'eth0',
         })
       end
 
       it do
-        content = subject.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
+        content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
         expected_lines = [
           'if exists user-class and option user-class = "iPXE" {',
-          'filename "bootstrap.kpxe";',
+          '      filename "bootstrap.kpxe";',
           '} else {',
-          'filename "undionly-20140116.kpxe";',
+          '      filename "undionly-20140116.kpxe";',
           '}',
-          'next-server 1.2.3.4',
         ]
         expect(content.split("\n").reject {|l| l =~ /^#|^$/ }).to eq(expected_lines)
       end
