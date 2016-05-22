@@ -35,12 +35,12 @@ describe 'dhcp::host', type: :define do
 
   context 'when options defined' do
     let(:params) do
-      default_params.merge({
+      default_params.merge(
         options: {
           'vendor-encapsulated-options' => '01:04:31:41:50:43',
           'domain-name-servers'         => '10.0.0.1',
         }
-      })
+      )
     end
 
     it 'creates a host declaration with options' do
