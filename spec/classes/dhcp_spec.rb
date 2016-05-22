@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'dhcp', :type => :class do
+describe 'dhcp', type: :class do
   let(:default_params) do
     {
       'dnsdomain'           => ['sampledomain.com','1.1.1.in-addr.arpa'],
@@ -18,10 +18,10 @@ describe 'dhcp', :type => :class do
   context 'on a RedHat OS' do
     let :facts do
       {
-        :osfamily               => 'RedHat',
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6',
-        :concat_basedir         => '/dne',
+        osfamily: 'RedHat',
+        operatingsystem: 'RedHat',
+        operatingsystemrelease: '6',
+        concat_basedir: '/dne',
       }
     end
     let :params do
@@ -42,7 +42,7 @@ describe 'dhcp', :type => :class do
     context 'coverage tests' do
       let :params do
         default_params.merge({
-          :interface => 'eth0',
+          interface: 'eth0',
         })
        end
       ['dhcp'].each do |dhclasses|
@@ -63,7 +63,7 @@ describe 'dhcp', :type => :class do
     context 'header' do
       let :params do
         default_params.merge({
-          :interfaces => ['eth0'],
+          interfaces: ['eth0'],
         })
       end
 
@@ -74,8 +74,8 @@ describe 'dhcp', :type => :class do
       context 'omapi_port => 7911' do
         let :params do
           default_params.merge({
-            :interfaces => ['eth0'],
-            :omapi_port => 7911,
+            interfaces: ['eth0'],
+            omapi_port: 7911,
           })
         end
 
@@ -88,7 +88,7 @@ describe 'dhcp', :type => :class do
     context 'ntp' do
       let :params do
         default_params.merge({
-          :interfaces => ['eth0'],
+          interfaces: ['eth0'],
         })
       end
 
@@ -99,8 +99,8 @@ describe 'dhcp', :type => :class do
       context 'ntpservers defined' do
         let :params do
           default_params.merge({
-            :interfaces => ['eth0'],
-            :ntpservers => ['time.sample.com'],
+            interfaces: ['eth0'],
+            ntpservers: ['time.sample.com'],
           })
         end
 
@@ -113,7 +113,7 @@ describe 'dhcp', :type => :class do
     context 'ddns' do
       let :params do
         default_params.merge({
-          :interface => 'eth0',
+          interface: 'eth0',
         })
       end
 
@@ -124,8 +124,8 @@ describe 'dhcp', :type => :class do
       context 'dnsupdatekey defined' do
         let :params do
           default_params.merge({
-            :interface => 'eth0',
-            :dnsupdatekey => '/etc/rndc.key',
+            interface: 'eth0',
+            dnsupdatekey: '/etc/rndc.key',
           })
         end
 
@@ -152,9 +152,9 @@ describe 'dhcp', :type => :class do
         context 'dnskeyname defined' do
           let :params do
             default_params.merge({
-              :interface => 'eth0',
-              :dnsupdatekey => '/etc/rndc.key',
-              :dnskeyname => 'rndc-key',
+              interface: 'eth0',
+              dnsupdatekey: '/etc/rndc.key',
+              dnskeyname: 'rndc-key',
             })
           end
 
@@ -168,13 +168,13 @@ describe 'dhcp', :type => :class do
   context 'on a Darwin OS' do
     let :facts do
       {
-        :osfamily               => 'Darwin',
-        :concat_basedir         => '/dne',
+        osfamily: 'Darwin',
+        concat_basedir: '/dne',
       }
     end
     let :params do
       default_params.merge({
-        :interface => 'eth0',
+        interface: 'eth0',
       })
     end
     it { is_expected.to compile.with_all_deps }
@@ -188,19 +188,19 @@ describe 'dhcp', :type => :class do
   context 'on a Debian based OS' do
     let :default_facts do
       {
-        :osfamily       => 'Debian',
-        :concat_basedir => '/dne',
+        osfamily: 'Debian',
+        concat_basedir: '/dne',
       }
     end
     context 'Debian' do
       let :facts do
         default_facts.merge({
-          :operatingsystem => 'Debian',
+          operatingsystem: 'Debian',
         })
       end
       let :params do
         default_params.merge({
-          :interface => 'eth0',
+          interface: 'eth0',
         })
       end
       it { is_expected.to compile.with_all_deps }
@@ -212,14 +212,14 @@ describe 'dhcp', :type => :class do
     context 'Ubuntu' do
       let :params do
         default_params.merge({
-          :interface => 'eth0',
+          interface: 'eth0',
         })
       end
       context '12.04' do
         let :facts do
           default_facts.merge({
-            :operatingsystem        => 'Ubuntu',
-            :operatingsystemrelease => '12.04',
+            operatingsystem: 'Ubuntu',
+            operatingsystemrelease: '12.04',
           })
         end
         it { is_expected.to compile.with_all_deps }
@@ -230,8 +230,8 @@ describe 'dhcp', :type => :class do
       context '10.04' do
         let :facts do
           default_facts.merge({
-            :operatingsystem        => 'Ubuntu',
-            :operatingsystemrelease => '10.04',
+            operatingsystem: 'Ubuntu',
+            operatingsystemrelease: '10.04',
           })
         end
         it { is_expected.to compile.with_all_deps }
@@ -245,17 +245,17 @@ describe 'dhcp', :type => :class do
   context 'with globaloptions parameter set' do
     let :facts do
       {
-        :osfamily               => 'Debian',
-        :operatingsystem        => 'Ubuntu',
-        :operatingsystemrelease => '12.04',
-        :concat_basedir         => '/dne',
+        osfamily: 'Debian',
+        operatingsystem: 'Ubuntu',
+        operatingsystemrelease: '12.04',
+        concat_basedir: '/dne',
       }
     end
     context 'globaloptions set to a string' do
       let :params do
         default_params.merge({
-          :interface     => 'eth0',
-          :globaloptions => 'root-path "/opt/ltsp/i386"',
+          interface: 'eth0',
+          globaloptions: 'root-path "/opt/ltsp/i386"',
         })
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
@@ -264,8 +264,8 @@ describe 'dhcp', :type => :class do
     context 'globaloptions set to an array' do
       let :params do
         default_params.merge({
-          :interface     => 'eth0',
-          :globaloptions => [ 'tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"', ]
+          interface: 'eth0',
+          globaloptions: [ 'tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"', ]
         })
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
@@ -276,17 +276,17 @@ describe 'dhcp', :type => :class do
   context 'pxeserver defined' do
     let :facts do
       {
-        :osfamily               => 'Debian',
-        :operatingsystem        => 'Ubuntu',
-        :operatingsystemrelease => '12.04',
-        :concat_basedir         => '/dne',
+        osfamily: 'Debian',
+        operatingsystem: 'Ubuntu',
+        operatingsystemrelease: '12.04',
+        concat_basedir: '/dne',
       }
     end
     let :params do
       default_params.merge({
-        :pxeserver   => '1.2.3.4',
-        :pxefilename => 'pxelinux.0',
-        :interface   => 'eth0',
+        pxeserver: '1.2.3.4',
+        pxefilename: 'pxelinux.0',
+        interface: 'eth0',
       })
     end
 
@@ -299,9 +299,9 @@ describe 'dhcp', :type => :class do
     context 'ipxefilename defined' do
       let :params do
         default_params.merge({
-          :ipxe_filename  => 'undionly-20140116.kpxe',
-          :ipxe_bootstrap => 'bootstrap.kpxe',
-          :interface      => 'eth0',
+          ipxe_filename: 'undionly-20140116.kpxe',
+          ipxe_bootstrap: 'bootstrap.kpxe',
+          interface: 'eth0',
         })
       end
 

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'dhcp::host', :type => :define do
+describe 'dhcp::host', type: :define do
   let :title do
     'test_host'
   end
   let(:facts) do
     {
-      :concat_basedir => '/dne',
-      :osfamily       => 'RedHat',
+      concat_basedir: '/dne',
+      osfamily: 'RedHat',
     }
   end
   let :default_params do
@@ -36,7 +36,7 @@ describe 'dhcp::host', :type => :define do
   context 'when options defined' do
     let(:params) do
       default_params.merge({
-        :options => {
+        options: {
           'vendor-encapsulated-options' => '01:04:31:41:50:43',
           'domain-name-servers'         => '10.0.0.1',
         }
