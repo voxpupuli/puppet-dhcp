@@ -174,7 +174,7 @@ describe 'dhcp', type: :class do
           'ldap-password "passw0rd";',
           'ldap-base-dn "dc=example, dc=com";',
           'ldap-method dynamic;',
-          'ldap-debug-file "/var/log/dhcp-ldap-startup.log"'
+          'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
         ]
         expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
       end
