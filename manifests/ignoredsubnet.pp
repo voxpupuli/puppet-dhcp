@@ -2,15 +2,13 @@ define dhcp::ignoredsubnet (
   $network,
   $mask,
 ) {
-
-  include ::dhcp::params
-
-  $dhcp_dir = $dhcp::params::dhcp_dir
-
-  concat::fragment { "dhcp_ignoredsubnet_${name}":
-    target  => "${dhcp_dir}/dhcpd.ignoredsubnets",
-    content => template('dhcp/dhcpd.ignoredsubnet.erb'),
+  if ! defined(Class['dhcp']) {
+    fail('You must include the dhcp base class before using any dhcp defined resources')
   }
 
+  concat::fragment { "dhcp_ignoredsubnet_${name}":
+    target  => "${::dhcp::dhcp_dir}/dhcpd.ignoredsubnets",
+    content => template('dhcp/dhcpd.ignoredsubnet.erb'),
+  }
 }
 

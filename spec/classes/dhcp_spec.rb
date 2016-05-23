@@ -168,7 +168,7 @@ describe 'dhcp', type: :class do
       default_params.merge(interface: 'eth0')
     end
     it { is_expected.to compile.with_all_deps }
-    it { should contain_package('dhcp') \
+    it { is_expected.to contain_package('dhcp') \
       .with_provider('macports')
     }
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|

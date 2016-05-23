@@ -13,13 +13,12 @@ define dhcp::pool (
   $domain_name = '',
   $ignore_unknown = undef,
 ) {
-
-  include ::dhcp::params
-
-  $dhcp_dir = $dhcp::params::dhcp_dir
+  if ! defined(Class['dhcp']) {
+    fail('You must include the dhcp base class before using any dhcp defined resources')
+  }
 
   concat::fragment { "dhcp_pool_${name}":
-    target  => "${dhcp_dir}/dhcpd.pools",
+    target  => "${::dhcp::dhcp_dir}/dhcpd.pools",
     content => template('dhcp/dhcpd.pool.erb'),
   }
 }
