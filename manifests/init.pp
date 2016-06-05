@@ -35,7 +35,7 @@ class dhcp (
   $ldap_password        = '',
   $ldap_base_dn         = 'dc=example, dc=com',
   $ldap_method          = 'dynamic',
-  $ldap_debug_file      = '/var/log/dhcp-ldap-startup.log',
+  $ldap_debug_file      = undef,
   $use_ldap             = false,
 ) inherits dhcp::params {
 
@@ -235,9 +235,6 @@ class dhcp (
     }
     if ($ldap_base_dn == '') {
       fail('you must set $ldap_username')
-    }
-    if ($ldap_debug_file == '') {
-      fail('$ldap_debug_file must be a valid path')
     }
     concat::fragment { 'dhcp-conf-ldap':
       target  => "${dhcp_dir}/dhcpd.conf",
