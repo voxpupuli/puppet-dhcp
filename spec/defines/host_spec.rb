@@ -25,6 +25,7 @@ describe 'dhcp::host', type: :define do
     content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
     expected_lines = [
       "host #{title} {",
+      "  # test_comment",
       "  hardware ethernet   #{params['mac']};",
       "  fixed-address       #{params['ip']};",
       "  ddns-hostname       \"#{title}\";",

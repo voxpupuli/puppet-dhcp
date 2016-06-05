@@ -1,4 +1,7 @@
 host <%= @host %> {
+<% if not @comment.empty? -%>
+  # <%= @comment %>
+<% end -%>
   hardware ethernet   <%= @mac.upcase %>;
   fixed-address       <%= @ip %>;
   ddns-hostname       "<%= @name %>";
