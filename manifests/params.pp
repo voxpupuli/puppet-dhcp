@@ -35,6 +35,14 @@ class dhcp::params {
       $servicename      = 'dhcpd'
       $package_provider = undef
     }
+    'Archlinux': {
+      $dhcp_dir         = '/etc'
+      $packagename      = 'dhcp'
+      # we currently do not manage the dhcpd6 config
+      #$servicename      = ['dhcpd4.service', 'dhcpd6.service']
+      $servicename      = ['dhcpd4.service']
+      $package_provider = 'pacman'
+    }
     default: {
       fail('dhcp is supported on the following OS\'s: Debian, Ubuntu, Darwin, FreeBSD, RedHat, Fedora, and CentOS.')
     }

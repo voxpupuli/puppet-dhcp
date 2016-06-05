@@ -11,7 +11,7 @@ describe 'dhcp', type: :class do
       'dhcp_conf_fragments' => {},
       'logfacility'         => 'daemon',
       'default_lease_time'  => '3600',
-      'max_lease_time'      => '86400',
+      'max_lease_time'      => '86400'
     }
   end
 
@@ -21,7 +21,7 @@ describe 'dhcp', type: :class do
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
+        concat_basedir: '/dne'
       }
     end
     let :params do
@@ -136,7 +136,7 @@ describe 'dhcp', type: :class do
             "zone #{params['dnsdomain'].last}. {",
             "  primary #{params['nameservers'].first};",
             '  key rndc.key;',
-            '}',
+            '}'
           ]
           expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
         end
@@ -156,21 +156,68 @@ describe 'dhcp', type: :class do
         end
       end
     end
+    context 'ldap enabled with logfile' do
+      let :params do
+        default_params.merge(
+          interface: 'eth0',
+          use_ldap: true,
+          ldap_password: 'passw0rd',
+          ldap_debug_file: '/var/log/dhcp-ldap-startup.log'
+        )
+      end
+
+      it do
+        content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+        expected_lines = [
+          'ldap-port 389;',
+          'ldap-server "localhost";',
+          'ldap-username "cn=root, dc=example, dc=com";',
+          'ldap-password "passw0rd";',
+          'ldap-base-dn "dc=example, dc=com";',
+          'ldap-method dynamic;',
+          'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
+        ]
+        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+      end
+    end
+    context 'ldap enabled without logfile' do
+      let :params do
+        default_params.merge(
+          interface: 'eth0',
+          use_ldap: true,
+          ldap_password: 'passw0rd'
+        )
+      end
+
+      it do
+        content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+        expected_lines = [
+          'ldap-port 389;',
+          'ldap-server "localhost";',
+          'ldap-username "cn=root, dc=example, dc=com";',
+          'ldap-password "passw0rd";',
+          'ldap-base-dn "dc=example, dc=com";',
+          'ldap-method dynamic;'
+        ]
+        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+      end
+    end
   end
   context 'on a Darwin OS' do
     let :facts do
       {
         osfamily: 'Darwin',
-        concat_basedir: '/dne',
+        concat_basedir: '/dne'
       }
     end
     let :params do
       default_params.merge(interface: 'eth0')
     end
     it { is_expected.to compile.with_all_deps }
-    it { should contain_package('dhcp') \
-      .with_provider('macports')
-    }
+    it do
+      should contain_package('dhcp') \
+        .with_provider('macports')
+    end
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
       it { is_expected.to contain_concat(file) }
     end
@@ -179,7 +226,7 @@ describe 'dhcp', type: :class do
     let :default_facts do
       {
         osfamily: 'Debian',
-        concat_basedir: '/dne',
+        concat_basedir: '/dne'
       }
     end
     context 'Debian' do
@@ -191,9 +238,10 @@ describe 'dhcp', type: :class do
       end
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_package('isc-dhcp-server') }
-      it { is_expected.to contain_file('/etc/default/isc-dhcp-server') \
-        .with_content(/INTERFACES=\"eth0\"/)
-      }
+      it do
+        is_expected.to contain_file('/etc/default/isc-dhcp-server') \
+          .with_content(/INTERFACES=\"eth0\"/)
+      end
     end
     context 'Ubuntu' do
       let :params do
@@ -202,6 +250,7 @@ describe 'dhcp', type: :class do
       context '12.04' do
         let :facts do
           default_facts.merge(
+            osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '12.04'
           )
@@ -214,6 +263,7 @@ describe 'dhcp', type: :class do
       context '10.04' do
         let :facts do
           default_facts.merge(
+            osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '10.04'
           )
@@ -232,7 +282,7 @@ describe 'dhcp', type: :class do
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
         operatingsystemrelease: '12.04',
-        concat_basedir: '/dne',
+        concat_basedir: '/dne'
       }
     end
     context 'globaloptions set to a string' do
@@ -249,7 +299,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(
           interface: 'eth0',
-          globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"',]
+          globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"']
         )
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
@@ -263,7 +313,7 @@ describe 'dhcp', type: :class do
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
         operatingsystemrelease: '12.04',
-        concat_basedir: '/dne',
+        concat_basedir: '/dne'
       }
     end
     let :params do
@@ -296,7 +346,7 @@ describe 'dhcp', type: :class do
           '      filename "bootstrap.kpxe";',
           '} else {',
           '      filename "undionly-20140116.kpxe";',
-          '}',
+          '}'
         ]
         expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
       end

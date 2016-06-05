@@ -1,0 +1,11 @@
+# BEGIN LDAP
+ldap-port <%= @ldap_port %>;
+ldap-server "<%= @ldap_server %>";
+ldap-username "<%= @ldap_username %>";
+ldap-password "<%= @ldap_password %>";
+ldap-base-dn "<%= @ldap_base_dn %>";
+ldap-method <%= @ldap_method %>;
+<% if @ldap_debug_file %>
+ldap-debug-file "<%= @ldap_debug_file %>";
+<% end %>
+# END LDAP

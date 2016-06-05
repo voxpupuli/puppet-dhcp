@@ -9,7 +9,7 @@ class dhcp (
   $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
   $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
   $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_fragments  = {},
+  $dhcp_conf_fragments = {},
   $interfaces           = undef,
   $interface            = 'NOTSET',
   $dnsupdatekey         = undef,
@@ -29,6 +29,14 @@ class dhcp (
   $packagename          = $dhcp::params::packagename,
   $servicename          = $dhcp::params::servicename,
   $package_provider     = $dhcp::params::package_provider,
+  $ldap_port            = 389,
+  $ldap_server          = 'localhost',
+  $ldap_username        = 'cn=root, dc=example, dc=com',
+  $ldap_password        = '',
+  $ldap_base_dn         = 'dc=example, dc=com',
+  $ldap_method          = 'dynamic',
+  $ldap_debug_file      = undef,
+  $use_ldap             = false,
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
@@ -205,6 +213,34 @@ class dhcp (
     target  => "${dhcp_dir}/dhcpd.hosts",
     content => "# static DHCP hosts\n",
     order   => '01',
+  }
+
+  # check if this is really a bool
+  validate_bool($use_ldap)
+  if $use_ldap {
+    unless ($ldap_method in ['dynamic', 'static']) {
+      fail('$ldap_method must be dynamic or static')
+    }
+    if ($ldap_password == '') {
+      fail('you must set $ldap_password')
+    }
+    unless (is_integer($ldap_port)) {
+      fail('$ldap_port must be an integer')
+    }
+    if ($ldap_server == '') {
+      fail('you must set $ldap_server')
+    }
+    if ($ldap_username == '') {
+      fail('you must set $ldap_username')
+    }
+    if ($ldap_base_dn == '') {
+      fail('you must set $ldap_username')
+    }
+    concat::fragment { 'dhcp-conf-ldap':
+      target  => "${dhcp_dir}/dhcpd.conf",
+      content => template('dhcp/dhcpd.conf-ldap.erb'),
+      order   => '90',
+    }
   }
 
   service { $servicename:
