@@ -148,7 +148,9 @@ class dhcp (
     default: { }
   }
 
-  Concat { require => Package[$packagename] }
+  Concat { require => Package[$packagename],
+    notify => Service[$servicename],
+  }
 
   # dhcpd.conf
   concat {  "${dhcp_dir}/dhcpd.conf": }
@@ -247,7 +249,6 @@ class dhcp (
     ensure    => $service_ensure,
     enable    => true,
     hasstatus => true,
-    subscribe => [Concat["${dhcp_dir}/dhcpd.pools"], Concat["${dhcp_dir}/dhcpd.hosts"], Concat["${dhcp_dir}/dhcpd.conf"]],
     require   => Package[$packagename],
   }
 }
