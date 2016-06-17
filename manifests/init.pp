@@ -19,7 +19,7 @@ class dhcp (
   $ipxe_filename        = undef,
   $ipxe_bootstrap       = undef,
   $logfacility          = 'daemon',
-  $default_lease_time   = 3600,
+  $default_lease_time   = 43200,
   $max_lease_time       = 86400,
   $service_ensure       = running,
   $globaloptions        = '',
