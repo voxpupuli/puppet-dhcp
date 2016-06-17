@@ -67,6 +67,10 @@ describe 'dhcp', type: :class do
         is_expected.to contain_concat__fragment('dhcp-conf-header')
       end
 
+      it 'contains authoritative statement' do
+        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^authoritative/)
+      end
+
       context 'omapi_port => 7911' do
         let :params do
           default_params.merge(
@@ -77,6 +81,19 @@ describe 'dhcp', type: :class do
 
         it 'defines dhcp header contents' do
           is_expected.to contain_concat__fragment('dhcp-conf-header')
+        end
+      end
+
+      context 'authoritative => false' do
+        let :params do
+          default_params.merge(
+            interfaces: ['eth0'],
+            authoritative: false
+          )
+        end
+
+        it 'contains not authoritative statement' do
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^not authoritative/)
         end
       end
     end

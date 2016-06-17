@@ -2,7 +2,11 @@
 # ----------
 # dhcpd.conf
 # ----------
+<% if @authoritative -%>
 authoritative;
+<% else -%>
+not authoritative;
+<% end -%>
 <% if @omapi_port -%>
 omapi-port <%= @omapi_port %>;
 <% end -%>
