@@ -10,7 +10,7 @@ describe 'dhcp', type: :class do
       'dhcp_conf_extra'     => 'INTERNAL_TEMPLATE',
       'dhcp_conf_fragments' => {},
       'logfacility'         => 'daemon',
-      'default_lease_time'  => '3600',
+      'default_lease_time'  => '43200',
       'max_lease_time'      => '86400'
     }
   end
