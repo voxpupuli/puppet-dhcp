@@ -24,6 +24,7 @@ class dhcp (
   $service_ensure       = running,
   $globaloptions        = '',
   $omapi_port           = undef,
+  $authoritative        = true,
   $extra_config         = '',
   $dhcp_dir             = $dhcp::params::dhcp_dir,
   $packagename          = $dhcp::params::packagename,
@@ -52,6 +53,7 @@ class dhcp (
 
   validate_array($nameservers)
   validate_array($ntpservers)
+  validate_bool($authoritative)
 
   if $pxeserver or $pxefilename {
     if ! $pxeserver or ! $pxefilename {
