@@ -4,6 +4,7 @@ class dhcp (
   $dnsdomain            = undef,
   $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
   $ntpservers           = [],
+  $dnssearchdomains     = [],
   $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ddns       = 'INTERNAL_TEMPLATE',
   $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
@@ -50,6 +51,7 @@ class dhcp (
     $dnsdomain_real = $dnsdomain
   }
   validate_array($dnsdomain_real)
+  validate_array($dnssearchdomains)
 
   validate_array($nameservers)
   validate_array($ntpservers)
