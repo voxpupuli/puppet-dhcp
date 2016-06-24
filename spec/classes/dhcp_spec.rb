@@ -68,7 +68,7 @@ describe 'dhcp', type: :class do
       end
 
       it 'contains authoritative statement' do
-        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^authoritative/)
+        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^authoritative})
       end
 
       context 'dnssearchdomains param populated' do
@@ -80,7 +80,7 @@ describe 'dhcp', type: :class do
         end
 
         it 'writes dnssearchdomains param into config file' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/option domain-search "example.com", "example.org";/)
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{option domain-search "example.com", "example.org";})
         end
       end
 
@@ -93,7 +93,7 @@ describe 'dhcp', type: :class do
         end
 
         it 'has domain-search option with empty array' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(/option domain-search/)
+          is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(%r{option domain-search})
         end
       end
 
@@ -130,7 +130,7 @@ describe 'dhcp', type: :class do
         end
 
         it 'contains not authoritative statement' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^not authoritative/)
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^not authoritative})
         end
       end
     end
@@ -141,7 +141,7 @@ describe 'dhcp', type: :class do
       end
 
       it 'sets ntp-servers to none' do
-        is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers none;$/)
+        is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers none;$})
       end
 
       context 'ntpservers defined' do
@@ -153,7 +153,7 @@ describe 'dhcp', type: :class do
         end
 
         it 'sets ntp-servers' do
-          is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(/^option ntp-servers time.sample.com;$/)
+          is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers time.sample.com;$})
         end
       end
     end
@@ -164,7 +164,7 @@ describe 'dhcp', type: :class do
       end
 
       it do
-        is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(/^ddns-update-style none;$/)
+        is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^ddns-update-style none;$})
       end
 
       context 'dnsupdatekey defined' do
@@ -192,7 +192,7 @@ describe 'dhcp', type: :class do
             '  key rndc.key;',
             '}'
           ]
-          expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
         end
 
         context 'dnskeyname defined' do
@@ -205,7 +205,7 @@ describe 'dhcp', type: :class do
           end
 
           it do
-            is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(/^  key rndc-key;$/)
+            is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^  key rndc-key;$})
           end
         end
       end
@@ -231,7 +231,7 @@ describe 'dhcp', type: :class do
           'ldap-method dynamic;',
           'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
         ]
-        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
       end
     end
     context 'ldap enabled without logfile' do
@@ -253,7 +253,7 @@ describe 'dhcp', type: :class do
           'ldap-base-dn "dc=example, dc=com";',
           'ldap-method dynamic;'
         ]
-        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
       end
     end
   end
@@ -269,8 +269,8 @@ describe 'dhcp', type: :class do
     end
     it { is_expected.to compile.with_all_deps }
     it do
-      should contain_package('dhcp') \
-        .with_provider('macports')
+      should contain_package('dhcp'). \
+        with_provider('macports')
     end
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
       it { is_expected.to contain_concat(file) }
@@ -293,8 +293,8 @@ describe 'dhcp', type: :class do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_package('isc-dhcp-server') }
       it do
-        is_expected.to contain_file('/etc/default/isc-dhcp-server') \
-          .with_content(/INTERFACES=\"eth0\"/)
+        is_expected.to contain_file('/etc/default/isc-dhcp-server'). \
+          with_content(%r{INTERFACES=\"eth0\"})
       end
     end
     context 'Ubuntu' do
@@ -357,7 +357,7 @@ describe 'dhcp', type: :class do
         )
       end
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
-      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(/^option tftp-server-name "1\.2\.3\.4";$/) }
+      it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^option tftp-server-name "1\.2\.3\.4";$}) }
     end
   end
 
@@ -381,7 +381,7 @@ describe 'dhcp', type: :class do
     it do
       content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
       expected_lines = ['filename "pxelinux.0";', 'next-server 1.2.3.4;']
-      expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+      expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
     end
 
     context 'ipxefilename defined' do
@@ -402,7 +402,7 @@ describe 'dhcp', type: :class do
           '      filename "undionly-20140116.kpxe";',
           '}'
         ]
-        expect(content.split("\n").reject { |l| l =~ /^#|^$/ }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
       end
     end
   end
