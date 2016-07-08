@@ -256,6 +256,19 @@ describe 'dhcp', type: :class do
         expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
       end
     end
+
+    context 'mtu defined' do
+      let :params do
+        default_params.merge(
+          interface: 'eth0',
+          mtu: 9000
+        )
+      end
+
+      it do
+        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^option interface-mtu 9000;$})
+      end
+    end
   end
   context 'on a Darwin OS' do
     let :facts do

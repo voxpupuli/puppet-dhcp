@@ -32,4 +32,7 @@ option <%= opt %>;
 <% elsif @globaloptions != '' -%>
 option <%= @globaloptions %>;
 <% end -%>
+<% if has_variable?( 'mtu' ) && @mtu -%>
+option interface-mtu <%= @mtu %>;
+<% end -%>
 # END DHCP Header

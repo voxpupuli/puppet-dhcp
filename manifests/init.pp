@@ -17,6 +17,7 @@ class dhcp (
   $dnskeyname           = undef,
   $pxeserver            = undef,
   $pxefilename          = undef,
+  $mtu                  = undef,
   $ipxe_filename        = undef,
   $ipxe_bootstrap       = undef,
   $logfacility          = 'daemon',
@@ -67,6 +68,10 @@ class dhcp (
     if ! $ipxe_filename or ! $ipxe_bootstrap {
       fail( '$ipxe_filename and $ipxe_bootstrap are required when enabling ipxe' )
     }
+  }
+
+  if $mtu {
+    validate_integer($mtu)
   }
 
   # Incase people set interface instead of interfaces work around
