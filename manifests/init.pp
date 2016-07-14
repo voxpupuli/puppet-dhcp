@@ -14,6 +14,7 @@ class dhcp (
   $interfaces           = undef,
   $interface            = 'NOTSET',
   $dnsupdatekey         = undef,
+  $ddns_update_style    = 'interim',
   $dnskeyname           = undef,
   $pxeserver            = undef,
   $pxefilename          = undef,

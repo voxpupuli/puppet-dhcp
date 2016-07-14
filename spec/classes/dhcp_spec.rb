@@ -171,7 +171,8 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interface: 'eth0',
-            dnsupdatekey: '/etc/rndc.key'
+            dnsupdatekey: '/etc/rndc.key',
+            ddns_update_style: 'standard'
           )
         end
 
@@ -179,7 +180,7 @@ describe 'dhcp', type: :class do
           content = catalogue.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
           expected_lines = [
             'ddns-updates on;',
-            'ddns-update-style interim;',
+            'ddns-update-style standard;',
             'update-static-leases on;',
             'use-host-decl-names on;',
             'include "/etc/rndc.key";',
