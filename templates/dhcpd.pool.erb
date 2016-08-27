@@ -50,5 +50,8 @@ subnet <%= @network %> netmask <%= @mask %> {
 <% if @pxeserver -%>
   next-server <%= @pxeserver %>;
 <% end -%>
+<% if @mtu -%>
+  option interface-mtu <%= @mtu %>;
+<% end -%>
 }
 

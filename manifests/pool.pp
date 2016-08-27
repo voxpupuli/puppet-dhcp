@@ -10,9 +10,13 @@ define dhcp::pool (
   $parameters  = '',
   $nameservers = undef,
   $pxeserver   = undef,
+  $mtu         = undef,
   $domain_name = '',
   $ignore_unknown = undef,
 ) {
+  if $mtu {
+    validate_integer($mtu)
+  }
 
   include ::dhcp::params
 
