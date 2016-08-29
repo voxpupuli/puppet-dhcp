@@ -30,13 +30,13 @@ class { 'dhcp':
 ```
 
 ### dhcp::pool
-Define the pool attributes
+Define the pool attributes. This example will create a pool, which serves IPs of two different ranges in the same network.
 
 ```puppet
 dhcp::pool{ 'ops.dc1.example.net':
   network => '10.0.1.0',
   mask    => '255.255.255.0',
-  range   => ['10.0.1.100', '10.0.1.200'],
+  range   => ['10.0.1.10 10.0.1.100', '10.0.1.200 10.0.1.250' ],
   gateway => '10.0.1.1',
 }
 ```
