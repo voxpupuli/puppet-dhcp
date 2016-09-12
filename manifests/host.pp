@@ -7,6 +7,7 @@ define dhcp::host (
   $comment=''
 ) {
 
+  validate_string($ip, $mac, $comment)
   validate_hash($options)
 
   $host = $name
