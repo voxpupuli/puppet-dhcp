@@ -1,3 +1,13 @@
+## 2016-09-26 Release 1.0.1
+
+* Modulesync with latest Vox Pupuli defaults
+* Feature: Add ability to configure the MTU
+* Feature: Allow for a DHCP host to be ignored so it can be handled
+  by another DHCP server in the same subnet
+* Fix: Documentation on pool ranges was confusing
+* Fix: Relax the concat version constraint to include version 2
+* Fix: A number of additional parameters are now type checked
+
 ## 2016-08-18 Release 1.0.0
 
 * Modulesync with latest Vox Pupuli defaults
