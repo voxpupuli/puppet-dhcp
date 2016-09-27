@@ -79,20 +79,19 @@ describe 'dhcp', type: :class do
           )
         end
 
-        it 'writes dnssearchdomains param into config file' do
+        it 'writes domain-search option into config file with dnssearchdomains param value' do
           is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{option domain-search "example.com", "example.org";})
         end
       end
 
-      context 'dnssearchdomains param empty array' do
+      context 'omitting dnssearchdomains param should not include option in config' do
         let :params do
           default_params.merge(
-            interfaces: ['eth0'],
-            dnssearchdomains: []
+            interfaces: ['eth0']
           )
         end
 
-        it 'has domain-search option with empty array' do
+        it 'should not have domain-search option' do
           is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(%r{option domain-search})
         end
       end
