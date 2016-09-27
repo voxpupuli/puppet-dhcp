@@ -91,7 +91,7 @@ describe 'dhcp', type: :class do
           )
         end
 
-        it 'should not have domain-search option' do
+        it 'may not have domain-search option' do
           is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(%r{option domain-search})
         end
       end
