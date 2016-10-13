@@ -1,3 +1,5 @@
+# == Define: dhcp::ignoredsubnet
+#
 define dhcp::ignoredsubnet (
   $network,
   $mask,
