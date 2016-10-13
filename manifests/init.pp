@@ -30,6 +30,7 @@ class dhcp (
   $authoritative        = true,
   $extra_config         = '',
   $dhcp_dir             = $dhcp::params::dhcp_dir,
+  $dhcpd_conf_filename  = 'dhcpd.conf',
   $packagename          = $dhcp::params::packagename,
   $servicename          = $dhcp::params::servicename,
   $package_provider     = $dhcp::params::package_provider,
@@ -163,29 +164,29 @@ class dhcp (
   }
 
   # dhcpd.conf
-  concat {  "${dhcp_dir}/dhcpd.conf": }
+  concat {  "${dhcp_dir}/${dhcpd_conf_filename}": }
   concat::fragment { 'dhcp-conf-header':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_header_real,
     order   => '01',
   }
   concat::fragment { 'dhcp-conf-ntp':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_ntp_real,
     order   => '02',
   }
   concat::fragment { 'dhcp-conf-ddns':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_ddns_real,
     order   => '10',
   }
   concat::fragment { 'dhcp-conf-pxe':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_pxe_real,
     order   => '20',
   }
   concat::fragment { 'dhcp-conf-extra':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_extra_real,
     order   => '99',
   }
@@ -249,7 +250,7 @@ class dhcp (
       fail('you must set $ldap_username')
     }
     concat::fragment { 'dhcp-conf-ldap':
-      target  => "${dhcp_dir}/dhcpd.conf",
+      target  => "${dhcp_dir}/${dhcpd_conf_filename}",
       content => template('dhcp/dhcpd.conf-ldap.erb'),
       order   => '90',
     }
