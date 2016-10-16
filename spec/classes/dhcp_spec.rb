@@ -374,6 +374,24 @@ describe 'dhcp', type: :class do
     end
   end
 
+  context 'alternate conf filename' do
+    let :facts do
+      {
+        osfamily: 'Debian',
+        operatingsystem: 'Ubuntu',
+        operatingsystemrelease: '14.04',
+        concat_basedir: '/dne'
+      }
+    end
+    let :params do
+      default_params.merge(
+        interface: 'eth0',
+        dhcpd_conf_filename: 'dhcpd6.conf'
+      )
+    end
+    it { is_expected.to contain_concat('/etc/dhcp/dhcpd6.conf') }
+  end
+
   context 'pxeserver defined' do
     let :facts do
       {
