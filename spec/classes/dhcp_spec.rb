@@ -4,6 +4,7 @@ describe 'dhcp', type: :class do
     {
       'dnsdomain'           => ['sampledomain.com', '1.1.1.in-addr.arpa'],
       'nameservers'         => ['1.1.1.1'],
+      'nameservers_ipv6'    => ['1:5ee:bad::c0de'],
       'dhcp_conf_header'    => 'INTERNAL_TEMPLATE',
       'dhcp_conf_ddns'      => 'INTERNAL_TEMPLATE',
       'dhcp_conf_pxe'       => 'INTERNAL_TEMPLATE',
@@ -185,10 +186,12 @@ describe 'dhcp', type: :class do
             'include "/etc/rndc.key";',
             "zone #{params['dnsdomain'].first}. {",
             "  primary #{params['nameservers'].first};",
+            "  primary6 #{params['nameservers_ipv6'].first};",
             '  key rndc.key;',
             '}',
             "zone #{params['dnsdomain'].last}. {",
             "  primary #{params['nameservers'].first};",
+            "  primary6 #{params['nameservers_ipv6'].first};",
             '  key rndc.key;',
             '}'
           ]

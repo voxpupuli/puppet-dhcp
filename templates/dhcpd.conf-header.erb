@@ -18,7 +18,12 @@ log-facility <%= @logfacility %>;
 # Options
 # ----------
 option domain-name "<%= @dnsdomain_real.first %>";
+<% if @nameservers && !@nameservers.empty? -%>
 option domain-name-servers <%= @nameservers.join(', ') %>;
+<% end -%>
+<% if @nameservers_ipv6 && !@nameservers_ipv6.empty? -%>
+option dhcp6.name-servers <%= @nameservers_ipv6.join(', ') %>;
+<% end -%>
 <% if @dnssearchdomains && !@dnssearchdomains.empty? -%>
 option domain-search "<%= @dnssearchdomains.join('", "') %>";
 <% end -%>
