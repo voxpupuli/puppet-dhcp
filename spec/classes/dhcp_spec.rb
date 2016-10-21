@@ -171,7 +171,9 @@ describe 'dhcp', type: :class do
           default_params.merge(
             interface: 'eth0',
             dnsupdatekey: '/etc/rndc.key',
-            ddns_update_style: 'standard'
+            ddns_update_style: 'standard',
+            ddns_update_static: 'on',
+            ddns_update_optimize: 'on'
           )
         end
 
@@ -181,6 +183,7 @@ describe 'dhcp', type: :class do
             'ddns-updates on;',
             'ddns-update-style standard;',
             'update-static-leases on;',
+            'update-optimization on;',
             'use-host-decl-names on;',
             'include "/etc/rndc.key";',
             "zone #{params['dnsdomain'].first}. {",

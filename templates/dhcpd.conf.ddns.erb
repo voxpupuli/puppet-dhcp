@@ -5,7 +5,8 @@
 # ----------
 ddns-updates on;
 ddns-update-style <%= @ddns_update_style %>;
-update-static-leases on;
+update-static-leases <%= @ddns_update_static %>;
+update-optimization <%= @ddns_update_optimize %>;
 use-host-decl-names on;
 
 # Key from bind
