@@ -1,0 +1,66 @@
+#################################
+# <%= @name %> <%= @network %>/<%= @prefix %>
+#################################
+subnet6 <%= @network %>/<%= @prefix %> {
+<% if @range != '' or @failover != '' -%>
+  pool6
+  {
+<% if @failover != '' -%>
+    failover peer "<%= @failover %>";
+<% end -%>
+<% if @ignore_unknown == true -%>
+    ignore unknown-clients ;
+<% end -%>
+<% if @range and @range.is_a? Array -%>
+<% @range.each do |r| -%>
+    range6 <%= r %>;
+<% end -%>
+<% elsif @range != '' -%>
+    range6 <%= @range %>;
+<% end -%>
+<% if @range_temp and @range_temp.is_a? Array -%>
+<% @range_temp.each do |r| -%>
+    range6 <%= r %> temporary;
+<% end -%>
+<% elsif @range_temp != '' -%>
+    range6 <%= @range_temp %> temporary;
+<% end -%>
+
+  }
+<% end -%>
+
+<% if @domain_name and !@domain_name.empty? -%>
+  option domain-name "<%= @domain_name %>";
+<% end -%>
+<% if @options.is_a? Array -%>
+<%   @options.each do |opt| -%>
+  option <%= opt %>;
+<%   end -%>
+<% elsif @options != '' -%>
+  option <%= @options %>;
+<% end -%>
+<% if @parameters.is_a? Array -%>
+<%   @parameters.each do |param| -%>
+  <%= param %>;
+<%   end -%>
+<% elsif @parameters != '' -%>
+  <%= @parameters %>;
+<% end -%>
+<% if @nameservers and @nameservers.is_a? Array -%>
+  option domain-name-servers <%= @nameservers.join(', ') %>;
+<% elsif @nameservers -%>
+  option domain-name-servers <%= @nameservers %>;
+<% end -%>
+<% if @nameservers_ipv6 and @nameservers_ipv6.is_a? Array -%>
+  option dhcp6.name-servers <%= @nameservers_ipv6.join(', ') %>;
+<% elsif @nameservers_ipv6 -%>
+  option dhcp6.name-servers <%= @nameservers_ipv6 %>;
+<% end -%>
+<% if @pxeserver -%>
+  next-server <%= @pxeserver %>;
+<% end -%>
+<% if @mtu -%>
+  option interface-mtu <%= @mtu %>;
+<% end -%>
+}
+
