@@ -1,5 +1,12 @@
 # DHCP module for Puppet
 
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-dhcp.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-dhcp)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-dhcp/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-dhcp)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+
 ## Overview
 
 Installs and manages a DHCP server.
