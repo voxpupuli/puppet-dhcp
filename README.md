@@ -1,13 +1,26 @@
 # DHCP module for Puppet
+
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-dhcp.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-dhcp)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-dhcp/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-dhcp)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+
+## Overview
+
 Installs and manages a DHCP server.
 
 ## Features
+
 * Multiple subnet support
 * Host reservations
 * Secure dynamic DNS updates when combined with Bind
-* Can create a dummy (ignored) subnet so that the server can be used only as a helper-address target
+* Can create a dummy (ignored) subnet so that the server can be used only as a
+  helper-address target
 
 ## Usage
+
 Define the server and the zones it will be responsible for.
 
 ```puppet
@@ -30,7 +43,9 @@ class { 'dhcp':
 ```
 
 ### dhcp::pool
-Define the pool attributes. This example will create a pool, which serves IPs of two different ranges in the same network.
+
+Define the pool attributes. This example will create a pool, which serves IPs of
+two different ranges in the same network.
 
 ```puppet
 dhcp::pool{ 'ops.dc1.example.net':
@@ -42,8 +57,9 @@ dhcp::pool{ 'ops.dc1.example.net':
 ```
 
 ### dhcp::ignoredsubnet
-Define a subnet that will be ignored - useful for making the DHCP server only respond to
-requests forwarded by switches etc.
+
+Define a subnet that will be ignored - useful for making the DHCP server only
+respond to requests forwarded by switches etc.
 
 ```puppet
 dhcp::ignoredsubnet{ 'eth0':
@@ -53,6 +69,7 @@ dhcp::ignoredsubnet{ 'eth0':
 ```
 
 ### dhcp::host
+
 Create host reservations.
 
 ```puppet
@@ -64,6 +81,7 @@ dhcp::host { 'server1':
 ```
 
 ### parameters
+
 Parameters are available to configure pxe or ipxe
 
 Boot ipxe from pxe. When configured this overrides pxefilename.
@@ -78,6 +96,7 @@ class { 'dhcp':
 ```
 
 ## Contributors
+
 Zach Leslie <zach.leslie@gmail.com>
 Ben Hughes <git@mumble.org.uk>
 Sam Dunster <sdunster@uow.edu.au>
