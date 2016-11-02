@@ -19,7 +19,7 @@ describe 'dhcp::host', type: :define do
   end
   let(:params) { default_params }
 
-  it { should contain_concat__fragment("dhcp_host_#{title}") }
+  it { is_expected.to contain_concat__fragment("dhcp_host_#{title}") }
 
   it 'creates a host declaration' do
     content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]

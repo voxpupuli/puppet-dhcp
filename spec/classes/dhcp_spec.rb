@@ -282,7 +282,7 @@ describe 'dhcp', type: :class do
     end
     it { is_expected.to compile.with_all_deps }
     it do
-      should contain_package('dhcp'). \
+      is_expected.to contain_package('dhcp'). \
         with_provider('macports')
     end
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
