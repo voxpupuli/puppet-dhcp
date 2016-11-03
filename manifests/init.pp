@@ -3,6 +3,7 @@
 class dhcp (
   $dnsdomain            = undef,
   $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
+  $nameservers_ipv6     = [],
   $ntpservers           = [],
   $dnssearchdomains     = [],
   $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
@@ -57,6 +58,7 @@ class dhcp (
   validate_array($dnssearchdomains)
 
   validate_array($nameservers)
+  validate_array($nameservers_ipv6)
   validate_array($ntpservers)
   validate_bool($authoritative)
 

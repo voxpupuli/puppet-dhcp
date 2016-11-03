@@ -3,16 +3,17 @@
 define dhcp::pool (
   $network,
   $mask,
-  $gateway     = '',
-  $range       = '',
-  $failover    = '',
-  $options     = '',
-  $parameters  = '',
-  $nameservers = undef,
-  $pxeserver   = undef,
-  $mtu         = undef,
-  $domain_name = '',
-  $ignore_unknown = undef,
+  $gateway          = '',
+  $range            = '',
+  $failover         = '',
+  $options          = '',
+  $parameters       = '',
+  $nameservers      = undef,
+  $nameservers_ipv6 = undef,
+  $pxeserver        = undef,
+  $mtu              = undef,
+  $domain_name      = '',
+  $ignore_unknown   = undef,
 ) {
   if $mtu {
     validate_integer($mtu)
