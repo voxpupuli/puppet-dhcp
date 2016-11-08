@@ -18,5 +18,5 @@ describe 'dhcp::pool6', type: :define do
     }
   end
 
-  it { should contain_concat__fragment("dhcp_pool_#{title}") }
+  it { is_expected.to contain_concat__fragment("dhcp_pool_#{title}") }
 end
