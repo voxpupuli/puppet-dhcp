@@ -283,7 +283,7 @@ describe 'dhcp', type: :class do
           default_params.merge(interface: 'eth0')
         end
 
-        it { should contain_file('/etc/sysconfig/dhcpd').with_content(%r{^DHCPDARGS=" eth0"$}) }
+        it { is_expected.to contain_file('/etc/sysconfig/dhcpd').with_content(%r{^DHCPDARGS=" eth0"$}) }
       end
 
     end
@@ -304,7 +304,7 @@ describe 'dhcp', type: :class do
           default_params.merge(interface: 'eth0')
         end
 
-        it { should contain_file('/etc/systemd/system/dhcpd.service').with_content(%r{ --no-pid eth0$}) }
+        it { is_expected.to contain_file('/etc/systemd/system/dhcpd.service').with_content(%r{ --no-pid eth0$}) }
       end
     end
   end
