@@ -17,263 +17,294 @@ describe 'dhcp', type: :class do
   end
 
   context 'on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystemmajrelease: '6',
-        concat_basedir: '/dne'
-      }
-    end
     let :params do
       default_params
     end
-    context 'input validation' do
-      %w(dnsdomain nameservers ntpservers).each do |arrays|
-        context "when #{arrays} is not an array" do
-          let :params do
-            super().merge(
-              arrays => 'BOGON'
-            )
+    context '6.8' do
+      let :facts do
+        {
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '6.8',
+          operatingsystemmajrelease: '6',
+          concat_basedir: '/dne'
+        }
+      end
+      context 'input validation' do
+        %w(dnsdomain nameservers ntpservers).each do |arrays|
+          context "when #{arrays} is not an array" do
+            let :params do
+              super().merge(
+                arrays => 'BOGON'
+              )
+            end
+            it { is_expected.not_to compile }
           end
-          it { is_expected.not_to compile }
         end
       end
-    end
-    context 'coverage tests' do
-      let :params do
-        default_params.merge(interface: 'eth0')
-      end
-      ['dhcp'].each do |dhclasses|
-        it { is_expected.to contain_class(dhclasses) }
-      end
-      ['/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.hosts'].each do |concats|
-        it { is_expected.to contain_concat(concats) }
-      end
-      ['dhcp-conf-pxe', 'dhcp-conf-extra'].each do |frags|
-        it { is_expected.to contain_concat__fragment(frags) }
-      end
-      ['/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
-        it { is_expected.to contain_concat(file) }
-      end
-      it { is_expected.to compile.with_all_deps }
-    end
-
-    context 'header' do
-      let :params do
-        default_params.merge(interfaces: ['eth0'])
-      end
-
-      it 'defines dhcp header contents' do
-        is_expected.to contain_concat__fragment('dhcp-conf-header')
-      end
-
-      it 'contains authoritative statement' do
-        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^authoritative})
-      end
-
-      context 'dnssearchdomains param populated' do
+      context 'coverage tests' do
         let :params do
-          default_params.merge(
-            interfaces: ['eth0'],
-            dnssearchdomains: ['example.com', 'example.org']
-          )
+          default_params.merge(interface: 'eth0')
         end
-
-        it 'writes domain-search option into config file with dnssearchdomains param value' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{option domain-search "example.com", "example.org";})
+        ['dhcp'].each do |dhclasses|
+          it { is_expected.to contain_class(dhclasses) }
         end
+        ['/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.hosts'].each do |concats|
+          it { is_expected.to contain_concat(concats) }
+        end
+        ['dhcp-conf-pxe', 'dhcp-conf-extra'].each do |frags|
+          it { is_expected.to contain_concat__fragment(frags) }
+        end
+        ['/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.ignoredsubnets'].each do |file|
+          it { is_expected.to contain_concat(file) }
+        end
+        it { is_expected.to compile.with_all_deps }
       end
 
-      context 'omitting dnssearchdomains param should not include option in config' do
+      context 'header' do
         let :params do
-          default_params.merge(
-            interfaces: ['eth0']
-          )
-        end
-
-        it 'may not have domain-search option' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(%r{option domain-search})
-        end
-      end
-
-      context 'dnssearchdomains param not array' do
-        let :params do
-          default_params.merge(
-            interfaces: ['eth0'],
-            dnssearchdomains: 'string'
-          )
-        end
-
-        it { is_expected.not_to compile }
-      end
-
-      context 'omapi_port => 7911' do
-        let :params do
-          default_params.merge(
-            interfaces: ['eth0'],
-            omapi_port: 7911
-          )
+          default_params.merge(interfaces: ['eth0'])
         end
 
         it 'defines dhcp header contents' do
           is_expected.to contain_concat__fragment('dhcp-conf-header')
         end
+
+        it 'contains authoritative statement' do
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^authoritative})
+        end
+
+        context 'dnssearchdomains param populated' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              dnssearchdomains: ['example.com', 'example.org']
+            )
+          end
+
+          it 'writes domain-search option into config file with dnssearchdomains param value' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{option domain-search "example.com", "example.org";})
+          end
+        end
+
+        context 'omitting dnssearchdomains param should not include option in config' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0']
+            )
+          end
+
+          it 'may not have domain-search option' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header').without_content(%r{option domain-search})
+          end
+        end
+
+        context 'dnssearchdomains param not array' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              dnssearchdomains: 'string'
+            )
+          end
+
+          it { is_expected.not_to compile }
+        end
+
+        context 'omapi_port => 7911' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              omapi_port: 7911
+            )
+          end
+
+          it 'defines dhcp header contents' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header')
+          end
+        end
+
+        context 'authoritative => false' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              authoritative: false
+            )
+          end
+
+          it 'contains not authoritative statement' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^not authoritative})
+          end
+        end
       end
 
-      context 'authoritative => false' do
+      context 'ntp' do
         let :params do
-          default_params.merge(
-            interfaces: ['eth0'],
-            authoritative: false
-          )
+          default_params.merge(interfaces: ['eth0'])
         end
 
-        it 'contains not authoritative statement' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^not authoritative})
+        it 'sets ntp-servers to none' do
+          is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers none;$})
+        end
+
+        context 'ntpservers defined' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              ntpservers: ['time.sample.com']
+            )
+          end
+
+          it 'sets ntp-servers' do
+            is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers time.sample.com;$})
+          end
         end
       end
-    end
 
-    context 'ntp' do
-      let :params do
-        default_params.merge(interfaces: ['eth0'])
-      end
-
-      it 'sets ntp-servers to none' do
-        is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers none;$})
-      end
-
-      context 'ntpservers defined' do
+      context 'ddns' do
         let :params do
-          default_params.merge(
-            interfaces: ['eth0'],
-            ntpservers: ['time.sample.com']
-          )
-        end
-
-        it 'sets ntp-servers' do
-          is_expected.to contain_concat__fragment('dhcp-conf-ntp').with_content(%r{^option ntp-servers time.sample.com;$})
-        end
-      end
-    end
-
-    context 'ddns' do
-      let :params do
-        default_params.merge(interface: 'eth0')
-      end
-
-      it do
-        is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^ddns-update-style none;$})
-      end
-
-      context 'dnsupdatekey defined' do
-        let :params do
-          default_params.merge(
-            interface: 'eth0',
-            dnsupdatekey: '/etc/rndc.key',
-            ddns_update_style: 'standard',
-            ddns_update_static: 'on',
-            ddns_update_optimize: 'on'
-          )
+          default_params.merge(interface: 'eth0')
         end
 
         it do
-          content = catalogue.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
-          expected_lines = [
-            'ddns-updates on;',
-            'ddns-update-style standard;',
-            'update-static-leases on;',
-            'update-optimization on;',
-            'use-host-decl-names on;',
-            'include "/etc/rndc.key";',
-            "zone #{params['dnsdomain'].first}. {",
-            "  primary #{params['nameservers'].first};",
-            "  primary6 #{params['nameservers_ipv6'].first};",
-            '  key rndc.key;',
-            '}',
-            "zone #{params['dnsdomain'].last}. {",
-            "  primary #{params['nameservers'].first};",
-            "  primary6 #{params['nameservers_ipv6'].first};",
-            '  key rndc.key;',
-            '}'
-          ]
-          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+          is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^ddns-update-style none;$})
         end
 
-        context 'dnskeyname defined' do
+        context 'dnsupdatekey defined' do
           let :params do
             default_params.merge(
               interface: 'eth0',
               dnsupdatekey: '/etc/rndc.key',
-              dnskeyname: 'rndc-key'
+              ddns_update_style: 'standard',
+              ddns_update_static: 'on',
+              ddns_update_optimize: 'on'
             )
           end
 
           it do
-            is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^  key rndc-key;$})
+            content = catalogue.resource('concat::fragment', 'dhcp-conf-ddns').send(:parameters)[:content]
+            expected_lines = [
+              'ddns-updates on;',
+              'ddns-update-style standard;',
+              'update-static-leases on;',
+              'update-optimization on;',
+              'use-host-decl-names on;',
+              'include "/etc/rndc.key";',
+              "zone #{params['dnsdomain'].first}. {",
+              "  primary #{params['nameservers'].first};",
+              "  primary6 #{params['nameservers_ipv6'].first};",
+              '  key rndc.key;',
+              '}',
+              "zone #{params['dnsdomain'].last}. {",
+              "  primary #{params['nameservers'].first};",
+              "  primary6 #{params['nameservers_ipv6'].first};",
+              '  key rndc.key;',
+              '}'
+            ]
+            expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+          end
+
+          context 'dnskeyname defined' do
+            let :params do
+              default_params.merge(
+                interface: 'eth0',
+                dnsupdatekey: '/etc/rndc.key',
+                dnskeyname: 'rndc-key'
+              )
+            end
+
+            it do
+              is_expected.to contain_concat__fragment('dhcp-conf-ddns').with_content(%r{^  key rndc-key;$})
+            end
           end
         end
       end
+      context 'ldap enabled with logfile' do
+        let :params do
+          default_params.merge(
+            interface: 'eth0',
+            use_ldap: true,
+            ldap_password: 'passw0rd',
+            ldap_debug_file: '/var/log/dhcp-ldap-startup.log'
+          )
+        end
+
+        it do
+          content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+          expected_lines = [
+            'ldap-port 389;',
+            'ldap-server "localhost";',
+            'ldap-username "cn=root, dc=example, dc=com";',
+            'ldap-password "passw0rd";',
+            'ldap-base-dn "dc=example, dc=com";',
+            'ldap-method dynamic;',
+            'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
+          ]
+          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+        end
+      end
+      context 'ldap enabled without logfile' do
+        let :params do
+          default_params.merge(
+            interface: 'eth0',
+            use_ldap: true,
+            ldap_password: 'passw0rd'
+          )
+        end
+
+        it do
+          content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
+          expected_lines = [
+            'ldap-port 389;',
+            'ldap-server "localhost";',
+            'ldap-username "cn=root, dc=example, dc=com";',
+            'ldap-password "passw0rd";',
+            'ldap-base-dn "dc=example, dc=com";',
+            'ldap-method dynamic;'
+          ]
+          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+        end
+      end
+
+      context 'mtu defined' do
+        let :params do
+          default_params.merge(
+            interface: 'eth0',
+            mtu: 9000
+          )
+        end
+
+        it do
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^option interface-mtu 9000;$})
+        end
+      end
+
+      context 'sysconfig file' do
+        let :params do
+          default_params.merge(interface: 'eth0')
+        end
+
+        it { should contain_file('/etc/sysconfig/dhcpd').with_content(%r{^DHCPDARGS=" eth0"$}) }
+      end
+
     end
-    context 'ldap enabled with logfile' do
-      let :params do
-        default_params.merge(
-          interface: 'eth0',
-          use_ldap: true,
-          ldap_password: 'passw0rd',
-          ldap_debug_file: '/var/log/dhcp-ldap-startup.log'
-        )
+    context '7.3' do
+      let :facts do
+        {
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '7.3',
+          operatingsystemmajrelease: '7',
+          concat_basedir: '/dne',
+          interface: 'eth0'
+        }
       end
 
-      it do
-        content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
-        expected_lines = [
-          'ldap-port 389;',
-          'ldap-server "localhost";',
-          'ldap-username "cn=root, dc=example, dc=com";',
-          'ldap-password "passw0rd";',
-          'ldap-base-dn "dc=example, dc=com";',
-          'ldap-method dynamic;',
-          'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
-        ]
-        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
-      end
-    end
-    context 'ldap enabled without logfile' do
-      let :params do
-        default_params.merge(
-          interface: 'eth0',
-          use_ldap: true,
-          ldap_password: 'passw0rd'
-        )
-      end
+      context 'systemd service file' do
+        let :params do
+          default_params.merge(interface: 'eth0')
+        end
 
-      it do
-        content = catalogue.resource('concat::fragment', 'dhcp-conf-ldap').send(:parameters)[:content]
-        expected_lines = [
-          'ldap-port 389;',
-          'ldap-server "localhost";',
-          'ldap-username "cn=root, dc=example, dc=com";',
-          'ldap-password "passw0rd";',
-          'ldap-base-dn "dc=example, dc=com";',
-          'ldap-method dynamic;'
-        ]
-        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
-      end
-    end
-
-    context 'mtu defined' do
-      let :params do
-        default_params.merge(
-          interface: 'eth0',
-          mtu: 9000
-        )
-      end
-
-      it do
-        is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^option interface-mtu 9000;$})
+        it { should contain_file('/etc/systemd/system/dhcpd.service').with_content(%r{ --no-pid eth0$}) }
       end
     end
   end
