@@ -285,7 +285,6 @@ describe 'dhcp', type: :class do
 
         it { is_expected.to contain_file('/etc/sysconfig/dhcpd').with_content(%r{^DHCPDARGS=" eth0"$}) }
       end
-
     end
     context '7.3' do
       let :facts do
