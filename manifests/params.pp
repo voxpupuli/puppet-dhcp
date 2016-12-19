@@ -43,6 +43,15 @@ class dhcp::params {
       $servicename      = ['dhcpd4.service']
       $package_provider = 'pacman'
     }
+    'Solaris': {
+      if ( $::operatingsystem != 'SmartOS' ) {
+        fail('Only SmartOS variant of Solaris is supported.')
+      }
+      $dhcp_dir         = '/opt/local/etc/dhcp'
+      $packagename      = 'isc-dhcpd'
+      $servicename      = 'isc-dhcpd'
+      $package_provider = undef
+    }
     default: {
       fail('dhcp is supported on the following OS\'s: Debian, Ubuntu, Darwin, FreeBSD, RedHat, Fedora, and CentOS.')
     }
