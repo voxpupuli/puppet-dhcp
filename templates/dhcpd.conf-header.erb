@@ -29,7 +29,7 @@ option domain-search "<%= @dnssearchdomains.join('", "') %>";
 <% end -%>
 option fqdn.no-client-update on;  # set the "O" and "S" flag bits
 option fqdn.rcode2 255;
-option pxegrub code 150 = text;
+option <%= @option_code150_label -%> code 150 = <%= @option_code150_value -%>;
 <% if @globaloptions.is_a? Array -%>
 <%   @globaloptions.each do |opt| -%>
 option <%= opt %>;

@@ -45,6 +45,8 @@ class dhcp (
   $ldap_method          = 'dynamic',
   $ldap_debug_file      = undef,
   $use_ldap             = false,
+  $option_code150_label = 'pxegrub',
+  $option_code150_value = 'text',
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
