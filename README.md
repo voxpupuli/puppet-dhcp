@@ -75,8 +75,8 @@ Create host reservations.
 ```puppet
 dhcp::host { 'server1':
   comment => 'Optional descriptive comment',
-  mac => '00:50:56:00:00:01',
-  ip  => '10.0.1.51',
+  mac     => '00:50:56:00:00:01',
+  ip      => '10.0.1.51',
 }
 ```
 
@@ -94,6 +94,57 @@ class { 'dhcp':
   pxeserver      => '10.0.1.50',
 }
 ```
+
+The following is the list of all parameters available for this class.
+
+| Parameter              | Data Type | Default Value                     |
+| :--------------------- | :-------: | :-------------------------------- |
+| `authoritative`        | Boolean   | `true`                            |
+| `ddns_update_static`   | String    | `'on'`                            |
+| `ddns_update_style`    | String    | `'interim'`                       |
+| `ddns_update_optimize` | String    | `'on'`                            |
+| `default_lease_time`   | Integer   | `43200`                           |
+| `dhcp_conf_ddns`       | String    | `'INTERNAL_TEMPLATE'`             |
+| `dhcp_conf_extra`      | String    | `'INTERNAL_TEMPLATE'`             |
+| `dhcp_conf_fragments`  | Hash      | `{}`                              |
+| `dhcp_conf_header`     | String    | `'INTERNAL_TEMPLATE'`             |
+| `dhcp_conf_ntp`        | String    | `'INTERNAL_TEMPLATE'`             |
+| `dhcp_conf_pxe`        | String    | `'INTERNAL_TEMPLATE'`             |
+| `dhcp_dir`             | String    | `$dhcp::params::dhcp_dir`         |
+| `dhcpd_conf_filename`  | String    | `'dhcpd.conf'`                    |
+| `dnsdomain`            | Array     | `undef`                           |
+| `dnskeyname`           | String    | `undef`                           |
+| `dnssearchdomains`     | Array     | `[]`                              |
+| `dnsupdatekey`         | String    | `undef`                           |
+| `extra_config`         | String    | `''`                              |
+| `globaloptions`        | String    | `''`                              |
+| `interface`            | String    | `'NOTSET'`                        |
+| `interfaces`           | Array     | `undef`                           |
+| `ipxe_bootstrap`       | String    | `undef`                           |
+| `ipxe_filename`        | String    | `undef`                           |
+| `ldap_base_dn`         | String    | `'dc=example, dc=com'`            |
+| `ldap_debug_file`      | String    | `undef`                           |
+| `ldap_method`          | String    | `'dynamic'`                       |
+| `ldap_password`        | String    | `''`                              |
+| `ldap_port`            | Integer   | `389`                             |
+| `ldap_server`          | String    | `'localhost'`                     |
+| `ldap_username`        | String    | `'cn=root, dc=example, dc=com'`   |
+| `logfacility`          | String    | `'daemon'`                        |
+| `max_lease_time`       | Integer   | `86400`                           |
+| `mtu`                  | Integer   | `undef`                           |
+| `nameservers`          | Array     | `[ '8.8.8.8', '8.8.4.4' ]`        |
+| `nameservers_ipv6`     | Array     | `[]`                              |
+| `ntpservers`           | Array     | `[]`                              |
+| `omapi_port`           | Integer   | `undef`                           |
+| `option_code150_label` | String    | `pxegrub`                         |
+| `option_code150_value` | String    | `text`                            |
+| `package_provider`     | String    | `$dhcp::params::package_provider` |
+| `packagename`          | String    | `$dhcp::params::packagename`      |
+| `pxefilename`          | String    | `undef`                           |
+| `pxeserver`            | String    | `undef`                           |
+| `service_ensure`       | Enum      | `running`                         |
+| `servicename`          | String    | `$dhcp::params::servicename`      |
+| `use_ldap`             | Boolean   | `false`                           |
 
 ## Contributors
 
