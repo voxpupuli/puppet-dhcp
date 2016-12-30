@@ -136,6 +136,8 @@ The following is the list of all parameters available for this class.
 | `nameservers_ipv6`     | Array     | `[]`                              |
 | `ntpservers`           | Array     | `[]`                              |
 | `omapi_port`           | Integer   | `undef`                           |
+| `option_code150_label` | String    | `pxegrub`                         |
+| `option_code150_value` | String    | `text`                            |
 | `package_provider`     | String    | `$dhcp::params::package_provider` |
 | `packagename`          | String    | `$dhcp::params::packagename`      |
 | `pxefilename`          | String    | `undef`                           |
