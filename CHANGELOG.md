@@ -1,6 +1,6 @@
 # Changelog
 
-## 2017-01-12 - Release 1.2.0
+## 2017-01-12 - Release 1.1.0
 
 Last release with Puppet 3 support!
 * Clarify test names
