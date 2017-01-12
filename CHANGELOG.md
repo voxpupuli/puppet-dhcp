@@ -1,4 +1,24 @@
-## 2016-09-26 Release 1.0.1
+# Changelog
+
+## 2017-01-12 - Release 1.2.0
+
+Last release with Puppet 3 support!
+* Clarify test names
+* RuboCop fixes
+* Add dhcpd_conf_filename param
+* Document the define in manifests/ignoredsubnet.pp
+* Add spec test for alternate conf filename
+* Add ipv6 nameservers param
+* Add dhcp6.name-servers option to pool.pp
+* Add dhcp::pool6
+* Add ddns_update_static & ddns_update_optimize params
+* Fix several markdown issues
+* Add missing badges
+* Deny dynamic bootp clients if failover is set
+* Parameterize option code 150
+* Set puppet min version_requirement to 3.8.7
+
+## 2016-09-26 - Release 1.0.1
 
 * Modulesync with latest Vox Pupuli defaults
 * Feature: Add ability to configure the MTU
@@ -8,7 +28,7 @@
 * Fix: Relax the concat version constraint to include version 2
 * Fix: A number of additional parameters are now type checked
 
-## 2016-08-18 Release 1.0.0
+## 2016-08-18 - Release 1.0.0
 
 * Modulesync with latest Vox Pupuli defaults
 * Feature: Add optional "comment" field to host template
@@ -19,7 +39,7 @@
 * Fix: Work around notification problem with concat resources
 
 
-## 2016-05-22 Release 0.5.0
+## 2016-05-22 - Release 0.5.0
 
 * First release in the voxpupuli namespace
 * Drop Ruby1.8 support
@@ -31,7 +51,7 @@
 * Fix wrong fact values in case blocks (init.pp/params.pp)
 
 
-## 2015-09-15 Release 0.4.0
+## 2015-09-15 - Release 0.4.0
 
 Backwards incompatible changes:
 * Updated to set `ddns-hostname` instead of `option host-name`.
@@ -56,7 +76,7 @@ Bugfixes:
 * Fix to properly wrap `domain-name` in quotes.
 
 
-## 2014-07-23 Release 0.3.0
+## 2014-07-23 - Release 0.3.0
 
 Backwards incompatible changes:
 * Now requires puppetlabs/concat >= 1.1.0
@@ -71,7 +91,7 @@ Bugfixes:
 * Ensure $dhcp_dir exists
 
 
-## 2014-03-25 Release 0.2.0
+## 2014-03-25 - Release 0.2.0
 
 Backwards incompatible changes:
 * Update concat dependency to puppetlabs/concat
