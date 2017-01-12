@@ -1,6 +1,6 @@
 {
   "name": "puppet-dhcp",
-  "version": "1.1.0",
+  "version": "1.1.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Manage the ISC dhcp daemon",
   "license": "Apache-2.0",
