@@ -9,6 +9,13 @@ not authoritative;
 <% end -%>
 <% if @omapi_port -%>
 omapi-port <%= @omapi_port %>;
+<% if @omapi_name && @omapi_key -%>
+key <%= @omapi_name %> {
+  algorithm <%= @omapi_algorithm %>;
+  secret "<%= @omapi_key %>";
+}
+omapi-key <%= @omapi_name %>;
+<% end -%>
 <% end -%>
 default-lease-time <%= @default_lease_time %>;
 max-lease-time <%= @max_lease_time %>;

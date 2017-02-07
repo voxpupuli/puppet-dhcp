@@ -116,8 +116,28 @@ describe 'dhcp', type: :class do
           )
         end
 
-        it 'defines dhcp header contents' do
-          is_expected.to contain_concat__fragment('dhcp-conf-header')
+        it 'sets omapi-port' do
+          is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^omapi-port 7911;})
+        end
+
+        context 'and omapi_name, omapi_key' do
+          let :params do
+            default_params.merge(
+              interfaces: ['eth0'],
+              omapi_port: 7911,
+              omapi_name: 'keyname',
+              omapi_key: 'keyvalue'
+            )
+          end
+
+          it 'adds key section' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^key keyname \{})
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^\s*algorithm HMAC-MD5;})
+          end
+
+          it 'sets key secret' do
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^\s*secret "keyvalue";})
+          end
         end
       end
 

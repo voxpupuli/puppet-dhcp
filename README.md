@@ -135,6 +135,9 @@ The following is the list of all parameters available for this class.
 | `nameservers`          | Array     | `[ '8.8.8.8', '8.8.4.4' ]`        |
 | `nameservers_ipv6`     | Array     | `[]`                              |
 | `ntpservers`           | Array     | `[]`                              |
+| `omapi_algorithm`      | String    | `HMAC-MD5`                        |
+| `omapi_key`            | String    | `undef`                           |
+| `omapi_name`           | String    | `undef`                           |
 | `omapi_port`           | Integer   | `undef`                           |
 | `option_code150_label` | String    | `pxegrub`                         |
 | `option_code150_value` | String    | `text`                            |
