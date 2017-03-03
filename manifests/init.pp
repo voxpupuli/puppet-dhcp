@@ -29,7 +29,10 @@ class dhcp (
   $max_lease_time       = 86400,
   $service_ensure       = running,
   $globaloptions        = '',
-  $omapi_port           = undef,
+  Optional[Integer[0,65535]] $omapi_port = undef,
+  Optional[String] $omapi_name = undef,
+  String $omapi_algorithm = 'HMAC-MD5',
+  Optional[String] $omapi_key = undef,
   $authoritative        = true,
   $extra_config         = '',
   $dhcp_dir             = $dhcp::params::dhcp_dir,
@@ -80,6 +83,12 @@ class dhcp (
 
   if $mtu {
     validate_integer($mtu)
+  }
+
+  if $omapi_name or $omapi_key {
+    if !$omapi_port or ! $omapi_name or ! $omapi_key or ! $omapi_algorithm {
+      fail('$omapi_port, $omapi_name, $omapi_key and $omapi_algorithm are required when defining an OMAPI key')
+    }
   }
 
   # Incase people set interface instead of interfaces work around
