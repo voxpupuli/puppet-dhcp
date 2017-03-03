@@ -152,14 +152,29 @@ class dhcp (
       }
     }
     'RedHat': {
-      file{ '/etc/sysconfig/dhcpd':
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        before  => Package[$packagename],
-        notify  => Service[$servicename],
-        content => template('dhcp/redhat/sysconfig-dhcpd'),
+      case $::operatingsystemmajrelease {
+        '5','6': {
+          file{ '/etc/sysconfig/dhcpd':
+            ensure  => present,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            before  => Package[$packagename],
+            notify  => Service[$servicename],
+            content => template('dhcp/redhat/sysconfig-dhcpd'),
+          }
+        }
+        default: {
+          file { '/etc/systemd/system/dhcpd.service':
+            ensure  => present,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            before  => Package[$packagename],
+            notify  => Service[$servicename],
+            content => template('dhcp/redhat/dhcpd.service'),
+          }
+        }
       }
     }
     default: { }
