@@ -1,55 +1,58 @@
 # == Class: dhcp
 #
 class dhcp (
-  $dnsdomain            = undef,
-  $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
-  $nameservers_ipv6     = [],
-  $ntpservers           = [],
-  $dnssearchdomains     = [],
-  $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_fragments = {},
-  $interfaces           = undef,
-  $interface            = 'NOTSET',
-  $dnsupdatekey         = undef,
-  $ddns_update_style    = 'interim',
-  $dnskeyname           = undef,
-  $ddns_update_static   = 'on',
-  $ddns_update_optimize = 'on',
-  $pxeserver            = undef,
-  $pxefilename          = undef,
-  $mtu                  = undef,
-  $ipxe_filename        = undef,
-  $ipxe_bootstrap       = undef,
-  $logfacility          = 'daemon',
-  $default_lease_time   = 43200,
-  $max_lease_time       = 86400,
-  $service_ensure       = running,
-  $globaloptions        = '',
-  Optional[Integer[0,65535]] $omapi_port = undef,
-  Optional[String] $omapi_name = undef,
-  String $omapi_algorithm = 'HMAC-MD5',
-  Optional[String] $omapi_key = undef,
-  $authoritative        = true,
-  $extra_config         = '',
-  $dhcp_dir             = $dhcp::params::dhcp_dir,
-  $dhcpd_conf_filename  = 'dhcpd.conf',
-  $packagename          = $dhcp::params::packagename,
-  $servicename          = $dhcp::params::servicename,
-  $package_provider     = $dhcp::params::package_provider,
-  $ldap_port            = 389,
-  $ldap_server          = 'localhost',
-  $ldap_username        = 'cn=root, dc=example, dc=com',
-  $ldap_password        = '',
-  $ldap_base_dn         = 'dc=example, dc=com',
-  $ldap_method          = 'dynamic',
-  $ldap_debug_file      = undef,
-  $use_ldap             = false,
-  $option_code150_label = 'pxegrub',
-  $option_code150_value = 'text',
+  Optional[Array[String]] $dnsdomain                      = undef,
+  Array[Stdlib::Compat::Ipv4] $nameservers                = [ '8.8.8.8', '8.8.4.4' ],
+  # the ipv6 regex is currently wrong so we can't use it here
+  # https://github.com/puppetlabs/puppetlabs-stdlib/pull/731
+  #Array[Stdlib::Compat::Ipv6] $nameservers_ipv6           = [],
+  Array[String] $nameservers_ipv6                         = [],
+  Array[String] $ntpservers                               = [],
+  Array[String] $dnssearchdomains                         = [],
+  String $dhcp_conf_header                                = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_ddns                                  = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_ntp                                   = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_pxe                                   = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_extra                                 = 'INTERNAL_TEMPLATE',
+  Hash[String, Hash[String, String]] $dhcp_conf_fragments = {},
+  Optional[Array[String]] $interfaces                     = undef,
+  String $interface                                       = 'NOTSET',
+  $dnsupdatekey                                           = undef,
+  String $ddns_update_style                               = 'interim',
+  $dnskeyname                                             = undef,
+  String $ddns_update_static                              = 'on',
+  String $ddns_update_optimize                            = 'on',
+  $pxeserver                                              = undef,
+  $pxefilename                                            = undef,
+  Optional[Integer] $mtu                                  = undef,
+  $ipxe_filename                                          = undef,
+  $ipxe_bootstrap                                         = undef,
+  String $logfacility                                     = 'daemon',
+  Integer $default_lease_time                             = 43200,
+  Integer $max_lease_time                                 = 86400,
+  $service_ensure                                         = running,
+  $globaloptions                                          = '',
+  Optional[Integer[0,65535]] $omapi_port                  = undef,
+  Optional[String] $omapi_name                            = undef,
+  String $omapi_algorithm                                 = 'HMAC-MD5',
+  Optional[String] $omapi_key                             = undef,
+  Boolean $authoritative                                  = true,
+  $extra_config                                           = '',
+  $dhcp_dir                                               = $dhcp::params::dhcp_dir,
+  String $dhcpd_conf_filename                             = 'dhcpd.conf',
+  $packagename                                            = $dhcp::params::packagename,
+  $servicename                                            = $dhcp::params::servicename,
+  $package_provider                                       = $dhcp::params::package_provider,
+  Integer[0,65535] $ldap_port                             = 389,
+  String $ldap_server                                     = 'localhost',
+  String $ldap_username                                   = 'cn=root, dc=example, dc=com',
+  String $ldap_password                                   = '',
+  String $ldap_base_dn                                    = 'dc=example, dc=com',
+  Enum['dynamic', 'static'] $ldap_method                  = 'dynamic',
+  Optional[Stdlib::Absolutepath] $ldap_debug_file         = undef,
+  Boolean $use_ldap                                       = false,
+  String $option_code150_label                            = 'pxegrub',
+  String $option_code150_value                            = 'text',
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
@@ -61,13 +64,6 @@ class dhcp (
   } else {
     $dnsdomain_real = $dnsdomain
   }
-  validate_array($dnsdomain_real)
-  validate_array($dnssearchdomains)
-
-  validate_array($nameservers)
-  validate_array($nameservers_ipv6)
-  validate_array($ntpservers)
-  validate_bool($authoritative)
 
   if $pxeserver or $pxefilename {
     if ! $pxeserver or ! $pxefilename {
@@ -79,10 +75,6 @@ class dhcp (
     if ! $ipxe_filename or ! $ipxe_bootstrap {
       fail( '$ipxe_filename and $ipxe_bootstrap are required when enabling ipxe' )
     }
-  }
-
-  if $mtu {
-    validate_integer($mtu)
   }
 
   if $omapi_name or $omapi_key {
@@ -244,16 +236,9 @@ class dhcp (
   }
 
   # check if this is really a bool
-  validate_bool($use_ldap)
   if $use_ldap {
-    unless ($ldap_method in ['dynamic', 'static']) {
-      fail('$ldap_method must be dynamic or static')
-    }
     if ($ldap_password == '') {
       fail('you must set $ldap_password')
-    }
-    unless (is_integer($ldap_port)) {
-      fail('$ldap_port must be an integer')
     }
     if ($ldap_server == '') {
       fail('you must set $ldap_server')

@@ -13,7 +13,7 @@ describe 'dhcp::pool6', type: :define do
   let :params do
     {
       'network'  => '2001:db8::',
-      'prefix'   => '64',
+      'prefix'   => 64,
       'range'    => '2001:db8::100 2001:db8::110'
     }
   end
