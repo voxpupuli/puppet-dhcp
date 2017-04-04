@@ -130,6 +130,7 @@ The following is the list of all parameters available for this class.
 | `ldap_server`          | String    | `'localhost'`                     |
 | `ldap_username`        | String    | `'cn=root, dc=example, dc=com'`   |
 | `logfacility`          | String    | `'daemon'`                        |
+| `manage_service`       | Boolean   | `true`                       |
 | `max_lease_time`       | Integer   | `86400`                           |
 | `mtu`                  | Integer   | `undef`                           |
 | `nameservers`          | Array     | `[ '8.8.8.8', '8.8.4.4' ]`        |

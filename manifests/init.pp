@@ -42,6 +42,7 @@ class dhcp (
   String $dhcpd_conf_filename                             = 'dhcpd.conf',
   $packagename                                            = $dhcp::params::packagename,
   $servicename                                            = $dhcp::params::servicename,
+  Boolean $manage_service                                 = true,
   $package_provider                                       = $dhcp::params::package_provider,
   Integer[0,65535] $ldap_port                             = 389,
   String $ldap_server                                     = 'localhost',
@@ -129,6 +130,12 @@ class dhcp (
     default             => $dhcp_conf_extra,
   }
 
+  # Notify service only if manage_service is true
+  $service_notify_real = $manage_service ? {
+    true    => Service[$servicename],
+    default => undef,
+  }
+
   package { $packagename:
     ensure   => installed,
     provider => $package_provider,
@@ -148,7 +155,7 @@ class dhcp (
         group   => 'root',
         mode    => '0644',
         before  => Package[$packagename],
-        notify  => Service[$servicename],
+        notify  => $service_notify_real,
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
     }
@@ -159,7 +166,7 @@ class dhcp (
         group   => 'root',
         mode    => '0644',
         before  => Package[$packagename],
-        notify  => Service[$servicename],
+        notify  => $service_notify_real,
         content => template('dhcp/redhat/sysconfig-dhcpd'),
       }
     }
@@ -167,7 +174,7 @@ class dhcp (
   }
 
   Concat { require => Package[$packagename],
-    notify => Service[$servicename],
+    notify => $service_notify_real,
   }
 
   # dhcpd.conf
