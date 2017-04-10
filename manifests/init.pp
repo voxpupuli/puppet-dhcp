@@ -263,10 +263,12 @@ class dhcp (
     }
   }
 
-  service { $servicename:
-    ensure    => $service_ensure,
-    enable    => true,
-    hasstatus => true,
-    require   => Package[$packagename],
+  if $manage_service {
+    service { $servicename:
+      ensure    => $service_ensure,
+      enable    => true,
+      hasstatus => true,
+      require   => Package[$packagename],
+    }
   }
 }
