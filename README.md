@@ -47,6 +47,8 @@ class { 'dhcp':
 Define the pool attributes. This example will create a pool, which serves IPs of
 two different ranges in the same network.
 
+May be passed as a hash into the DHCP class.
+
 ```puppet
 dhcp::pool{ 'ops.dc1.example.net':
   network => '10.0.1.0',
@@ -61,6 +63,7 @@ dhcp::pool{ 'ops.dc1.example.net':
 Define a subnet that will be ignored - useful for making the DHCP server only
 respond to requests forwarded by switches etc.
 
+May be passed as a hash into the DHCP class.
 ```puppet
 dhcp::ignoredsubnet{ 'eth0':
   network => '10.0.0.0',
@@ -72,6 +75,7 @@ dhcp::ignoredsubnet{ 'eth0':
 
 Create host reservations.
 
+May be passed as a hash into the DHCP class.
 ```puppet
 dhcp::host { 'server1':
   comment => 'Optional descriptive comment',
@@ -149,6 +153,11 @@ The following is the list of all parameters available for this class.
 | `service_ensure`       | Enum      | `running`                         |
 | `servicename`          | String    | `$dhcp::params::servicename`      |
 | `use_ldap`             | Boolean   | `false`                           |
+| `dhcp_classes`         | Hash      | `{}`                              |
+| `hosts`                | Hash      | `{}`                              |
+| `ignoredsubnets`       | Hash      | `{}`                              |
+| `pools`                | Hash      | `{}`                              |
+| `pools6`               | Hash      | `{}`                              |
 
 ## Contributors
 
