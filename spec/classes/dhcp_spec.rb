@@ -28,14 +28,16 @@ describe 'dhcp', type: :class do
     let :params do
       default_params
     end
+
     context 'input validation' do
-      %w(dnsdomain nameservers ntpservers).each do |arrays|
+      %w[dnsdomain nameservers ntpservers].each do |arrays|
         context "when #{arrays} is not an array" do
           let :params do
             super().merge(
               arrays => 'BOGON'
             )
           end
+
           it { is_expected.not_to compile }
         end
       end
@@ -44,6 +46,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(interface: 'eth0')
       end
+
       ['dhcp'].each do |dhclasses|
         it { is_expected.to contain_class(dhclasses) }
       end
@@ -306,6 +309,7 @@ describe 'dhcp', type: :class do
     let :params do
       default_params.merge(interface: 'eth0')
     end
+
     it { is_expected.to compile.with_all_deps }
     it do
       is_expected.to contain_package('dhcp'). \
@@ -322,6 +326,7 @@ describe 'dhcp', type: :class do
         concat_basedir: '/dne'
       }
     end
+
     context 'Debian' do
       let :facts do
         default_facts.merge(operatingsystem: 'Debian')
@@ -329,6 +334,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(interface: 'eth0')
       end
+
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_package('isc-dhcp-server') }
       it do
@@ -340,6 +346,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(interface: 'eth0')
       end
+
       context '12.04' do
         let :facts do
           default_facts.merge(
@@ -348,6 +355,7 @@ describe 'dhcp', type: :class do
             operatingsystemrelease: '12.04'
           )
         end
+
         it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp/dhcpd.hosts', '/etc/dhcp/dhcpd.conf', '/etc/dhcp/dhcpd.ignoredsubnets', '/etc/dhcp/dhcpd.pools'].each do |file|
           it { is_expected.to contain_concat(file) }
@@ -361,6 +369,7 @@ describe 'dhcp', type: :class do
             operatingsystemrelease: '10.04'
           )
         end
+
         it { is_expected.to compile.with_all_deps }
         ['/etc/dhcp3/dhcpd.hosts', '/etc/dhcp3/dhcpd.conf', '/etc/dhcp3/dhcpd.ignoredsubnets', '/etc/dhcp3/dhcpd.pools'].each do |file|
           it { is_expected.to contain_concat(file) }
@@ -378,6 +387,7 @@ describe 'dhcp', type: :class do
         concat_basedir: '/dne'
       }
     end
+
     context 'globaloptions set to a string' do
       let :params do
         default_params.merge(
@@ -385,6 +395,7 @@ describe 'dhcp', type: :class do
           globaloptions: 'root-path "/opt/ltsp/i386"'
         )
       end
+
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
     end
 
@@ -395,6 +406,7 @@ describe 'dhcp', type: :class do
           globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"']
         )
       end
+
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content %r{^option root-path "/opt/ltsp/i386";$} }
       it { is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^option tftp-server-name "1\.2\.3\.4";$}) }
     end
@@ -415,6 +427,7 @@ describe 'dhcp', type: :class do
         dhcpd_conf_filename: 'dhcpd6.conf'
       )
     end
+
     it { is_expected.to contain_concat('/etc/dhcp/dhcpd6.conf') }
   end
 
