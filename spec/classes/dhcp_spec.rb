@@ -158,6 +158,33 @@ describe 'dhcp', type: :class do
       end
     end
 
+    context 'resources' do
+      let :params do
+        default_params.merge('interfaces'     => ['eth0'],
+                             'pools'          => { 'ops.dc1.example.net' => { 'network' => '10.0.1.0',
+                                                                              'mask'    => '255.255.255.0',
+                                                                              'range'   => ['10.0.1.10 10.0.1.100', '10.0.1.200 10.0.1.250'],
+                                                                              'gateway' => '10.0.1.1' } },
+                             'pools6'         => { 'ipv6.dc1.example.net' => { 'network' => '2001:db8::',
+                                                                               'prefix'  => 64,
+                                                                               'range'   => '2001:db8::100 2001:db8::110' } },
+                             'ignoredsubnets' => { 'eth0' => { 'network' => '10.0.0.0',
+                                                               'mask'    => '255.255.255.0' } },
+                             'hosts'          => { 'server1' => { 'comment' => 'Optional descriptive comment',
+                                                                  'mac'     => '00:50:56:00:00:01',
+                                                                  'ip'      => '10.0.1.51' } },
+                             'dhcp_classes'   => { 'vendor-class-identifier' => { 'parameters' => ['match option vendor-class-identifier'] } })
+      end
+
+      it 'has resources' do
+        is_expected.to contain_concat__fragment('dhcp_pool_ops.dc1.example.net')
+        is_expected.to contain_concat__fragment('dhcp_pool_ipv6.dc1.example.net')
+        is_expected.to contain_concat__fragment('dhcp_ignoredsubnet_eth0')
+        is_expected.to contain_concat__fragment('dhcp_host_server1')
+        is_expected.to contain_concat__fragment('dhcp_class_vendor-class-identifier')
+      end
+    end
+
     context 'ntp' do
       let :params do
         default_params.merge(interfaces: ['eth0'])

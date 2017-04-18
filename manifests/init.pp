@@ -54,6 +54,11 @@ class dhcp (
   Boolean $use_ldap                                       = false,
   String $option_code150_label                            = 'pxegrub',
   String $option_code150_value                            = 'text',
+  Hash[String, Hash] $dhcp_classes                        = {},
+  Hash[String, Hash] $hosts                               = {},
+  Hash[String, Hash] $ignoredsubnets                      = {},
+  Hash[String, Hash] $pools                               = {},
+  Hash[String, Hash] $pools6                              = {},
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
@@ -241,6 +246,21 @@ class dhcp (
     content => "# static DHCP hosts\n",
     order   => '01',
   }
+
+  # Create any DHCP classes requested
+  create_resources('dhcp::dhcp_class', $dhcp_classes)
+
+  # Create any DHCP hosts requested
+  create_resources('dhcp::host', $hosts)
+
+  # Ignore any DHCP subnets requested
+  create_resources('dhcp::ignoredsubnet', $ignoredsubnets)
+
+  # Setup any DHCP pools for IPv6
+  create_resources('dhcp::pool6', $pools6)
+
+  # Setup any DHCP pools for IPv4
+  create_resources('dhcp::pool', $pools)
 
   # check if this is really a bool
   if $use_ldap {
