@@ -37,7 +37,7 @@ class dhcp (
   String $omapi_algorithm                                 = 'HMAC-MD5',
   Optional[String] $omapi_key                             = undef,
   Boolean $authoritative                                  = true,
-  Optional[Array] $extra_config                           = undef,
+  Optional[Variant[Array,String]] $extra_config           = undef,
   $dhcp_dir                                               = $dhcp::params::dhcp_dir,
   String $dhcpd_conf_filename                             = 'dhcpd.conf',
   $packagename                                            = $dhcp::params::packagename,
@@ -60,6 +60,13 @@ class dhcp (
   Hash[String, Hash] $pools                               = {},
   Hash[String, Hash] $pools6                              = {},
 ) inherits dhcp::params {
+
+  # check if extra_config is a string, if so convert it to an array
+  if $extra_config =~ String {
+    $extra_config_real = [$extra_config]
+  } else {
+    $extra_config_real = $extra_config
+  }
 
   if $dnsdomain == undef {
     if $::domain {
