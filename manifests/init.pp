@@ -37,7 +37,7 @@ class dhcp (
   String $omapi_algorithm                                 = 'HMAC-MD5',
   Optional[String] $omapi_key                             = undef,
   Boolean $authoritative                                  = true,
-  $extra_config                                           = '',
+  Optional[Array] $extra_config                           = undef,
   $dhcp_dir                                               = $dhcp::params::dhcp_dir,
   String $dhcpd_conf_filename                             = 'dhcpd.conf',
   $packagename                                            = $dhcp::params::packagename,
