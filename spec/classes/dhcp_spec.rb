@@ -326,6 +326,29 @@ describe 'dhcp', type: :class do
       end
     end
   end
+  context 'on SmartOS' do
+    let :facts do
+      {
+        osfamily: 'Solaris',
+        operatingsystem: 'SmartOS',
+        concat_basedir: '/dne'
+      }
+    end
+    let :params do
+      default_params.merge(interface: 'eth0')
+    end
+
+    it { is_expected.to compile.with_all_deps }
+    it do
+      is_expected.to contain_package('isc-dhcpd')
+    end
+    it do
+      is_expected.to contain_service('isc-dhcpd')
+    end
+    it do
+      is_expected.to contain_file('/opt/local/etc/dhcp')
+    end
+  end
   context 'on a Darwin OS' do
     let :facts do
       {
