@@ -2,8 +2,10 @@
 include "<%= @dhcp_dir %>/dhcpd.pools";
 include "<%= @dhcp_dir %>/dhcpd.hosts";
 include "<%= @dhcp_dir %>/dhcpd.ignoredsubnets";
-<% if @extra_config && !@extra_config.empty? -%>
+<% unless @extra_config.empty? -%>
 # extra_config
-<%= @extra_config %>
+<% @extra_config.each do |config_entry| %>
+<%= config_entry %>  
+<% end -%>
 <% end -%>
 # END DHCP Extra configurations
