@@ -1,11 +1,29 @@
-# Change log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
-These should not impact the functionality of the module.
+These should not affect the functionality of the module.
+
+## [v2.1.0](https://github.com/voxpupuli/puppet-dhcp/tree/v2.1.0) (2017-09-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v2.0.0...v2.1.0)
+
+**Implemented enhancements:**
+
+- Update $extra\_config to work with arrays and not only strings [\#156](https://github.com/voxpupuli/puppet-dhcp/pull/156) ([bastelfreak](https://github.com/bastelfreak))
+- Support SmartOS [\#155](https://github.com/voxpupuli/puppet-dhcp/pull/155) ([petems](https://github.com/petems))
+
+**Merged pull requests:**
+
+- Add breaking changes section to the changelog [\#153](https://github.com/voxpupuli/puppet-dhcp/pull/153) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v2.0.0) (2017-06-15)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v1.1.0...v2.0.0)
+
+**Breaking changes:**
+
+- modulesync 0.17.0 and drop puppet3 support [\#138](https://github.com/voxpupuli/puppet-dhcp/pull/138) ([bastelfreak](https://github.com/bastelfreak))
 
 **Closed issues:**
 
@@ -13,10 +31,6 @@ These should not impact the functionality of the module.
 - Add pools/hosts parameters for create\_resources\(\) [\#91](https://github.com/voxpupuli/puppet-dhcp/issues/91)
 - Add OMAPI key configuration [\#90](https://github.com/voxpupuli/puppet-dhcp/issues/90)
 - Add define for specifying DHCP classes [\#86](https://github.com/voxpupuli/puppet-dhcp/issues/86)
-
-**Breaking changes:**
-
-- modulesync 0.17.0 and drop puppet3 support [\#138](https://github.com/voxpupuli/puppet-dhcp/pull/138) ([bastelfreak](https://github.com/bastelfreak))
 
 **Merged pull requests:**
 
@@ -30,6 +44,7 @@ These should not impact the functionality of the module.
 - Add omapi\_name, key, algorithm parameters [\#141](https://github.com/voxpupuli/puppet-dhcp/pull/141) ([domcleal](https://github.com/domcleal))
 
 ## [v1.1.0](https://github.com/voxpupuli/puppet-dhcp/tree/v1.1.0) (2017-01-12)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v1.0.1...v1.1.0)
 
 **Merged pull requests:**
@@ -48,6 +63,7 @@ These should not impact the functionality of the module.
 - Clarify test names [\#115](https://github.com/voxpupuli/puppet-dhcp/pull/115) ([Yuav](https://github.com/Yuav))
 
 ## [v1.0.1](https://github.com/voxpupuli/puppet-dhcp/tree/v1.0.1) (2016-09-26)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v1.0.0...v1.0.1)
 
 **Closed issues:**
@@ -67,6 +83,7 @@ These should not impact the functionality of the module.
 - add mtu option [\#99](https://github.com/voxpupuli/puppet-dhcp/pull/99) ([alvin-huang](https://github.com/alvin-huang))
 
 ## [v1.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v1.0.0) (2016-08-18)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v0.5.0...v1.0.0)
 
 **Closed issues:**
@@ -90,6 +107,7 @@ These should not impact the functionality of the module.
 - Work around notification problem with concat resources [\#71](https://github.com/voxpupuli/puppet-dhcp/pull/71) ([michaelweiser](https://github.com/michaelweiser))
 
 ## [v0.5.0](https://github.com/voxpupuli/puppet-dhcp/tree/v0.5.0) (2016-05-22)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/0.4.0...v0.5.0)
 
 **Implemented enhancements:**
@@ -109,6 +127,7 @@ These should not impact the functionality of the module.
 - do not sort pool dns servers list [\#72](https://github.com/voxpupuli/puppet-dhcp/pull/72) ([jearls](https://github.com/jearls))
 
 ## [0.4.0](https://github.com/voxpupuli/puppet-dhcp/tree/0.4.0) (2015-09-15)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/0.3.0...0.4.0)
 
 **Breaking changes:**
@@ -138,6 +157,7 @@ These should not impact the functionality of the module.
 - Corrections and fixes... [\#40](https://github.com/voxpupuli/puppet-dhcp/pull/40) ([pecastro](https://github.com/pecastro))
 
 ## [0.3.0](https://github.com/voxpupuli/puppet-dhcp/tree/0.3.0) (2014-07-23)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/0.2.0...0.3.0)
 
 **Merged pull requests:**
@@ -148,6 +168,7 @@ These should not impact the functionality of the module.
 - Remove deprecation warnings for templates and use of concat::setup [\#32](https://github.com/voxpupuli/puppet-dhcp/pull/32) ([kscherer](https://github.com/kscherer))
 
 ## [0.2.0](https://github.com/voxpupuli/puppet-dhcp/tree/0.2.0) (2014-03-25)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/0.1.0...0.2.0)
 
 **Closed issues:**
@@ -168,6 +189,9 @@ These should not impact the functionality of the module.
 - Whitespace only removal of comments [\#10](https://github.com/voxpupuli/puppet-dhcp/pull/10) ([jeffmccune](https://github.com/jeffmccune))
 
 ## [0.1.0](https://github.com/voxpupuli/puppet-dhcp/tree/0.1.0) (2012-06-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/2ff3a2c89aac13d6c73282c044552d11cd81ce25...0.1.0)
+
 **Merged pull requests:**
 
 - Send the client hostname to be used if unset [\#9](https://github.com/voxpupuli/puppet-dhcp/pull/9) ([jeffmccune](https://github.com/jeffmccune))
@@ -181,4 +205,4 @@ These should not impact the functionality of the module.
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
