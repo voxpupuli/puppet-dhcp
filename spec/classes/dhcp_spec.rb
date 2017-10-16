@@ -349,6 +349,90 @@ describe 'dhcp', type: :class do
       is_expected.to contain_file('/opt/local/etc/dhcp')
     end
   end
+
+  context 'Systemd' do
+    context 'RedHat 7' do
+      let :facts do
+        {
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '7',
+          operatingsystemmajrelease: '7',
+          concat_basedir: '/dne',
+          service_provider: 'systemd'
+        }
+      end
+      let :params do
+        default_params.merge(interface: 'eth0')
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
+          with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
+      end
+    end
+    context 'RedHat 6' do
+      let :facts do
+        {
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '6',
+          operatingsystemmajrelease: '6',
+          concat_basedir: '/dne',
+          service_provider: 'systemd'
+        }
+      end
+      let :params do
+        default_params.merge(interface: 'eth0')
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.not_to contain_file('/etc/systemd/system/dhcpd.service')
+      end
+    end
+    context 'Debian' do
+      let :facts do
+        {
+          osfamily: 'Debian',
+          operatingsystem: 'Ubuntu',
+          operatingsystemrelease: '16.04',
+          operatingsystemmajrelease: '16.04',
+          concat_basedir: '/dne',
+          service_provider: 'systemd'
+        }
+      end
+      let :params do
+        default_params.merge(interface: 'eth0')
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.not_to contain_file('/etc/systemd/system/dhcpd.service')
+      end
+    end
+    context 'Arch' do
+      let :facts do
+        {
+          osfamily: 'Archlinux',
+          operatingsystem: 'ArchLinux',
+          concat_basedir: '/dne',
+          service_provider: 'systemd'
+        }
+      end
+      let :params do
+        default_params.merge(interface: 'eth0')
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
+          with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
+      end
+    end
+  end
+
   context 'on a Darwin OS' do
     let :facts do
       {

@@ -158,31 +158,60 @@ class dhcp (
     require => Package[$packagename],
   }
 
-  # Only debian and ubuntu have this style of defaults for startup.
-  case $::osfamily {
-    'Debian': {
-      file{ '/etc/default/isc-dhcp-server':
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        before  => Package[$packagename],
-        notify  => $service_notify_real,
-        content => template('dhcp/debian/default_isc-dhcp-server'),
-      }
-    }
+
+
+  case $facts['osfamily'] {
     'RedHat': {
-      file{ '/etc/sysconfig/dhcpd':
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        before  => Package[$packagename],
-        notify  => $service_notify_real,
-        content => template('dhcp/redhat/sysconfig-dhcpd'),
+      if $facts['operatingsystemmajrelease'] == '7' {
+        $use_systemd_service_file = true
+      } else {
+        $use_systemd_service_file = false
       }
     }
-    default: { }
+    'ArchLinux': {
+      $use_systemd_service_file = true
+    }
+    default: {
+      $use_systemd_service_file = false
+    }
+  }
+
+  if $use_systemd_service_file {
+    file { '/etc/systemd/system/dhcpd.service':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      notify  => Service[$servicename],
+      content => template('dhcp/dhcpd.service'),
+    }
+  } else {
+    # Only debian and ubuntu have this style of defaults for startup.
+    case $facts['osfamily'] {
+      'Debian': {
+        file{ '/etc/default/isc-dhcp-server':
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          before  => Package[$packagename],
+          notify  => $service_notify_real,
+          content => template('dhcp/debian/default_isc-dhcp-server'),
+        }
+      }
+      'RedHat': {
+        file {'/etc/sysconfig/dhcpd':
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          before  => Package[$packagename],
+          notify  => $service_notify_real,
+          content => template('dhcp/redhat/sysconfig-dhcpd'),
+        }
+      }
+      default: { }
+    }
   }
 
   Concat { require => Package[$packagename],
