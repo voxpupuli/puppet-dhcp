@@ -2,10 +2,10 @@
 #
 class dhcp::params {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      if ( $::operatingsystem == 'Ubuntu' ) {
-        if (versioncmp($::operatingsystemrelease, '12.04') >= 0) {
+      if ( $facts['os']['name'] == 'Ubuntu' ) {
+        if (versioncmp($facts['os']['release']['full'], '12.04') >= 0) {
           $dhcp_dir    = '/etc/dhcp'
         } else {
           $dhcp_dir    = '/etc/dhcp3'
@@ -44,7 +44,7 @@ class dhcp::params {
       $package_provider = 'pacman'
     }
     'Solaris': {
-      if ( $::operatingsystem != 'SmartOS' ) {
+      if ( $facts['os']['name'] != 'SmartOS' ) {
         fail('Only SmartOS variant of Solaris is supported.')
       }
       $dhcp_dir         = '/opt/local/etc/dhcp'
