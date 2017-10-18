@@ -16,32 +16,37 @@ class dhcp::params {
       $packagename      = 'isc-dhcp-server'
       $servicename      = 'isc-dhcp-server'
       $package_provider = undef
+      $dhcpd_binary     = undef
     }
     'Darwin': {
       $dhcp_dir         = '/opt/local/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'org.macports.dhcpd'
       $package_provider = 'macports'
+      $dhcpd_binary     = undef
     }
     'FreeBSD': {
       $dhcp_dir         = '/usr/local/etc'
       $packagename      = 'net/isc-dhcp43-server'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
+      $dhcpd_binary     = undef
     }
     'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'dhcpd'
       $package_provider = undef
+      $dhcpd_binary     = '/usr/sbin/dhcpd'
     }
     'Archlinux': {
       $dhcp_dir         = '/etc'
       $packagename      = 'dhcp'
       # we currently do not manage the dhcpd6 config
-      #$servicename      = ['dhcpd4.service', 'dhcpd6.service']
+      #$servicename     = ['dhcpd4.service', 'dhcpd6.service']
       $servicename      = ['dhcpd4.service']
       $package_provider = 'pacman'
+      $dhcpd_binary     = '/usr/bin/dhcpd'
     }
     'Solaris': {
       if ( $facts['os']['name'] != 'SmartOS' ) {
@@ -51,6 +56,7 @@ class dhcp::params {
       $packagename      = 'isc-dhcpd'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
+      $dhcpd_binary     = undef
     }
     default: {
       fail('dhcp is supported on the following OS\'s: Debian, Ubuntu, Darwin, FreeBSD, RedHat, Fedora, and CentOS.')
