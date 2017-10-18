@@ -333,7 +333,7 @@ describe 'dhcp', type: :class do
         osfamily: 'Solaris',
         operatingsystem: 'SmartOS',
         concat_basedir: '/dne',
-        os: { family: 'Solaris' }
+        os: { family: 'Solaris', name: 'SmartOS' }
       }
     end
     let :params do
@@ -509,7 +509,7 @@ describe 'dhcp', type: :class do
             osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '10.04',
-            os: { family: 'Debian' }
+            os: { family: 'Debian', name: 'Ubuntu' }
           )
         end
 
