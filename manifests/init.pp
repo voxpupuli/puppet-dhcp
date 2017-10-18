@@ -69,7 +69,7 @@ class dhcp (
   }
 
   if $dnsdomain == undef {
-    if $::domain {
+    if $facts['domain'] {
       $dnsdomain_real = [ $::domain ]
     } else {
       fail('dhcp::dnsdomain must be set and domain fact is missing to use as a default value.')
