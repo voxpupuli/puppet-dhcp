@@ -434,7 +434,7 @@ describe 'dhcp', type: :class do
       it { is_expected.to compile.with_all_deps }
       it do
         is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
-          with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
+          with_content(%r{ExecStart=/usr/bin/dhcpd -f -cf /etc/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
       end
     end
   end
