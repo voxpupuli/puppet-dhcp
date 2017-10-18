@@ -22,7 +22,8 @@ describe 'dhcp', type: :class do
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
+        os: { family: 'RedHat' }
       }
     end
     let :params do
@@ -47,7 +48,7 @@ describe 'dhcp', type: :class do
         default_params.merge(interface: 'eth0')
       end
 
-      ['dhcp'].each do |dhclasses|
+      ['dhcp', 'dhcp::params'].each do |dhclasses|
         it { is_expected.to contain_class(dhclasses) }
       end
       ['/etc/dhcp/dhcpd.pools', '/etc/dhcp/dhcpd.hosts'].each do |concats|
@@ -331,7 +332,8 @@ describe 'dhcp', type: :class do
       {
         osfamily: 'Solaris',
         operatingsystem: 'SmartOS',
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
+        os: { family: 'Solaris' }
       }
     end
     let :params do
@@ -359,7 +361,8 @@ describe 'dhcp', type: :class do
           operatingsystemrelease: '7',
           operatingsystemmajrelease: '7',
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
+          os: { family: 'RedHat' }
         }
       end
       let :params do
@@ -380,7 +383,8 @@ describe 'dhcp', type: :class do
           operatingsystemrelease: '6',
           operatingsystemmajrelease: '6',
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
+          os: { family: 'RedHat' }
         }
       end
       let :params do
@@ -400,7 +404,8 @@ describe 'dhcp', type: :class do
           operatingsystemrelease: '16.04',
           operatingsystemmajrelease: '16.04',
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
+          os: { family: 'Debian' }
         }
       end
       let :params do
@@ -418,7 +423,8 @@ describe 'dhcp', type: :class do
           osfamily: 'Archlinux',
           operatingsystem: 'ArchLinux',
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
+          os: { family: 'Archlinux' }
         }
       end
       let :params do
@@ -437,7 +443,8 @@ describe 'dhcp', type: :class do
     let :facts do
       {
         osfamily: 'Darwin',
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
+        os: { family: 'Darwin' }
       }
     end
     let :params do
@@ -463,7 +470,7 @@ describe 'dhcp', type: :class do
 
     context 'Debian' do
       let :facts do
-        default_facts.merge(operatingsystem: 'Debian')
+        default_facts.merge(operatingsystem: 'Debian', os: { family: 'Debian' })
       end
       let :params do
         default_params.merge(interface: 'eth0')
@@ -486,7 +493,8 @@ describe 'dhcp', type: :class do
           default_facts.merge(
             osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
-            operatingsystemrelease: '12.04'
+            operatingsystemrelease: '12.04',
+            os: { family: 'Debian' }
           )
         end
 
@@ -500,7 +508,8 @@ describe 'dhcp', type: :class do
           default_facts.merge(
             osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
-            operatingsystemrelease: '10.04'
+            operatingsystemrelease: '10.04',
+            os: { family: 'Debian' }
           )
         end
 
@@ -518,7 +527,8 @@ describe 'dhcp', type: :class do
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
         operatingsystemrelease: '12.04',
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
+        os: { family: 'Debian' }
       }
     end
 
@@ -552,6 +562,7 @@ describe 'dhcp', type: :class do
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
         operatingsystemrelease: '14.04',
+        os: { family: 'Debian' },
         concat_basedir: '/dne'
       }
     end
@@ -571,6 +582,7 @@ describe 'dhcp', type: :class do
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
         operatingsystemrelease: '12.04',
+        os: { family: 'Debian' },
         concat_basedir: '/dne'
       }
     end

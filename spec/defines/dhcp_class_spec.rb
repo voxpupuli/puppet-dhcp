@@ -5,7 +5,8 @@ describe 'dhcp::dhcp_class', type: :define do
   let(:header) { ['#################################', "# Custom class #{title}", '#################################'] }
   let(:facts) do
     {
-      osfamily: 'RedHat'
+      osfamily: 'RedHat',
+      os: { family: 'RedHat' }
     }
   end
 

@@ -2,7 +2,7 @@
 #
 class dhcp::params {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
       if ( $::operatingsystem == 'Ubuntu' ) {
         if (versioncmp($::operatingsystemrelease, '12.04') >= 0) {
