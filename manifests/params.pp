@@ -5,7 +5,7 @@ class dhcp::params {
   case $facts['os']['family'] {
     'Debian': {
       if ( $facts['os']['name'] == 'Ubuntu' ) {
-        if (versioncmp($::operatingsystemrelease, '12.04') >= 0) {
+        if (versioncmp($facts['os']['release']['full'], '12.04') >= 0) {
           $dhcp_dir    = '/etc/dhcp'
         } else {
           $dhcp_dir    = '/etc/dhcp3'

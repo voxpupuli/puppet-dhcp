@@ -509,7 +509,7 @@ describe 'dhcp', type: :class do
             osfamily: 'Debian',
             operatingsystem: 'Ubuntu',
             operatingsystemrelease: '10.04',
-            os: { family: 'Debian', name: 'Ubuntu' }
+            os: { family: 'Debian', name: 'Ubuntu', release: { full: '10.04' } }
           )
         end
 
