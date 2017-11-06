@@ -4,7 +4,7 @@ host <%= @host %> {
 <% end -%>
   hardware ethernet   <%= @mac.upcase %>;
   fixed-address       <%= @ip %>;
-  ddns-hostname       "<%= @name %>";
+  ddns-hostname       "<%= @ddns_hostname %>";
 <% if @ignored -%>
   ignore              booting;
 <% end -%>
