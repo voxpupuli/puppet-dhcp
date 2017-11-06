@@ -12,10 +12,11 @@ class dhcp::failover (
   $load_balance         = '3',
   $omapi_key            = '',
   $dhcp_dir             = $dhcp::params::dhcp_dir,
+  $dhcpd_conf_filename  = $dhcp::params::dhcpd_conf_filename,
 ) inherits dhcp::params {
 
   concat::fragment { 'dhcp-conf-failover':
-    target  => "${dhcp_dir}/dhcpd.conf",
+    target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => template('dhcp/dhcpd.conf.failover.erb'),
   }
 }
