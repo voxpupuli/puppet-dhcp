@@ -7,7 +7,7 @@ After=time-sync.target
 
 [Service]
 Type=notify
-ExecStart=<%= @dhcpd_binary %> -f -cf <%= @dhcp_dir %>/dhcpd.conf -user dhcpd -group dhcpd --no-pid <%= Array(@dhcp_interfaces).join(' ') %>
+ExecStart=<%= @dhcpd_binary %> -f -cf <%= @dhcp_dir %>/<%= @dhcpd_conf_filename %> -user dhcpd -group dhcpd --no-pid <%= Array(@dhcp_interfaces).join(' ') %>
 
 [Install]
 WantedBy=multi-user.target
