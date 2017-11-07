@@ -3,6 +3,7 @@
 define dhcp::host (
   Stdlib::Compat::Ip_address $ip,
   String $mac,
+  String $ddns_hostname = $name,
   Hash $options     = {},
   String $comment   ='',
   Boolean $ignored  = false,
