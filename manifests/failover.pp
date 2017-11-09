@@ -11,8 +11,8 @@ class dhcp::failover (
   $load_split           = '128',
   $load_balance         = '3',
   $omapi_key            = '',
-  $dhcp_dir             = $dhcp::params::dhcp_dir,
-  $dhcpd_conf_filename  = $dhcp::params::dhcpd_conf_filename,
+  $dhcp_dir             = $dhcp::dhcp_dir,
+  $dhcpd_conf_filename  = $dhcp::dhcpd_conf_filename,
 ) inherits dhcp::params {
 
   concat::fragment { 'dhcp-conf-failover':
