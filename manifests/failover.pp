@@ -13,7 +13,7 @@ class dhcp::failover (
   $omapi_key            = '',
   $dhcp_dir             = $dhcp::dhcp_dir,
   $dhcpd_conf_filename  = $dhcp::dhcpd_conf_filename,
-) inherits dhcp::params {
+) {
 
   concat::fragment { 'dhcp-conf-failover':
     target  => "${dhcp_dir}/${dhcpd_conf_filename}",
