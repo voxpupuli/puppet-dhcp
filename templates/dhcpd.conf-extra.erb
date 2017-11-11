@@ -1,11 +1,12 @@
 # BEGIN DHCP Extra configurations
-include "<%= @dhcp_dir %>/dhcpd.pools";
-include "<%= @dhcp_dir %>/dhcpd.hosts";
-include "<%= @dhcp_dir %>/dhcpd.ignoredsubnets";
 <% unless @extra_config.empty? -%>
-# extra_config
 <% @extra_config.each do |config_entry| %>
 <%= config_entry %>  
 <% end -%>
 <% end -%>
 # END DHCP Extra configurations
+# BEGIN Additional configuration files
+include "<%= @dhcp_dir %>/dhcpd.pools";
+include "<%= @dhcp_dir %>/dhcpd.hosts";
+include "<%= @dhcp_dir %>/dhcpd.ignoredsubnets";
+# END Additional configuration files
