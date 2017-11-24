@@ -183,7 +183,7 @@ class dhcp (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      notify  => Service[$servicename],
+      notify  => $service_notify_real,
       content => template('dhcp/dhcpd.service'),
     }
   } else {
