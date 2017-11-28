@@ -22,6 +22,7 @@ class dhcp (
   $dnskeyname                                             = undef,
   String $ddns_update_static                              = 'on',
   String $ddns_update_optimize                            = 'on',
+  String $ddns_client_updates                             = 'allow',
   $pxeserver                                              = undef,
   $pxefilename                                            = undef,
   Optional[Integer] $mtu                                  = undef,
