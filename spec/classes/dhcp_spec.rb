@@ -237,6 +237,7 @@ describe 'dhcp', type: :class do
             'update-static-leases on;',
             'update-optimization on;',
             'use-host-decl-names on;',
+            'allow client-updates;',
             'include "/etc/rndc.key";',
             "zone #{params['dnsdomain'].first}. {",
             "  primary #{params['nameservers'].first};",
