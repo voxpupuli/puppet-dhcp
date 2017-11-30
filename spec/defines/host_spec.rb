@@ -33,7 +33,7 @@ describe 'dhcp::host', type: :define do
       "  ddns-hostname       \"#{title}\";",
       '}'
     ]
-    expect(content.split("\n")).to eq(expected_lines)
+    expect(content.split("\n")).to match_array(expected_lines)
   end
 
   context 'when options defined' do
@@ -58,7 +58,7 @@ describe 'dhcp::host', type: :define do
         '  option vendor-encapsulated-options 01:04:31:41:50:43;',
         '}'
       ]
-      expect(content.split("\n")).to eq(expected_lines)
+      expect(content.split("\n")).to match_array(expected_lines)
     end
   end
 
@@ -80,7 +80,7 @@ describe 'dhcp::host', type: :define do
         '  ignore              booting;',
         '}'
       ]
-      expect(content.split("\n")).to eq(expected_lines)
+      expect(content.split("\n")).to match_array(expected_lines)
     end
   end
 end
