@@ -24,7 +24,7 @@ describe 'dhcp::dhcp_class', type: :define do
         '  match option vendor-class-identifier;',
         '}'
       ]
-      expect(content.split("\n")).to eq(expected_lines)
+      expect(content.split("\n")).to match_array(expected_lines)
     end
   end
 
@@ -43,7 +43,7 @@ describe 'dhcp::dhcp_class', type: :define do
         '  match option identifier-2;',
         '}'
       ]
-      expect(content.split("\n")).to eq(expected_lines)
+      expect(content.split("\n")).to match_array(expected_lines)
     end
   end
 end

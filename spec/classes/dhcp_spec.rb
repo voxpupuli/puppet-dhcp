@@ -249,7 +249,7 @@ describe 'dhcp', type: :class do
             '  key rndc.key;',
             '}'
           ]
-          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+          expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
         end
 
         context 'dnskeyname defined' do
@@ -288,7 +288,7 @@ describe 'dhcp', type: :class do
           'ldap-method dynamic;',
           'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
         ]
-        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
       end
     end
     context 'ldap enabled without logfile' do
@@ -310,7 +310,7 @@ describe 'dhcp', type: :class do
           'ldap-base-dn "dc=example, dc=com";',
           'ldap-method dynamic;'
         ]
-        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
       end
     end
 
@@ -597,7 +597,7 @@ describe 'dhcp', type: :class do
     it do
       content = catalogue.resource('concat::fragment', 'dhcp-conf-pxe').send(:parameters)[:content]
       expected_lines = ['filename "pxelinux.0";', 'next-server 1.2.3.4;']
-      expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+      expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
     end
 
     context 'ipxefilename defined' do
@@ -618,7 +618,7 @@ describe 'dhcp', type: :class do
           '      filename "undionly-20140116.kpxe";',
           '}'
         ]
-        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to eq(expected_lines)
+        expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
       end
     end
   end

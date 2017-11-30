@@ -31,6 +31,6 @@ describe 'dhcp::ignoredsubnet' do
       '  not authoritative;',
       '}'
     ]
-    expect(content.split("\n")).to eq(expected_lines)
+    expect(content.split("\n")).to match_array(expected_lines)
   end
 end
