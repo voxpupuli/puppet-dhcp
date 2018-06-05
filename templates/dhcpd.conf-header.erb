@@ -12,7 +12,7 @@ omapi-port <%= @omapi_port %>;
 <% if @omapi_name && @omapi_key -%>
 key <%= @omapi_name %> {
   algorithm <%= @omapi_algorithm %>;
-  secret "<%= @omapi_key %>";
+  secret <%= @omapi_key %>;
 }
 omapi-key <%= @omapi_name %>;
 <% end -%>
