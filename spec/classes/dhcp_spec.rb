@@ -140,7 +140,7 @@ describe 'dhcp', type: :class do
           end
 
           it 'sets key secret' do
-            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^\s*secret "keyvalue";})
+            is_expected.to contain_concat__fragment('dhcp-conf-header').with_content(%r{^\s*secret keyvalue;})
           end
         end
       end
