@@ -3,10 +3,7 @@
 class dhcp (
   Optional[Array[String]] $dnsdomain                      = undef,
   Array[Stdlib::Compat::Ipv4] $nameservers                = [ '8.8.8.8', '8.8.4.4' ],
-  # the ipv6 regex is currently wrong so we can't use it here
-  # https://github.com/puppetlabs/puppetlabs-stdlib/pull/731
-  #Array[Stdlib::Compat::Ipv6] $nameservers_ipv6           = [],
-  Array[String] $nameservers_ipv6                         = [],
+  Array[Stdlib::Compat::Ipv6] $nameservers_ipv6           = [],
   Array[String] $ntpservers                               = [],
   Array[String] $dnssearchdomains                         = [],
   String $dhcp_conf_header                                = 'INTERNAL_TEMPLATE',
