@@ -8,4 +8,8 @@
 
 # On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
 #       Separate multiple interfaces with spaces, e.g. "eth0 eth1".
+<% if @operatingsystemmajrelease >= '9' && @operatingsystem == 'Debian' -%>
+INTERFACESv4="<%= Array(@dhcp_interfaces).join(' ') %>"
+<% else -%>
 INTERFACES="<%= Array(@dhcp_interfaces).join(' ') %>"
+<% end -%>
