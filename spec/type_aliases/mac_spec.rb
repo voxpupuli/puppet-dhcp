@@ -25,22 +25,22 @@ describe 'Dhcp::Mac' do
       'CC:CC:CC:CC:CC:CC',
       'DD:DD:DD:DD:DD:DD',
       'EE:EE:EE:EE:EE:EE',
-      'FF:FF:FF:FF:FF:FF',
+      'FF:FF:FF:FF:FF:FF'
     )
   end
 
   describe 'invalid value handling' do
     [
       nil,
-      "aa:aa:aa:aa:aa",
-      "aaa:aa:aa:aa:aa:aa",
-      "aa:aaa:aa:aa:aa:aa",
-      "aa:aa:aaa:aa:aa:aa",
-      "aa:aa:aa:aaa:aa:aa",
-      "aa:aa:aa:aa:aaa:aa",
-      "aa:aa:aa:aa:aa:aaa",
-      "aa:aa:aa:aa:aa:aa:aa",
-      "gg:gg:gg:gg:gg:gg",
+      'aa:aa:aa:aa:aa',
+      'aaa:aa:aa:aa:aa:aa',
+      'aa:aaa:aa:aa:aa:aa',
+      'aa:aa:aaa:aa:aa:aa',
+      'aa:aa:aa:aaa:aa:aa',
+      'aa:aa:aa:aa:aaa:aa',
+      'aa:aa:aa:aa:aa:aaa',
+      'aa:aa:aa:aa:aa:aa:aa',
+      'gg:gg:gg:gg:gg:gg'
     ].each do |value|
       it { is_expected.not_to allow_value(value) }
     end
