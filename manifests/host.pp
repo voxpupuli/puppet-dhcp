@@ -2,7 +2,7 @@
 #
 define dhcp::host (
   Stdlib::Compat::Ip_address $ip,
-  Stdlib::MAC $mac,
+  Dhcp::Mac $mac,
   String $ddns_hostname = $name,
   Hash $options     = {},
   String $comment   ='',
