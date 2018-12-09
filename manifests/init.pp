@@ -2,7 +2,7 @@
 #
 class dhcp (
   Optional[Array[String]] $dnsdomain                      = undef,
-  Array[Stdlib::Compat::Ipv4] $nameservers                = [ '8.8.8.8', '8.8.4.4' ],
+  Array[Stdlib::Compat::Ipv4] $nameservers                = [],
   Array[Stdlib::Compat::Ipv6] $nameservers_ipv6           = [],
   Array[String] $ntpservers                               = [],
   Array[String] $dnssearchdomains                         = [],
