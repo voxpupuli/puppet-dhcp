@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.4.0](https://github.com/voxpupuli/puppet-dhcp/tree/v3.4.0) (2018-12-19)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v3.3.0...v3.4.0)
+
+**Implemented enhancements:**
+
+- add mac address validation [\#205](https://github.com/voxpupuli/puppet-dhcp/pull/205) ([tiernap](https://github.com/tiernap))
+- add debian 9 support [\#197](https://github.com/voxpupuli/puppet-dhcp/pull/197) ([bastelfreak](https://github.com/bastelfreak))
+- add ubuntu 18.04 support [\#196](https://github.com/voxpupuli/puppet-dhcp/pull/196) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Don't add a newline between each DHCP option [\#207](https://github.com/voxpupuli/puppet-dhcp/pull/207) ([bastelfreak](https://github.com/bastelfreak))
+- Purge useless trailing whitespace in template [\#206](https://github.com/voxpupuli/puppet-dhcp/pull/206) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- make main section nameservers optional [\#204](https://github.com/voxpupuli/puppet-dhcp/pull/204) ([SourceDoctor](https://github.com/SourceDoctor))
+- modulesync 2.1.0 and allow puppet 6.x [\#199](https://github.com/voxpupuli/puppet-dhcp/pull/199) ([bastelfreak](https://github.com/bastelfreak))
+- fix wrong version schema in metadata.json [\#198](https://github.com/voxpupuli/puppet-dhcp/pull/198) ([bastelfreak](https://github.com/bastelfreak))
+- enable acceptance tests [\#195](https://github.com/voxpupuli/puppet-dhcp/pull/195) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.3.0](https://github.com/voxpupuli/puppet-dhcp/tree/v3.3.0) (2018-09-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v3.2.0...v3.3.0)
@@ -249,7 +271,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Release 0.2.0 [\#31](https://github.com/voxpupuli/puppet-dhcp/pull/31) ([hunner](https://github.com/hunner))
 - Correct concat dependency [\#30](https://github.com/voxpupuli/puppet-dhcp/pull/30) ([hunner](https://github.com/hunner))
 - Concat update [\#28](https://github.com/voxpupuli/puppet-dhcp/pull/28) ([jhoblitt](https://github.com/jhoblitt))
 - Add apache 2.0 license. [\#26](https://github.com/voxpupuli/puppet-dhcp/pull/26) ([apenney](https://github.com/apenney))
