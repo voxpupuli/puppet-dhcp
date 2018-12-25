@@ -1,6 +1,6 @@
 ---
 sudo: false
-dist: trusty
+dist: xenial
 language: ruby
 cache: bundler
 before_install:
@@ -107,12 +107,6 @@ matrix:
     bundler_args: --without development release
     dist: trusty
     env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_debug=true BEAKER_setfile=centos6-64 BEAKER_HYPERVISOR=docker CHECK=beaker
-    services: docker
-    sudo: required
-  - rvm: 2.5.1
-    bundler_args: --without development release
-    dist: trusty
-    env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=puppet6-nightly BEAKER_debug=true BEAKER_setfile=centos6-64 BEAKER_HYPERVISOR=docker CHECK=beaker
     services: docker
     sudo: required
   - rvm: 2.5.1
