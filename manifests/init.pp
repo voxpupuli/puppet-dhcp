@@ -209,6 +209,15 @@ class dhcp (
           content => template('dhcp/redhat/sysconfig-dhcpd'),
         }
       }
+      /^(FreeBSD|DragonFly)$/: {
+        $interfaces_line = join($dhcp_interfaces, ' ')
+        augeas { 'set listen interfaces':
+          context => '/files/etc/rc.conf',
+          changes => "set dhcpd_ifaces '\"${interfaces_line}\"'",
+          before  => Package[$packagename],
+          notify  => $service_notify_real,
+        }
+      }
       default: { }
     }
   }
