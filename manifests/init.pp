@@ -58,7 +58,7 @@ class dhcp (
   Hash[String, Hash] $ignoredsubnets                               = {},
   Hash[String, Hash] $pools                                        = {},
   Hash[String, Hash] $pools6                                       = {},
-  Optional[Stdlib::Absolutepath] $dhcpd_binary                     = $dhcp::params::dhcpd_binary
+  Boolean $manage_dhcp_dir                                         = $dhcp::params::manage_dhcp_dir,
 ) inherits dhcp::params {
 
   # check if extra_config is a string, if so convert it to an array
@@ -155,12 +155,12 @@ class dhcp (
     }
   }
 
-  file { $dhcp_dir:
-    mode    => '0755',
-    require => Package[$packagename],
+  if $manage_dhcp_dir {
+    file { $dhcp_dir:
+      mode    => '0755',
+      require => Package[$packagename],
+    }
   }
-
-
 
   case $facts['osfamily'] {
     'RedHat': {

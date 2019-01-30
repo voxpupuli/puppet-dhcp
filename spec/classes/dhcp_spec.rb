@@ -654,4 +654,28 @@ describe 'dhcp', type: :class do
       end
     end
   end
+
+  context 'manage_dhpc_dir=false' do
+    let :facts do
+      {
+        osfamily: 'Debian',
+        operatingsystem: 'Ubuntu',
+        operatingsystemrelease: '12.04',
+        os: { family: 'Debian' },
+        concat_basedir: '/dne'
+      }
+    end
+
+    let :params do
+      {
+        dhcp_dir: '/dhcp_dir',
+        interface: 'etho',
+        manage_dhcp_dir: false
+      }
+    end
+
+    it 'does not create /dhcp_dir' do
+      is_expected.not_to contain_file('/dhcp_dir')
+    end
+  end
 end

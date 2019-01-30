@@ -13,6 +13,7 @@ class dhcp::params {
       } else {
         $dhcp_dir    = '/etc/dhcp'
       }
+      $manage_dhcp_dir  = true
       $packagename      = 'isc-dhcp-server'
       $servicename      = 'isc-dhcp-server'
       $package_provider = undef
@@ -20,6 +21,7 @@ class dhcp::params {
     }
     'Darwin': {
       $dhcp_dir         = '/opt/local/etc/dhcp'
+      $manage_dhcp_dir  = true
       $packagename      = 'dhcp'
       $servicename      = 'org.macports.dhcpd'
       $package_provider = 'macports'
@@ -27,6 +29,7 @@ class dhcp::params {
     }
     'FreeBSD': {
       $dhcp_dir         = '/usr/local/etc'
+      $manage_dhcp_dir  = true
       $packagename      = 'net/isc-dhcp44-server'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
@@ -34,6 +37,7 @@ class dhcp::params {
     }
     'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
+      $manage_dhcp_dir  = true
       $packagename      = 'dhcp'
       $servicename      = 'dhcpd'
       $package_provider = undef
@@ -41,6 +45,7 @@ class dhcp::params {
     }
     'Archlinux': {
       $dhcp_dir         = '/etc'
+      $manage_dhcp_dir  = true
       $packagename      = 'dhcp'
       # we currently do not manage the dhcpd6 config
       #$servicename     = ['dhcpd4.service', 'dhcpd6.service']
@@ -53,6 +58,7 @@ class dhcp::params {
         fail('Only SmartOS variant of Solaris is supported.')
       }
       $dhcp_dir         = '/opt/local/etc/dhcp'
+      $manage_dhcp_dir  = true
       $packagename      = 'isc-dhcpd'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
