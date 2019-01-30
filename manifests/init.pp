@@ -39,6 +39,7 @@ class dhcp (
   $dhcp_dir                                               = $dhcp::params::dhcp_dir,
   String $dhcpd_conf_filename                             = 'dhcpd.conf',
   $packagename                                            = $dhcp::params::packagename,
+  Boolean $manage_package                                 = true,
   $servicename                                            = $dhcp::params::servicename,
   Boolean $manage_service                                 = true,
   $package_provider                                       = $dhcp::params::package_provider,
@@ -147,9 +148,11 @@ class dhcp (
     default => undef,
   }
 
-  package { $packagename:
-    ensure   => installed,
-    provider => $package_provider,
+  if $manage_package {
+    package { $packagename:
+      ensure   => installed,
+      provider => $package_provider,
+    }
   }
 
   file { $dhcp_dir:
