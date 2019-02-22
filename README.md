@@ -83,7 +83,20 @@ dhcp::host { 'server1':
   ip                 => '10.0.1.51',
   # Optionally override subnet/global settings for some hosts.
   default_lease_time => 600,
-  max_lease_time     => 900
+  max_lease_time     => 900,
+  # Optionally declare event statements in any combination.
+  on_commit => [
+    'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+    'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+  ],
+  on_release => [
+    'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+    'log(concat("Released IP: ", ClientIP))'
+  ],
+  on_expiry => [
+    'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+    'log(concat("Expired IP: ", ClientIP))'
+  ]
 }
 ```
 

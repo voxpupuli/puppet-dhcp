@@ -66,7 +66,19 @@ describe 'dhcp::host', type: :define do
     let(:params) do
       default_params.merge(
         'default_lease_time' => 600,
-        'max_lease_time'     => 900
+        'max_lease_time'     => 900,
+        'on_commit' => [
+          'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+          'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+        ],
+        'on_release' => [
+          'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+          'log(concat("Released IP: ", ClientIP))'
+        ],
+        'on_expiry' => [
+          'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+          'log(concat("Expired IP: ", ClientIP))'
+        ]
       )
     end
 
@@ -80,6 +92,18 @@ describe 'dhcp::host', type: :define do
         "  ddns-hostname       \"#{title}\";",
         '  default-lease-time  600;',
         '  max-lease-time      900;',
+        '  on commit {',
+        '    set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+        '    execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP);',
+        '  }',
+        '  on release {',
+        '    set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+        '    log(concat("Released IP: ", ClientIP));',
+        '  }',
+        '  on expiry {',
+        '    set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+        '    log(concat("Expired IP: ", ClientIP));',
+        '  }',
         '}'
       ]
       expect(content.split("\n")).to match_array(expected_lines)

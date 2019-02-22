@@ -9,6 +9,9 @@ define dhcp::host (
   Boolean $ignored                      = false,
   Optional[Integer] $default_lease_time = undef,
   Optional[Integer] $max_lease_time     = undef,
+  Array[String[1]] $on_commit           = [],
+  Array[String[1]] $on_release          = [],
+  Array[String[1]] $on_expiry           = [],
 ) {
 
   $host = $name
