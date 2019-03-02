@@ -1,10 +1,7 @@
 # == Define: dhcp::pool6
 #
 define dhcp::pool6 (
-  # the ipv6 regex is currently wrong so we can't use it here
-  # https://github.com/puppetlabs/puppetlabs-stdlib/pull/731
-  # Stdlib::Compat::Ipv6 $network,
-  String $network,
+  Stdlib::IP::Address::V6 $network,
   Integer $prefix,
   String $range                             = '',
   String $range_temp                        = '',
