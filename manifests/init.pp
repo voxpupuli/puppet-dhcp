@@ -2,8 +2,8 @@
 #
 class dhcp (
   Optional[Array[String]] $dnsdomain                      = undef,
-  Array[Stdlib::Compat::Ipv4] $nameservers                = [],
-  Array[Stdlib::Compat::Ipv6] $nameservers_ipv6           = [],
+  Array[Stdlib::IP::Address::V4] $nameservers             = [],
+  Array[Stdlib::IP::Address::V6] $nameservers_ipv6        = [],
   Array[String] $ntpservers                               = [],
   Array[String] $dnssearchdomains                         = [],
   String $dhcp_conf_header                                = 'INTERNAL_TEMPLATE',
@@ -30,7 +30,7 @@ class dhcp (
   Integer $max_lease_time                                 = 86400,
   $service_ensure                                         = running,
   $globaloptions                                          = '',
-  Optional[Integer[0,65535]] $omapi_port                  = undef,
+  Optional[Stdlib::Port] $omapi_port                      = undef,
   Optional[String] $omapi_name                            = undef,
   String $omapi_algorithm                                 = 'HMAC-MD5',
   Optional[String] $omapi_key                             = undef,

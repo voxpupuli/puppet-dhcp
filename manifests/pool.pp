@@ -1,8 +1,8 @@
 # == Define: dhcp::pool
 #
 define dhcp::pool (
-  Stdlib::Compat::Ipv4 $network,
-  Stdlib::Compat::Ipv4 $mask,
+  Stdlib::IP::Address::V4 $network,
+  Stdlib::IP::Address::V4 $mask,
   $gateway                                  = '',
   $range                                    = '',
   $failover                                 = '',
