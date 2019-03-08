@@ -148,6 +148,7 @@ The following is the list of all parameters available for this class.
 | `option_code150_value` | String    | `text`                            |
 | `package_provider`     | String    | `$dhcp::params::package_provider` |
 | `packagename`          | String    | `$dhcp::params::packagename`      |
+| `manage_package`       | Boolean   | `true`                            |
 | `pxefilename`          | String    | `undef`                           |
 | `pxeserver`            | String    | `undef`                           |
 | `service_ensure`       | Enum      | `running`                         |
