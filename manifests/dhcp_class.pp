@@ -3,7 +3,7 @@
 define dhcp::dhcp_class (
   Variant[Array[String], String] $parameters,
 ) {
-  include ::dhcp::params
+  include dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 
