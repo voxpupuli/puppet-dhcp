@@ -1,64 +1,64 @@
 # == Class: dhcp
 #
 class dhcp (
-  Optional[Array[String]] $dnsdomain                      = undef,
-  Array[Stdlib::IP::Address::V4] $nameservers             = [],
-  Array[Stdlib::IP::Address::V6] $nameservers_ipv6        = [],
-  Array[String] $ntpservers                               = [],
-  Array[String] $dnssearchdomains                         = [],
-  String $dhcp_conf_header                                = 'INTERNAL_TEMPLATE',
-  String $dhcp_conf_ddns                                  = 'INTERNAL_TEMPLATE',
-  String $dhcp_conf_ntp                                   = 'INTERNAL_TEMPLATE',
-  String $dhcp_conf_pxe                                   = 'INTERNAL_TEMPLATE',
-  String $dhcp_conf_extra                                 = 'INTERNAL_TEMPLATE',
-  Hash[String, Hash[String, String]] $dhcp_conf_fragments = {},
-  Optional[Array[String]] $interfaces                     = undef,
-  String $interface                                       = 'NOTSET',
-  $dnsupdatekey                                           = undef,
-  String $ddns_update_style                               = 'interim',
-  $dnskeyname                                             = undef,
-  String $ddns_update_static                              = 'on',
-  String $ddns_update_optimize                            = 'on',
-  Enum['allow', 'deny'] $ddns_client_updates              = 'allow',
-  $pxeserver                                              = undef,
-  $pxefilename                                            = undef,
-  Optional[Integer] $mtu                                  = undef,
-  $ipxe_filename                                          = undef,
-  $ipxe_bootstrap                                         = undef,
-  String $logfacility                                     = 'daemon',
-  Integer $default_lease_time                             = 43200,
-  Integer $max_lease_time                                 = 86400,
-  $service_ensure                                         = running,
-  $globaloptions                                          = '',
-  Optional[Stdlib::Port] $omapi_port                      = undef,
-  Optional[String] $omapi_name                            = undef,
-  String $omapi_algorithm                                 = 'HMAC-MD5',
-  Optional[String] $omapi_key                             = undef,
-  Boolean $authoritative                                  = true,
-  Variant[Array[String],String[1]] $extra_config          = [],
-  $dhcp_dir                                               = $dhcp::params::dhcp_dir,
-  String $dhcpd_conf_filename                             = 'dhcpd.conf',
-  $packagename                                            = $dhcp::params::packagename,
-  Boolean $manage_package                                 = true,
-  $servicename                                            = $dhcp::params::servicename,
-  Boolean $manage_service                                 = true,
-  $package_provider                                       = $dhcp::params::package_provider,
-  Integer[0,65535] $ldap_port                             = 389,
-  String $ldap_server                                     = 'localhost',
-  String $ldap_username                                   = 'cn=root, dc=example, dc=com',
-  String $ldap_password                                   = '',
-  String $ldap_base_dn                                    = 'dc=example, dc=com',
-  Enum['dynamic', 'static'] $ldap_method                  = 'dynamic',
-  Optional[Stdlib::Absolutepath] $ldap_debug_file         = undef,
-  Boolean $use_ldap                                       = false,
-  String $option_code150_label                            = 'pxegrub',
-  String $option_code150_value                            = 'text',
-  Hash[String, Hash] $dhcp_classes                        = {},
-  Hash[String, Hash] $hosts                               = {},
-  Hash[String, Hash] $ignoredsubnets                      = {},
-  Hash[String, Hash] $pools                               = {},
-  Hash[String, Hash] $pools6                              = {},
-  Optional[Stdlib::Absolutepath] $dhcpd_binary            = $dhcp::params::dhcpd_binary
+  Optional[Array[String[1]]] $dnsdomain                            = undef,
+  Array[Stdlib::IP::Address::V4] $nameservers                      = [],
+  Array[Stdlib::IP::Address::V6] $nameservers_ipv6                 = [],
+  Array[Variant[Stdlib::Fqdn,Stdlib::IP::Address]] $ntpservers     = [],
+  Array[String[1]] $dnssearchdomains                               = [],
+  String $dhcp_conf_header                                         = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_ddns                                           = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_ntp                                            = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_pxe                                            = 'INTERNAL_TEMPLATE',
+  String $dhcp_conf_extra                                          = 'INTERNAL_TEMPLATE',
+  Hash[String[1], Hash[String[1], String[1]]] $dhcp_conf_fragments = {},
+  Optional[Array[String[1]]] $interfaces                           = undef,
+  String[1] $interface                                             = 'NOTSET',
+  Optional[String[1]] $dnsupdatekey                                = undef,
+  String[1] $ddns_update_style                                     = 'interim',
+  Optional[String[1]] $dnskeyname                                  = undef,
+  String[1] $ddns_update_static                                    = 'on',
+  String[1] $ddns_update_optimize                                  = 'on',
+  Enum['allow', 'deny'] $ddns_client_updates                       = 'allow',
+  Optional[Stdlib::IP::Address] $pxeserver                         = undef,
+  Optional[String[1]] $pxefilename                                 = undef,
+  Optional[Integer[1]] $mtu                                        = undef,
+  Optional[String[1]] $ipxe_filename                               = undef,
+  Optional[String[1]] $ipxe_bootstrap                              = undef,
+  Dhcp::Syslogfacility $logfacility                                = 'daemon',
+  Integer[1] $default_lease_time                                   = 43200,
+  Integer[1] $max_lease_time                                       = 86400,
+  Stdlib::Ensure::Service $service_ensure                          = 'running',
+  Variant[String,Array[String[1]]] $globaloptions                  = '',
+  Optional[Stdlib::Port] $omapi_port                               = undef,
+  Optional[String[1]] $omapi_name                                  = undef,
+  String[1] $omapi_algorithm                                       = 'HMAC-MD5',
+  Optional[String[1]] $omapi_key                                   = undef,
+  Boolean $authoritative                                           = true,
+  Variant[Array[String[1]],String[1]] $extra_config                = [],
+  Stdlib::Absolutepath $dhcp_dir                                   = $dhcp::params::dhcp_dir,
+  String[1] $dhcpd_conf_filename                                   = 'dhcpd.conf',
+  String[1] $packagename                                           = $dhcp::params::packagename,
+  Boolean $manage_package                                          = true,
+  Variant[String[1],Array[String[1]]] $servicename                 = $dhcp::params::servicename,
+  Boolean $manage_service                                          = true,
+  Optional[String[1]] $package_provider                            = $dhcp::params::package_provider,
+  Stdlib::Port $ldap_port                                          = 389,
+  String[1] $ldap_server                                           = 'localhost',
+  String[1] $ldap_username                                         = 'cn=root, dc=example, dc=com',
+  String $ldap_password                                            = '',
+  String[1] $ldap_base_dn                                          = 'dc=example, dc=com',
+  Enum['dynamic', 'static'] $ldap_method                           = 'dynamic',
+  Optional[Stdlib::Absolutepath] $ldap_debug_file                  = undef,
+  Boolean $use_ldap                                                = false,
+  String[1] $option_code150_label                                  = 'pxegrub',
+  String[1] $option_code150_value                                  = 'text',
+  Hash[String[1], Hash] $dhcp_classes                              = {},
+  Hash[String[1], Hash] $hosts                                     = {},
+  Hash[String, Hash] $ignoredsubnets                               = {},
+  Hash[String, Hash] $pools                                        = {},
+  Hash[String, Hash] $pools6                                       = {},
+  Optional[Stdlib::Absolutepath] $dhcpd_binary                     = $dhcp::params::dhcpd_binary
 ) inherits dhcp::params {
 
   # check if extra_config is a string, if so convert it to an array
@@ -68,14 +68,14 @@ class dhcp (
     $extra_config_real = $extra_config
   }
 
-  if $dnsdomain == undef {
+  if $dnsdomain {
+    $dnsdomain_real = $dnsdomain
+  } else {
     if $facts['domain'] {
-      $dnsdomain_real = [ $::domain ]
+      $dnsdomain_real = [ $facts['domain'] ]
     } else {
       fail('dhcp::dnsdomain must be set and domain fact is missing to use as a default value.')
-    }
-  } else {
-    $dnsdomain_real = $dnsdomain
+      }
   }
 
   if $pxeserver or $pxefilename {
