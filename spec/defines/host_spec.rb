@@ -62,6 +62,30 @@ describe 'dhcp::host', type: :define do
     end
   end
 
+  context 'when optional parameters defined' do
+    let(:params) do
+      default_params.merge(
+        'default_lease_time' => 600,
+        'max_lease_time'     => 900
+      )
+    end
+
+    it 'creates a host declaration with optional parameters' do
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      expected_lines = [
+        "host #{title} {",
+        '  # test_comment',
+        "  hardware ethernet   #{params['mac']};",
+        "  fixed-address       #{params['ip']};",
+        "  ddns-hostname       \"#{title}\";",
+        '  default-lease-time  600;',
+        '  max-lease-time      900;',
+        '}'
+      ]
+      expect(content.split("\n")).to match_array(expected_lines)
+    end
+  end
+
   context 'when ignored defined' do
     let(:params) do
       default_params.merge(

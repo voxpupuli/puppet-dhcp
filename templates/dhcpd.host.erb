@@ -8,6 +8,12 @@ host <%= @host %> {
 <% if @ignored -%>
   ignore              booting;
 <% end -%>
+<% if @default_lease_time -%>
+  default-lease-time  <%= @default_lease_time %>;
+<% end -%>
+<% if @max_lease_time -%>
+  max-lease-time      <%= @max_lease_time %>;
+<% end -%>
 <% if not @options.empty? -%>
 <% @options.keys.sort.each do |option| -%>
   option <%= option %> <%= @options[option] %>;

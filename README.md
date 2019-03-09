@@ -78,9 +78,12 @@ Create host reservations.
 May be passed as a hash into the DHCP class.
 ```puppet
 dhcp::host { 'server1':
-  comment => 'Optional descriptive comment',
-  mac     => '00:50:56:00:00:01',
-  ip      => '10.0.1.51',
+  comment            => 'Optional descriptive comment',
+  mac                => '00:50:56:00:00:01',
+  ip                 => '10.0.1.51',
+  # Optionally override subnet/global settings for some hosts.
+  default_lease_time => 600,
+  max_lease_time     => 900
 }
 ```
 
