@@ -1,7 +1,7 @@
 # == Define: dhcp::dhcp_class
 #
 define dhcp::dhcp_class (
-  Variant[Array[String], String] $parameters,
+  Variant[Array[String[1]], String[1]] $parameters,
 ) {
   include dhcp::params
 
