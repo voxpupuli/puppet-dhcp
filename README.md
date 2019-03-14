@@ -65,7 +65,7 @@ respond to requests forwarded by switches etc.
 
 May be passed as a hash into the DHCP class.
 ```puppet
-dhcp::ignoredsubnet{ 'eth0':
+dhcp::ignoredsubnets{ 'eth0':
   network => '10.0.0.0',
   mask    => '255.255.255.0',
 }
