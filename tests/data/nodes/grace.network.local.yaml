@@ -1,0 +1,12 @@
+# Puppet node file
+---
+classes:
+  - 'role::infrastructure'
+
+# dhcp settings for clients
+profile::dhcp::dns_server: '192.168.0.100'
+profile::dhcp::gateway: '192.168.0.1'
+profile::dhcp::pxe_server: '192.168.0.100'
+profile::dhcp::listen_device:
+  - 'eno1'
+
