@@ -12,7 +12,7 @@ subnet <%= @network %> netmask <%= @mask %> {
 <% if @ignore_unknown == true -%>
     ignore unknown-clients ;
 <% end -%>
-<% if @max_lease_time != '' -%>
+<% if @max_lease_time -%>
     max-lease-time <%= @max_lease_time %>;
 <% end -%>
 <% if @range and @range.is_a? Array -%>
