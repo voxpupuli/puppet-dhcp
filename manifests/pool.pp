@@ -14,6 +14,7 @@ define dhcp::pool (
   Optional[Integer] $mtu                    = undef,
   String $domain_name                       = '',
   $ignore_unknown                           = undef,
+  Optional[Integer] $max_lease_time         = undef,
 ) {
   include dhcp::params
 
