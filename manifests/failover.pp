@@ -3,7 +3,7 @@
 class dhcp::failover (
   $peer_address,
   $role                 = 'primary',
-  $address              = $::ipaddress,
+  $address              = $facts['networking']['ip'],
   $port                 = '519',
   $max_response_delay   = '30',
   $max_unacked_updates  = '10',

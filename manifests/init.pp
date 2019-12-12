@@ -71,8 +71,8 @@ class dhcp (
   if $dnsdomain {
     $dnsdomain_real = $dnsdomain
   } else {
-    if $facts['domain'] {
-      $dnsdomain_real = [ $facts['domain'] ]
+    if $facts['networking']['domain'] {
+      $dnsdomain_real = [ $facts['networking']['domain'] ]
     } else {
       fail('dhcp::dnsdomain must be set and domain fact is missing to use as a default value.')
       }
@@ -162,9 +162,9 @@ class dhcp (
 
 
 
-  case $facts['osfamily'] {
+  case $facts['os']['family'] {
     'RedHat': {
-      if $facts['operatingsystemmajrelease'] == '7' {
+      if $facts['os']['release']['major'] == '7' {
         $use_systemd_service_file = true
       } else {
         $use_systemd_service_file = false
@@ -189,7 +189,7 @@ class dhcp (
     }
   } else {
     # Only debian and ubuntu have this style of defaults for startup.
-    case $facts['osfamily'] {
+    case $facts['os']['family'] {
       'Debian': {
         file{ '/etc/default/isc-dhcp-server':
           ensure  => present,
