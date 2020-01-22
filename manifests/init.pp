@@ -164,7 +164,7 @@ class dhcp (
 
   case $facts['os']['family'] {
     'RedHat': {
-      if $facts['os']['release']['major'] == '7' {
+      if $facts['os']['release']['major'] =~ /(7|8)/ {
         $use_systemd_service_file = true
       } else {
         $use_systemd_service_file = false
