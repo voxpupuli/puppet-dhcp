@@ -10,7 +10,6 @@ These should not affect the functionality of the module.
 
 **Breaking changes:**
 
-- drop Ubuntu 14.04 CI testing [\#230](https://github.com/voxpupuli/puppet-dhcp/pull/230) ([bastelfreak](https://github.com/bastelfreak))
 - drop Ubuntu 14.04 support [\#229](https://github.com/voxpupuli/puppet-dhcp/pull/229) ([bastelfreak](https://github.com/bastelfreak))
 - modulesync 2.5.1 & drop Puppet 4 [\#218](https://github.com/voxpupuli/puppet-dhcp/pull/218) ([bastelfreak](https://github.com/bastelfreak))
 
@@ -38,6 +37,7 @@ These should not affect the functionality of the module.
 
 - update repo links to https [\#236](https://github.com/voxpupuli/puppet-dhcp/pull/236) ([bastelfreak](https://github.com/bastelfreak))
 - Remove duplicate CONTRIBUTING.md file [\#231](https://github.com/voxpupuli/puppet-dhcp/pull/231) ([dhoppe](https://github.com/dhoppe))
+- drop Ubuntu 14.04 CI testing [\#230](https://github.com/voxpupuli/puppet-dhcp/pull/230) ([bastelfreak](https://github.com/bastelfreak))
 - Update minimum stdlib version to 4.25.0 and use some of the newer types [\#217](https://github.com/voxpupuli/puppet-dhcp/pull/217) ([alexjfisher](https://github.com/alexjfisher))
 - Add parameter to make installing the package optional [\#214](https://github.com/voxpupuli/puppet-dhcp/pull/214) ([dgivens](https://github.com/dgivens))
 
