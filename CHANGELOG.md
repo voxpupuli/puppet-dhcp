@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v4.0.0) (2020-02-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v3.4.0...v4.0.0)
+
+**Breaking changes:**
+
+- drop Ubuntu 14.04 CI testing [\#230](https://github.com/voxpupuli/puppet-dhcp/pull/230) ([bastelfreak](https://github.com/bastelfreak))
+- drop Ubuntu 14.04 support [\#229](https://github.com/voxpupuli/puppet-dhcp/pull/229) ([bastelfreak](https://github.com/bastelfreak))
+- modulesync 2.5.1 & drop Puppet 4 [\#218](https://github.com/voxpupuli/puppet-dhcp/pull/218) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add support for RHEL/CentOS 8 and Debian 10 [\#235](https://github.com/voxpupuli/puppet-dhcp/pull/235) ([dhoppe](https://github.com/dhoppe))
+- Improve datatypes [\#219](https://github.com/voxpupuli/puppet-dhcp/pull/219) ([bastelfreak](https://github.com/bastelfreak))
+- allow dhcp::host to set "on EVENT" handlers [\#216](https://github.com/voxpupuli/puppet-dhcp/pull/216) ([jflorian](https://github.com/jflorian))
+- allow dhcp::host to override default- and max-lease-time [\#215](https://github.com/voxpupuli/puppet-dhcp/pull/215) ([jflorian](https://github.com/jflorian))
+- update FreeBSD pkg name [\#211](https://github.com/voxpupuli/puppet-dhcp/pull/211) ([mmoll](https://github.com/mmoll))
+- Allow host declaration without IP. [\#210](https://github.com/voxpupuli/puppet-dhcp/pull/210) ([mergwyn](https://github.com/mergwyn))
+
+**Fixed bugs:**
+
+- Allow puppetlabs/concat 6.x, puppetlabs/stdlib 6.x [\#225](https://github.com/voxpupuli/puppet-dhcp/pull/225) ([dhoppe](https://github.com/dhoppe))
+- set dhcpd\_ifaces in rc.conf on FreeBSD [\#212](https://github.com/voxpupuli/puppet-dhcp/pull/212) ([mmoll](https://github.com/mmoll))
+
+**Closed issues:**
+
+- Ubuntu 18.04 Interfaces not set [\#200](https://github.com/voxpupuli/puppet-dhcp/issues/200)
+- Insert possibility to enable host declaration without IP. [\#106](https://github.com/voxpupuli/puppet-dhcp/issues/106)
+- Configure dhcpd\_ifaces in rc.conf on FreeBSD [\#88](https://github.com/voxpupuli/puppet-dhcp/issues/88)
+
+**Merged pull requests:**
+
+- update repo links to https [\#236](https://github.com/voxpupuli/puppet-dhcp/pull/236) ([bastelfreak](https://github.com/bastelfreak))
+- Remove duplicate CONTRIBUTING.md file [\#231](https://github.com/voxpupuli/puppet-dhcp/pull/231) ([dhoppe](https://github.com/dhoppe))
+- Update minimum stdlib version to 4.25.0 and use some of the newer types [\#217](https://github.com/voxpupuli/puppet-dhcp/pull/217) ([alexjfisher](https://github.com/alexjfisher))
+- Add parameter to make installing the package optional [\#214](https://github.com/voxpupuli/puppet-dhcp/pull/214) ([dgivens](https://github.com/dgivens))
+
 ## [v3.4.0](https://github.com/voxpupuli/puppet-dhcp/tree/v3.4.0) (2018-12-19)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v3.3.0...v3.4.0)
