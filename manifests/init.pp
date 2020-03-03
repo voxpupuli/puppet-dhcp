@@ -20,7 +20,7 @@ class dhcp (
   String[1] $ddns_update_static                                    = 'on',
   String[1] $ddns_update_optimize                                  = 'on',
   Enum['allow', 'deny'] $ddns_client_updates                       = 'allow',
-  Optional[Variant[Stdlib::Fqdn,Stdlib::IP::Address]] $pxeserver   = undef,
+  Optional[Stdlib::Host] $pxeserver                                = undef,
   Optional[String[1]] $pxefilename                                 = undef,
   Optional[Integer[1]] $mtu                                        = undef,
   Optional[String[1]] $ipxe_filename                               = undef,
