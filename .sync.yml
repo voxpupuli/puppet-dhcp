@@ -10,3 +10,5 @@
     - set: debian10-64
     - set: ubuntu1604-64
     - set: ubuntu1804-64
+spec/spec_helper_acceptance.rb:
+  unmanaged: false
