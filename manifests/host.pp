@@ -13,7 +13,6 @@ define dhcp::host (
   Array[String[1]] $on_release          = [],
   Array[String[1]] $on_expiry           = [],
 ) {
-
   $host = $name
 
   include dhcp::params
