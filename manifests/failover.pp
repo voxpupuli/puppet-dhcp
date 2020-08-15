@@ -14,7 +14,6 @@ class dhcp::failover (
   $dhcp_dir             = $dhcp::dhcp_dir,
   $dhcpd_conf_filename  = $dhcp::dhcpd_conf_filename,
 ) {
-
   concat::fragment { 'dhcp-conf-failover':
     target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => template('dhcp/dhcpd.conf.failover.erb'),

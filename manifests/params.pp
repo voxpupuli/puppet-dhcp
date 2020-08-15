@@ -1,7 +1,6 @@
 # == Class: dhcp::params
 #
 class dhcp::params {
-
   case $facts['os']['family'] {
     'Debian': {
       if ( $facts['os']['name'] == 'Ubuntu' ) {
