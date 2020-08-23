@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.1](https://github.com/voxpupuli/puppet-dhcp/tree/v4.0.1) (2020-08-23)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v4.0.0...v4.0.1)
+
+**Fixed bugs:**
+
+- pxeserver parameter no longer supports hostnames, only IP address [\#239](https://github.com/voxpupuli/puppet-dhcp/issues/239)
+- Allow indefinite lease times to be set [\#246](https://github.com/voxpupuli/puppet-dhcp/pull/246) ([alexjfisher](https://github.com/alexjfisher))
+
+**Merged pull requests:**
+
+- Use voxpupuli-acceptance [\#242](https://github.com/voxpupuli/puppet-dhcp/pull/242) ([ekohl](https://github.com/ekohl))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v4.0.0) (2020-02-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v3.4.0...v4.0.0)
