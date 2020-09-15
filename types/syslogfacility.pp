@@ -21,5 +21,5 @@ type Dhcp::Syslogfacility = Enum[
   'local4',
   'local5',
   'local6',
-  'local7'
+  'local7',
 ]
