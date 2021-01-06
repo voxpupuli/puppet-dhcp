@@ -19,11 +19,12 @@ describe 'dhcp', type: :class do
   context 'on a RedHat OS' do
     let :facts do
       {
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        concat_basedir: '/dne',
-        os: { family: 'RedHat' }
+        os: {
+          family: 'RedHat',
+          name: 'RedHat',
+          release: { major: '6' }
+        },
+        concat_basedir: '/dne'
       }
     end
     let :params do
@@ -331,10 +332,11 @@ describe 'dhcp', type: :class do
   context 'on SmartOS' do
     let :facts do
       {
-        osfamily: 'Solaris',
-        operatingsystem: 'SmartOS',
-        concat_basedir: '/dne',
-        os: { family: 'Solaris', name: 'SmartOS' }
+        os: {
+          family: 'Solaris',
+          name: 'SmartOS'
+        },
+        concat_basedir: '/dne'
       }
     end
     let :params do
@@ -357,13 +359,16 @@ describe 'dhcp', type: :class do
     context 'RedHat 7' do
       let :facts do
         {
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemrelease: '7',
-          operatingsystemmajrelease: '7',
+          os: {
+            family: 'RedHat',
+            name: 'RedHat',
+            release: {
+              full: '7',
+              major: '7'
+            }
+          },
           concat_basedir: '/dne',
-          service_provider: 'systemd',
-          os: { family: 'RedHat' }
+          service_provider: 'systemd'
         }
       end
       let :params do
@@ -379,13 +384,16 @@ describe 'dhcp', type: :class do
     context 'RedHat 6' do
       let :facts do
         {
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystemmajrelease: '6',
+          os: {
+            family: 'RedHat',
+            name: 'RedHat',
+            release: {
+              full: '6',
+              major: '6'
+            }
+          },
           concat_basedir: '/dne',
-          service_provider: 'systemd',
-          os: { family: 'RedHat' }
+          service_provider: 'systemd'
         }
       end
       let :params do
@@ -400,13 +408,16 @@ describe 'dhcp', type: :class do
     context 'Debian' do
       let :facts do
         {
-          osfamily: 'Debian',
-          operatingsystem: 'Ubuntu',
-          operatingsystemrelease: '16.04',
-          operatingsystemmajrelease: '16.04',
+          os: {
+            family: 'Debian',
+            name: 'Ubuntu',
+            release: {
+              full: '16.04',
+              major: '16.04'
+            }
+          },
           concat_basedir: '/dne',
-          service_provider: 'systemd',
-          os: { family: 'Debian' }
+          service_provider: 'systemd'
         }
       end
       let :params do
@@ -421,11 +432,12 @@ describe 'dhcp', type: :class do
     context 'Arch' do
       let :facts do
         {
-          osfamily: 'Archlinux',
-          operatingsystem: 'ArchLinux',
+          os: {
+            family: 'Archlinux',
+            name: 'ArchLinux'
+          },
           concat_basedir: '/dne',
-          service_provider: 'systemd',
-          os: { family: 'Archlinux' }
+          service_provider: 'systemd'
         }
       end
       let :params do
@@ -443,9 +455,8 @@ describe 'dhcp', type: :class do
   context 'on a Darwin OS' do
     let :facts do
       {
-        osfamily: 'Darwin',
-        concat_basedir: '/dne',
-        os: { family: 'Darwin' }
+        os: { family: 'Darwin' },
+        concat_basedir: '/dne'
       }
     end
     let :params do
@@ -464,7 +475,7 @@ describe 'dhcp', type: :class do
   context 'on a Debian based OS' do
     let :default_facts do
       {
-        osfamily: 'Debian',
+        os: { family: 'Debian' },
         concat_basedir: '/dne'
       }
     end
@@ -523,10 +534,13 @@ describe 'dhcp', type: :class do
       context '12.04' do
         let :facts do
           default_facts.merge(
-            osfamily: 'Debian',
-            operatingsystem: 'Ubuntu',
-            operatingsystemrelease: '12.04',
-            os: { family: 'Debian' }
+            os: {
+              family: 'Debian',
+              name: 'Ubuntu',
+              release: {
+                full: '12.04'
+              }
+            }
           )
         end
 
@@ -538,10 +552,13 @@ describe 'dhcp', type: :class do
       context '10.04' do
         let :facts do
           default_facts.merge(
-            osfamily: 'Debian',
-            operatingsystem: 'Ubuntu',
-            operatingsystemrelease: '10.04',
-            os: { family: 'Debian', name: 'Ubuntu', release: { full: '10.04' } }
+            os: {
+              family: 'Debian',
+              name: 'Ubuntu',
+              release: {
+                full: '10.04'
+              }
+            }
           )
         end
 
@@ -556,11 +573,12 @@ describe 'dhcp', type: :class do
   context 'with globaloptions parameter set' do
     let :facts do
       {
-        osfamily: 'Debian',
-        operatingsystem: 'Ubuntu',
-        operatingsystemrelease: '12.04',
-        concat_basedir: '/dne',
-        os: { family: 'Debian' }
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: { full: '12.04' }
+        },
+        concat_basedir: '/dne'
       }
     end
 
@@ -591,10 +609,11 @@ describe 'dhcp', type: :class do
   context 'alternate conf filename' do
     let :facts do
       {
-        osfamily: 'Debian',
-        operatingsystem: 'Ubuntu',
-        operatingsystemrelease: '14.04',
-        os: { family: 'Debian' },
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: { full: '14.04' }
+        },
         concat_basedir: '/dne'
       }
     end
@@ -611,10 +630,11 @@ describe 'dhcp', type: :class do
   context 'pxeserver defined' do
     let :facts do
       {
-        osfamily: 'Debian',
-        operatingsystem: 'Ubuntu',
-        operatingsystemrelease: '12.04',
-        os: { family: 'Debian' },
+        os: {
+          family: 'Debian',
+          name: 'Ubuntu',
+          release: { full: '12.04' }
+        },
         concat_basedir: '/dne'
       }
     end

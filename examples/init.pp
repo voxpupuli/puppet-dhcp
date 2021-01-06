@@ -4,19 +4,19 @@ class { 'dhcp':
   dnsdomain      => [
     'example.com',
     '1.1.10.in-addr.arpa',
-    ],
+  ],
   nameservers    => ['10.1.1.10'],
   ntpservers     => ['us.pool.ntp.org'],
   interfaces     => ['eth0'],
   dnsupdatekey   => "/etc/bind/keys.d/${ddnskeyname}",
-  require        => Bind::Key[ $ddnskeyname ],
+  require        => Bind::Key[$ddnskeyname],
   pxeserver      => '10.1.1.5',
   pxefilename    => 'pxelinux.0',
   ipxe_filename  => 'undionly.kpxe',
   ipxe_bootstrap => 'bootstrap.kpxe',
 }
 
-dhcp::pool{ 'example.com':
+dhcp::pool { 'example.com':
   network => '10.1.1.0',
   mask    => '255.255.255.0',
   range   => '10.1.1.100 10.1.1.200',

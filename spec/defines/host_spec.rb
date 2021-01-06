@@ -7,8 +7,10 @@ describe 'dhcp::host', type: :define do
   let(:facts) do
     {
       concat_basedir: '/dne',
-      osfamily: 'RedHat',
-      os: { family: 'RedHat' }
+      os: {
+        family: 'RedHat',
+        release: { major: '8' }
+      }
 
     }
   end

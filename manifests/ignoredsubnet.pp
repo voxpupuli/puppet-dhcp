@@ -4,7 +4,6 @@ define dhcp::ignoredsubnet (
   $network,
   $mask,
 ) {
-
   include dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
@@ -13,6 +12,4 @@ define dhcp::ignoredsubnet (
     target  => "${dhcp_dir}/dhcpd.ignoredsubnets",
     content => template('dhcp/dhcpd.ignoredsubnet.erb'),
   }
-
 }
-
