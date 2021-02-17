@@ -47,4 +47,25 @@ option <%= @globaloptions %>;
 <% if has_variable?( 'mtu' ) && @mtu -%>
 option interface-mtu <%= @mtu %>;
 <% end -%>
+<% if not @on_commit.empty? -%>
+on commit {
+<% @on_commit.each do |statement| -%>
+  <%= statement %>;
+<% end -%>
+}
+<% end -%>
+<% if not @on_release.empty? -%>
+on release {
+<% @on_release.each do |statement| -%>
+  <%= statement %>;
+<% end -%>
+}
+<% end -%>
+<% if not @on_expiry.empty? -%>
+on expiry {
+<% @on_expiry.each do |statement| -%>
+  <%= statement %>;
+<% end -%>
+}
+<% end -%>
 # END DHCP Header
