@@ -5,9 +5,6 @@ class dhcp::disable (
   String[1] $packagename = $dhcp::params::packagename,
   String[1] $servicename = $dhcp::params::servicename,
 ) inherits dhcp::params {
-
-
-
   package { $packagename:
     ensure => absent,
   }
@@ -18,6 +15,4 @@ class dhcp::disable (
     hasstatus => true,
     require   => Package[$packagename],
   }
-
 }
-

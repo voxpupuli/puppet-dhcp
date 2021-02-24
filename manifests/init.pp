@@ -20,14 +20,14 @@ class dhcp (
   String[1] $ddns_update_static                                    = 'on',
   String[1] $ddns_update_optimize                                  = 'on',
   Enum['allow', 'deny'] $ddns_client_updates                       = 'allow',
-  Optional[Stdlib::IP::Address] $pxeserver                         = undef,
+  Optional[Stdlib::Host] $pxeserver                                = undef,
   Optional[String[1]] $pxefilename                                 = undef,
   Optional[Integer[1]] $mtu                                        = undef,
   Optional[String[1]] $ipxe_filename                               = undef,
   Optional[String[1]] $ipxe_bootstrap                              = undef,
   Dhcp::Syslogfacility $logfacility                                = 'daemon',
-  Integer[1] $default_lease_time                                   = 43200,
-  Integer[1] $max_lease_time                                       = 86400,
+  Integer[-1] $default_lease_time                                  = 43200,
+  Integer[-1] $max_lease_time                                      = 86400,
   Stdlib::Ensure::Service $service_ensure                          = 'running',
   Variant[String,Array[String[1]]] $globaloptions                  = '',
   Optional[Stdlib::Port] $omapi_port                               = undef,
@@ -60,7 +60,6 @@ class dhcp (
   Hash[String, Hash] $pools6                                       = {},
   Optional[Stdlib::Absolutepath] $dhcpd_binary                     = $dhcp::params::dhcpd_binary
 ) inherits dhcp::params {
-
   # check if extra_config is a string, if so convert it to an array
   if $extra_config =~ String {
     $extra_config_real = [$extra_config]
@@ -71,11 +70,11 @@ class dhcp (
   if $dnsdomain {
     $dnsdomain_real = $dnsdomain
   } else {
-    if $facts['domain'] {
-      $dnsdomain_real = [ $facts['domain'] ]
+    if $facts['networking']['domain'] {
+      $dnsdomain_real = [$facts['networking']['domain']]
     } else {
       fail('dhcp::dnsdomain must be set and domain fact is missing to use as a default value.')
-      }
+    }
   }
 
   if $pxeserver or $pxefilename {
@@ -100,7 +99,7 @@ class dhcp (
   # that. If they set both, use interfaces and the user is a unwise
   # and deserves what they get.
   if $interface != 'NOTSET' and $interfaces == undef {
-    $dhcp_interfaces = [ $interface ]
+    $dhcp_interfaces = [$interface]
   } elsif $interface == 'NOTSET' and $interfaces == undef {
     fail ("You need to set \$interfaces in ${module_name}")
   } else {
@@ -160,11 +159,9 @@ class dhcp (
     require => Package[$packagename],
   }
 
-
-
-  case $facts['osfamily'] {
+  case $facts['os']['family'] {
     'RedHat': {
-      if $facts['operatingsystemmajrelease'] == '7' {
+      if $facts['os']['release']['major'] =~ /(7|8)/ {
         $use_systemd_service_file = true
       } else {
         $use_systemd_service_file = false
@@ -180,7 +177,7 @@ class dhcp (
 
   if $use_systemd_service_file {
     file { '/etc/systemd/system/dhcpd.service':
-      ensure  => present,
+      ensure  => file,
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -189,10 +186,10 @@ class dhcp (
     }
   } else {
     # Only debian and ubuntu have this style of defaults for startup.
-    case $facts['osfamily'] {
+    case $facts['os']['family'] {
       'Debian': {
-        file{ '/etc/default/isc-dhcp-server':
-          ensure  => present,
+        file { '/etc/default/isc-dhcp-server':
+          ensure  => file,
           owner   => 'root',
           group   => 'root',
           mode    => '0644',
@@ -202,8 +199,8 @@ class dhcp (
         }
       }
       'RedHat': {
-        file {'/etc/sysconfig/dhcpd':
-          ensure  => present,
+        file { '/etc/sysconfig/dhcpd':
+          ensure  => file,
           owner   => 'root',
           group   => 'root',
           mode    => '0644',
@@ -221,7 +218,7 @@ class dhcp (
           notify  => $service_notify_real,
         }
       }
-      default: { }
+      default: {}
     }
   }
 
@@ -230,7 +227,7 @@ class dhcp (
   }
 
   # dhcpd.conf
-  concat {  "${dhcp_dir}/${dhcpd_conf_filename}": }
+  concat { "${dhcp_dir}/${dhcpd_conf_filename}": }
   concat::fragment { 'dhcp-conf-header':
     target  => "${dhcp_dir}/${dhcpd_conf_filename}",
     content => $dhcp_conf_header_real,

@@ -1,7 +1,6 @@
 # == Class: dhcp::params
 #
 class dhcp::params {
-
   case $facts['os']['family'] {
     'Debian': {
       if ( $facts['os']['name'] == 'Ubuntu' ) {
@@ -34,7 +33,11 @@ class dhcp::params {
     }
     'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
-      $packagename      = 'dhcp'
+      if $facts['os']['release']['major'] == '8' {
+        $packagename = 'dhcp-server'
+      } else {
+        $packagename = 'dhcp'
+      }
       $servicename      = 'dhcpd'
       $package_provider = undef
       $dhcpd_binary     = '/usr/sbin/dhcpd'
