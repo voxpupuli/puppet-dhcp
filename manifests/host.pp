@@ -1,7 +1,7 @@
 # == Define: dhcp::host
 #
 define dhcp::host (
-  Optional[Stdlib::IP::Address] $ip     = undef,
+  Optional[Stdlib::Host] $ip            = undef,
   Dhcp::Mac $mac,
   String $ddns_hostname                 = $name,
   Hash $options                         = {},
