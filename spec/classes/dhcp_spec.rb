@@ -673,5 +673,63 @@ describe 'dhcp', type: :class do
         expect(content.split("\n").reject { |l| l =~ %r{^#|^$} }).to match_array(expected_lines)
       end
     end
+
+    context 'when event clauses defined' do
+      let :params do
+        default_params.merge(
+          'interface' =>  'eth0',
+          'on_commit' => [
+            'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+            'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+          ],
+          'on_release' => [
+            'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+            'log(concat("Released IP: ", ClientIP))'
+          ],
+          'on_expiry' => [
+            'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
+            'log(concat("Expired IP: ", ClientIP))'
+          ]
+        )
+      end
+
+      it 'event clauses are present' do
+        content = catalogue.resource('concat::fragment', 'dhcp-conf-header').send(:parameters)[:content]
+        expected_lines = [
+          '# BEGIN DHCP Header',
+          '# ----------',
+          '# dhcpd.conf',
+          '# ----------',
+          'authoritative;',
+          'default-lease-time 43200;',
+          'max-lease-time 86400;',
+          'log-facility daemon;',
+          '',
+          '# ----------',
+          '# Options',
+          '# ----------',
+          'option domain-name "sampledomain.com";',
+          'option domain-name-servers 1.1.1.1;',
+          'option dhcp6.name-servers 1:5ee:bad::c0de;',
+          'option fqdn.no-client-update on;  # set the "O" and "S" flag bits',
+          'option fqdn.rcode2 255;',
+          'option pxegrub code 150 = text;',
+          'on commit {',
+          '  set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+          '  execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP);',
+          '}',
+          'on release {',
+          '  set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+          '  log(concat("Released IP: ", ClientIP));',
+          '}',
+          'on expiry {',
+          '  set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
+          '  log(concat("Expired IP: ", ClientIP));',
+          '}',
+          '# END DHCP Header',
+        ]
+        expect(content.split("\n")).to match_array(expected_lines)
+      end
+    end
   end
 end

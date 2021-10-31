@@ -58,6 +58,9 @@ class dhcp (
   Hash[String, Hash] $ignoredsubnets                               = {},
   Hash[String, Hash] $pools                                        = {},
   Hash[String, Hash] $pools6                                       = {},
+  Array[String[1]] $on_commit                                      = [],
+  Array[String[1]] $on_release                                     = [],
+  Array[String[1]] $on_expiry                                      = [],
   Optional[Stdlib::Absolutepath] $dhcpd_binary                     = $dhcp::params::dhcpd_binary
 ) inherits dhcp::params {
   # check if extra_config is a string, if so convert it to an array
