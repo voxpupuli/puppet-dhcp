@@ -42,4 +42,12 @@ host <%= @host %> {
 <% end -%>
   }
 <% end -%>
+<% if @ipxe_filename and @ipxe_bootstrap -%>
+  if exists <%= @ipxe_filename %> {
+    filename "<%= @ipxe_bootstrap %>"; 
+  }
+  else {
+    filename "<%= @ipxe_filename %>";
+  }
+<% end -%>
 }
