@@ -17,7 +17,7 @@ host <%= @host %> {
   max-lease-time      <%= @max_lease_time %>;
 <% end -%>
 <% if @filename -%>
-  filename            "<%= @filename %>"
+  filename            "<%= @filename %>";
 <% end -%>
 <% if not @options.empty? -%>
 <% @options.keys.sort.each do |option| -%>
