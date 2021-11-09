@@ -1,10 +1,12 @@
 # == Define: dhcp::host
 #
+# @param [Hash] parameters set different parameters like e.g. filename for the host
 define dhcp::host (
   Optional[Stdlib::IP::Address] $ip     = undef,
   Dhcp::Mac $mac,
   String $ddns_hostname                 = $name,
   Hash $options                         = {},
+  Hash $parameters                      = {},
   String $comment                       = '',
   Boolean $ignored                      = false,
   Optional[Integer] $default_lease_time = undef,
