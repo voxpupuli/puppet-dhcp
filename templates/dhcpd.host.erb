@@ -21,6 +21,9 @@ host <%= @host %> {
   option <%= option %> <%= @options[option] %>;
 <% end -%>
 <% end -%>
+<% @parameters.sort.each do |param, value| -%>
+  <%= param %> <%= value %>;
+<% end -%>
 <% if not @on_commit.empty? -%>
   on commit {
 <% @on_commit.each do |statement| -%>
