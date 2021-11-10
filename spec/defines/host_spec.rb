@@ -149,7 +149,7 @@ describe 'dhcp::host', type: :define do
         "  hardware ethernet   #{params['mac']};",
         "  fixed-address       #{params['ip']};",
         "  ddns-hostname       \"#{title}\";",
-        "  filename            \"lpxelinux.0\";",
+        '  filename            "lpxelinux.0";',
         '}'
       ]
       expect(content.split("\n")).to match_array(expected_lines)
@@ -160,7 +160,7 @@ describe 'dhcp::host', type: :define do
     let(:params) do
       default_params.merge(
         'ipxe_filename' => 'ipxe.efi',
-        'ipxe_bootstrap' => 'winpe.ipxe',
+        'ipxe_bootstrap' => 'winpe.ipxe'
       )
     end
 
@@ -172,11 +172,11 @@ describe 'dhcp::host', type: :define do
         "  hardware ethernet   #{params['mac']};",
         "  fixed-address       #{params['ip']};",
         "  ddns-hostname       \"#{title}\";",
-        '  if exists ipxe.efi {',
-        "    filename \"winpe.ipxe\";",
+        "  if exists #{params['ipxe_filename']} {",
+        "    filename \"#{params['ipxe_bootstrap']}\";",
         '  }',
         '  else {',
-        "    filename \"ipxe.efi\";",
+        "    filename \"#{params['ipxe_filename']}\";",
         '  }',
         '}'
       ]
@@ -187,7 +187,7 @@ describe 'dhcp::host', type: :define do
   context 'when only ipxe_filename is defined' do
     let(:params) do
       default_params.merge(
-        'ipxe_filename' => 'ipxe.efi',
+        'ipxe_filename' => 'ipxe.efi'
       )
     end
 
@@ -208,7 +208,7 @@ describe 'dhcp::host', type: :define do
   context 'when only ipxe_bootstrap is defined' do
     let(:params) do
       default_params.merge(
-        'ipxe_filename' => 'ipxe.efi',
+        'ipxe_filename' => 'ipxe.efi'
       )
     end
 
