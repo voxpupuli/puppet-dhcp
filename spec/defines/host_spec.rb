@@ -133,4 +133,96 @@ describe 'dhcp::host', type: :define do
       expect(content.split("\n")).to match_array(expected_lines)
     end
   end
+
+  context 'when filename defined' do
+    let(:params) do
+      default_params.merge(
+        'filename' => 'lpxelinux.0'
+      )
+    end
+
+    it 'creates a host declaration with filename' do
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      expected_lines = [
+        "host #{title} {",
+        '  # test_comment',
+        "  hardware ethernet   #{params['mac']};",
+        "  fixed-address       #{params['ip']};",
+        "  ddns-hostname       \"#{title}\";",
+        "  filename            \"lpxelinux.0\";",
+        '}'
+      ]
+      expect(content.split("\n")).to match_array(expected_lines)
+    end
+  end
+
+  context 'when ipxe_filename and ipxe_bootstrap are defined' do
+    let(:params) do
+      default_params.merge(
+        'ipxe_filename' => 'ipxe.efi',
+        'ipxe_bootstrap' => 'winpe.ipxe',
+      )
+    end
+
+    it 'creates a host declaration with ipxe configuration' do
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      expected_lines = [
+        "host #{title} {",
+        '  # test_comment',
+        "  hardware ethernet   #{params['mac']};",
+        "  fixed-address       #{params['ip']};",
+        "  ddns-hostname       \"#{title}\";",
+        '  if exists ipxe.efi {',
+        "    filename \"winpe.ipxe\";",
+        '  }',
+        '  else {',
+        "    filename \"ipxe.efi\";",
+        '  }',
+        '}'
+      ]
+      expect(content.split("\n")).to match_array(expected_lines)
+    end
+  end
+
+  context 'when only ipxe_filename is defined' do
+    let(:params) do
+      default_params.merge(
+        'ipxe_filename' => 'ipxe.efi',
+      )
+    end
+
+    it 'creates a host declaration without ipxe configuration' do
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      expected_lines = [
+        "host #{title} {",
+        '  # test_comment',
+        "  hardware ethernet   #{params['mac']};",
+        "  fixed-address       #{params['ip']};",
+        "  ddns-hostname       \"#{title}\";",
+        '}'
+      ]
+      expect(content.split("\n")).to match_array(expected_lines)
+    end
+  end
+
+  context 'when only ipxe_bootstrap is defined' do
+    let(:params) do
+      default_params.merge(
+        'ipxe_filename' => 'ipxe.efi',
+      )
+    end
+
+    it 'creates a host declaration without ipxe configuration' do
+      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
+      expected_lines = [
+        "host #{title} {",
+        '  # test_comment',
+        "  hardware ethernet   #{params['mac']};",
+        "  fixed-address       #{params['ip']};",
+        "  ddns-hostname       \"#{title}\";",
+        '}'
+      ]
+      expect(content.split("\n")).to match_array(expected_lines)
+    end
+  end
 end
