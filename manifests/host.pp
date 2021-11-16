@@ -1,7 +1,7 @@
 # == Define: dhcp::host
 #
 # @param ip
-#    The ip address of the DHCP host or a DNS resolvable name.
+#    The ip address of the DHCP host.
 #
 # @param mac
 #    The MAC address.
