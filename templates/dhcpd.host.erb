@@ -16,6 +16,9 @@ host <%= @host %> {
 <% if @max_lease_time -%>
   max-lease-time      <%= @max_lease_time %>;
 <% end -%>
+<% if @filename -%>
+  filename            "<%= @filename %>";
+<% end -%>
 <% if not @options.empty? -%>
 <% @options.keys.sort.each do |option| -%>
   option <%= option %> <%= @options[option] %>;
@@ -40,6 +43,14 @@ host <%= @host %> {
 <% @on_expiry.each do |statement| -%>
     <%= statement %>;
 <% end -%>
+  }
+<% end -%>
+<% if @ipxe_filename and @ipxe_bootstrap -%>
+  if exists <%= @ipxe_filename %> {
+    filename "<%= @ipxe_bootstrap %>";
+  }
+  else {
+    filename "<%= @ipxe_filename %>";
   }
 <% end -%>
 }
