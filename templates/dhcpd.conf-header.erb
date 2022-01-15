@@ -41,7 +41,7 @@ option <%= @option_code150_label -%> code 150 = <%= @option_code150_value -%>;
 <%   @globaloptions.each do |opt| -%>
 option <%= opt %>;
 <%   end -%>
-<% elsif @globaloptions != '' -%>
+<% elsif @globaloptions -%>
 option <%= @globaloptions %>;
 <% end -%>
 <% if has_variable?( 'mtu' ) && @mtu -%>

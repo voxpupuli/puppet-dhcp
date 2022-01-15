@@ -10,7 +10,7 @@ class dhcp::failover (
   $mclt                 = '300',
   $load_split           = '128',
   $load_balance         = '3',
-  $omapi_key            = '',
+  Optional[String[1]] $omapi_key = undef,
   $dhcp_dir             = $dhcp::dhcp_dir,
   $dhcpd_conf_filename  = $dhcp::dhcpd_conf_filename,
 ) {

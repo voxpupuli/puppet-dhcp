@@ -26,6 +26,8 @@ describe 'dhcp', type: :class do
           name: 'RedHat',
           release: { major: '6' }
         },
+        osfamily: 'RedHat',
+        operatingsystem: 'RedHat',
         concat_basedir: '/dne'
       }
     end

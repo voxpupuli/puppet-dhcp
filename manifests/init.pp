@@ -29,7 +29,7 @@ class dhcp (
   Integer[-1] $default_lease_time                                  = 43200,
   Integer[-1] $max_lease_time                                      = 86400,
   Stdlib::Ensure::Service $service_ensure                          = 'running',
-  Variant[String,Array[String[1]]] $globaloptions                  = '',
+  Optional[Variant[String,Array[String[1]]]] $globaloptions        = undef,
   Optional[Stdlib::Port] $omapi_port                               = undef,
   Optional[String[1]] $omapi_name                                  = undef,
   String[1] $omapi_algorithm                                       = 'HMAC-MD5',
@@ -46,7 +46,7 @@ class dhcp (
   Stdlib::Port $ldap_port                                          = 389,
   String[1] $ldap_server                                           = 'localhost',
   String[1] $ldap_username                                         = 'cn=root, dc=example, dc=com',
-  String $ldap_password                                            = '',
+  Optional[String[1]] $ldap_password                               = undef,
   String[1] $ldap_base_dn                                          = 'dc=example, dc=com',
   Enum['dynamic', 'static'] $ldap_method                           = 'dynamic',
   Optional[Stdlib::Absolutepath] $ldap_debug_file                  = undef,
@@ -319,16 +319,16 @@ class dhcp (
 
   # check if this is really a bool
   if $use_ldap {
-    if ($ldap_password == '') {
+    unless $ldap_password {
       fail('you must set $ldap_password')
     }
-    if ($ldap_server == '') {
+    unless $ldap_server {
       fail('you must set $ldap_server')
     }
-    if ($ldap_username == '') {
+    unless $ldap_username {
       fail('you must set $ldap_username')
     }
-    if ($ldap_base_dn == '') {
+    unless $ldap_base_dn {
       fail('you must set $ldap_username')
     }
     concat::fragment { 'dhcp-conf-ldap':
