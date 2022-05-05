@@ -58,6 +58,7 @@ class dhcp (
   Hash[String, Hash] $ignoredsubnets                               = {},
   Hash[String, Hash] $pools                                        = {},
   Hash[String, Hash] $pools6                                       = {},
+  Hash[String, Hash] $sharednetworks                               = {},
   Array[String[1]] $on_commit                                      = [],
   Array[String[1]] $on_release                                     = [],
   Array[String[1]] $on_expiry                                      = [],
@@ -308,6 +309,13 @@ class dhcp (
 
   # Setup any DHCP pools for IPv4
   create_resources('dhcp::pool', $pools)
+
+  # Setup any DHCP shared-networks
+  $sharednetworks.each |$sharednetwork, $sharednetworkattr| {
+    dhcp::sharednetwork { $sharednetwork:
+      * => $sharednetworkattr,
+    }
+  }
 
   # check if this is really a bool
   if $use_ldap {

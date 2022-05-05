@@ -8,6 +8,7 @@ define dhcp::pool6 (
   String $failover                          = '',
   String $options                           = '',
   String $parameters                        = '',
+  Optional[String[1]] $sharednetwork        = undef,
   Optional[Array[String]] $nameservers      = undef,
   Optional[Array[String]] $nameservers_ipv6 = undef,
   Optional[String] $pxeserver               = undef,
@@ -25,5 +26,10 @@ define dhcp::pool6 (
   concat::fragment { "dhcp_pool_${name}":
     target  => "${dhcp_dir}/dhcpd.pools",
     content => template('dhcp/dhcpd.pool6.erb'),
+    order   => "10 ${sharednetwork}-10",
+  }
+
+  if $sharednetwork {
+    Dhcp::Sharednetwork[$sharednetwork] -> Concat::Fragment["dhcp_pool_${name}"]
   }
 }
