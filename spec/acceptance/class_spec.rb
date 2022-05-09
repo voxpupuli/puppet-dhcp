@@ -6,6 +6,8 @@ describe 'dhcp class' do
                   'isc-dhcp-server'
                 when 'RedHat'
                   'dhcpd'
+                when 'Archlinux'
+                  'dhcpd4'
                 end
   context 'minimal parameters' do
     # Using puppet_apply as a helper

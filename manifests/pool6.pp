@@ -22,7 +22,7 @@ define dhcp::pool6 (
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 
-  concat::fragment { "dhcp_pool_${name}":
+  concat::fragment { "dhcp_pool6_${name}":
     target  => "${dhcp_dir}/dhcpd.pools",
     content => template('dhcp/dhcpd.pool6.erb'),
   }

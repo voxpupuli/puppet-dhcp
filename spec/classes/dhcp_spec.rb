@@ -180,7 +180,7 @@ describe 'dhcp', type: :class do
 
       it 'has resources' do
         is_expected.to contain_concat__fragment('dhcp_pool_ops.dc1.example.net')
-        is_expected.to contain_concat__fragment('dhcp_pool_ipv6.dc1.example.net')
+        is_expected.to contain_concat__fragment('dhcp_pool6_ipv6.dc1.example.net')
         is_expected.to contain_concat__fragment('dhcp_ignoredsubnet_eth0')
         is_expected.to contain_concat__fragment('dhcp_host_server1')
         is_expected.to contain_concat__fragment('dhcp_class_vendor-class-identifier')
