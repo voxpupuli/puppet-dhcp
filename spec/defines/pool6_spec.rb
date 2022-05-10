@@ -24,7 +24,7 @@ describe 'dhcp::pool6', type: :define do
   context 'creates a pool definition' do
     let(:params) { default_params }
 
-    it { is_expected.to contain_concat__fragment("dhcp_pool_#{title}") }
+    it { is_expected.to contain_concat__fragment("dhcp_pool6_#{title}") }
   end
 
   context 'when optional parameters defined' do
@@ -46,7 +46,7 @@ describe 'dhcp::pool6', type: :define do
     end
 
     it 'creates a pool declaration with optional parameters' do
-      content = catalogue.resource('concat::fragment', "dhcp_pool_#{title}").send(:parameters)[:content]
+      content = catalogue.resource('concat::fragment', "dhcp_pool6_#{title}").send(:parameters)[:content]
       expected_lines = [
         '#################################',
         "# #{title} #{params['network']}/#{params['prefix']}",
