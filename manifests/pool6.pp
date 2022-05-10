@@ -30,6 +30,6 @@ define dhcp::pool6 (
   }
 
   if $sharednetwork {
-    Dhcp::Sharednetwork[$sharednetwork] -> Concat::Fragment["dhcp_pool_${name}"]
+    Dhcp::Sharednetwork[$sharednetwork] -> Concat::Fragment["dhcp_pool6_${name}"]
   }
 }
