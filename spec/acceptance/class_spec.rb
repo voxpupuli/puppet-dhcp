@@ -3,7 +3,7 @@
 require 'spec_helper_acceptance'
 
 describe 'dhcp class' do
-  servicename = case fact('os.family')
+  servicename = case fact('os.family') # rubocop: disable Style/HashLikeCase
                 when 'Debian'
                   'isc-dhcp-server'
                 when 'RedHat'
