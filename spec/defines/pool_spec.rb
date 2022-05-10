@@ -15,10 +15,11 @@ describe 'dhcp::pool', type: :define do
   end
   let :default_params do
     {
-      'gateway'  => '1.1.1.1',
-      'mask'     => '255.255.255.0',
-      'network'  => '1.1.1.0',
-      'range'    => '1.1.1.100 1.1.1.110'
+      'gateway'   => '1.1.1.1',
+      'mask'      => '255.255.255.0',
+      'host_mask' => '255.255.255.128',
+      'network'   => '1.1.1.0',
+      'range'     => '1.1.1.100 1.1.1.110'
     }
   end
 
@@ -58,7 +59,7 @@ describe 'dhcp::pool', type: :define do
         "    range #{params['range']};",
         '  }',
         '',
-        "  option subnet-mask #{params['mask']};",
+        "  option subnet-mask #{params['host_mask']};",
         "  option routers #{params['gateway']};",
         '  on commit {',
         '    set ClientIP = binary-to-ascii(10, 8, ".", leased-address);',
