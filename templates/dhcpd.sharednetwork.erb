@@ -1,0 +1,12 @@
+#################################
+# Shared-Network <%= @name %>
+#################################
+shared-network <%= @name %> {
+<% if @parameters.is_a? Array -%>
+<%   @parameters.each do |param| -%>
+  <%= param %>;
+<%   end -%>
+<% elsif @parameters -%>
+  <%= @parameters %>;
+<% end -%>
+
