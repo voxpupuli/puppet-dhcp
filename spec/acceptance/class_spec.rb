@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'dhcp class' do
-  servicename = case fact('os.family')
+  servicename = case fact('os.family') # rubocop: disable Style/HashLikeCase
                 when 'Debian'
                   'isc-dhcp-server'
                 when 'RedHat'
@@ -28,11 +30,13 @@ describe 'dhcp class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
+
     describe service(servicename) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
   end
+
   context 'minimal other parameters' do
     # Using puppet_apply as a helper
     it 'works idempotently with no errors' do
@@ -52,6 +56,7 @@ describe 'dhcp class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
+
     describe service(servicename) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }

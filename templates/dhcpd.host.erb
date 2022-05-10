@@ -1,5 +1,5 @@
 host <%= @host %> {
-<% if not @comment.empty? -%>
+<% if @comment -%>
   # <%= @comment %>
 <% end -%>
   hardware ethernet   <%= @mac.upcase %>;

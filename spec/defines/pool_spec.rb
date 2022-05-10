@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'dhcp::pool', type: :define do
@@ -15,11 +17,11 @@ describe 'dhcp::pool', type: :define do
   end
   let :default_params do
     {
-      'gateway'   => '1.1.1.1',
-      'mask'      => '255.255.255.0',
+      'gateway' => '1.1.1.1',
+      'mask' => '255.255.255.0',
       'host_mask' => '255.255.255.128',
-      'network'   => '1.1.1.0',
-      'range'     => '1.1.1.100 1.1.1.110'
+      'network' => '1.1.1.0',
+      'range' => '1.1.1.100 1.1.1.110'
     }
   end
 

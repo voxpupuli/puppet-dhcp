@@ -2,10 +2,10 @@
 # <%= @name %> <%= @network %> <%= @mask %>
 #################################
 subnet <%= @network %> netmask <%= @mask %> {
-<% if @range != '' or @failover != '' -%>
+<% if @range or @failover -%>
   pool
   {
-<% if @failover != '' -%>
+<% if @failover -%>
     failover peer "<%= @failover %>";
     deny dynamic bootp clients;
 <% end -%>
@@ -16,7 +16,7 @@ subnet <%= @network %> netmask <%= @mask %> {
 <% @range.each do |r| -%>
     range <%= r %>;
 <% end -%>
-<% elsif @range != '' -%>
+<% elsif @range -%>
     range <%= @range %>;
 <% end -%>
   }
@@ -26,21 +26,21 @@ subnet <%= @network %> netmask <%= @mask %> {
   option domain-name "<%= @domain_name %>";
 <% end -%>
   option subnet-mask <%= @host_mask %>;
-<% if @gateway != '' -%>
+<% if @gateway -%>
   option routers <%= @gateway %>;
 <% end -%>
 <% if @options.is_a? Array -%>
 <%   @options.each do |opt| -%>
   option <%= opt %>;
 <%   end -%>
-<% elsif @options != '' -%>
+<% elsif @options -%>
   option <%= @options %>;
 <% end -%>
 <% if @parameters.is_a? Array -%>
 <%   @parameters.each do |param| -%>
   <%= param %>;
 <%   end -%>
-<% elsif @parameters != '' -%>
+<% elsif @parameters -%>
   <%= @parameters %>;
 <% end -%>
 <% if @nameservers and @nameservers.is_a? Array -%>

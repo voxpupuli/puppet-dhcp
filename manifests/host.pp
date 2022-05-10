@@ -48,7 +48,7 @@ define dhcp::host (
   Dhcp::Mac $mac,
   String $ddns_hostname                 = $name,
   Hash $options                         = {},
-  String $comment                       = '',
+  Optional[String[1]] $comment          = undef,
   Boolean $ignored                      = false,
   Optional[Integer] $default_lease_time = undef,
   Optional[Integer] $max_lease_time     = undef,

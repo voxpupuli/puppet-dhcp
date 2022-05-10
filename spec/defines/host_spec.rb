@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'dhcp::host', type: :define do
@@ -16,8 +18,8 @@ describe 'dhcp::host', type: :define do
   end
   let :default_params do
     {
-      'ip'      => '1.2.3.4',
-      'mac'     => '90:FB:A6:E4:08:9F',
+      'ip' => '1.2.3.4',
+      'mac' => '90:FB:A6:E4:08:9F',
       'comment' => 'test_comment'
     }
   end
@@ -43,7 +45,7 @@ describe 'dhcp::host', type: :define do
       default_params.merge(
         options: {
           'vendor-encapsulated-options' => '01:04:31:41:50:43',
-          'domain-name-servers'         => '10.0.0.1'
+          'domain-name-servers' => '10.0.0.1'
         }
       )
     end
@@ -68,7 +70,7 @@ describe 'dhcp::host', type: :define do
     let(:params) do
       default_params.merge(
         'default_lease_time' => 600,
-        'max_lease_time'     => 900,
+        'max_lease_time' => 900,
         'on_commit' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
           'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
@@ -185,27 +187,6 @@ describe 'dhcp::host', type: :define do
   end
 
   context 'when only ipxe_filename is defined' do
-    let(:params) do
-      default_params.merge(
-        'ipxe_filename' => 'ipxe.efi'
-      )
-    end
-
-    it 'creates a host declaration without ipxe configuration' do
-      content = catalogue.resource('concat::fragment', "dhcp_host_#{title}").send(:parameters)[:content]
-      expected_lines = [
-        "host #{title} {",
-        '  # test_comment',
-        "  hardware ethernet   #{params['mac']};",
-        "  fixed-address       #{params['ip']};",
-        "  ddns-hostname       \"#{title}\";",
-        '}'
-      ]
-      expect(content.split("\n")).to match_array(expected_lines)
-    end
-  end
-
-  context 'when only ipxe_bootstrap is defined' do
     let(:params) do
       default_params.merge(
         'ipxe_filename' => 'ipxe.efi'
