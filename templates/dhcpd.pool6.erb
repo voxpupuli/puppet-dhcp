@@ -33,19 +33,11 @@ subnet6 <%= @network %>/<%= @prefix %> {
 <% if @domain_name -%>
   option domain-name "<%= @domain_name %>";
 <% end -%>
-<% if @options.is_a? Array -%>
-<%   @options.each do |opt| -%>
+<% @options.each do |opt| -%>
   option <%= opt %>;
-<%   end -%>
-<% elsif @options -%>
-  option <%= @options %>;
 <% end -%>
-<% if @parameters.is_a? Array -%>
-<%   @parameters.each do |param| -%>
+<% @parameters.each do |param| -%>
   <%= param %>;
-<%   end -%>
-<% elsif @parameters -%>
-  <%= @parameters %>;
 <% end -%>
 <% if @nameservers and @nameservers.is_a? Array -%>
   option domain-name-servers <%= @nameservers.join(', ') %>;
