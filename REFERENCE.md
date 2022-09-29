@@ -995,7 +995,7 @@ Default value: ``undef``
 
 ##### <a name="options"></a>`options`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 Optional String or Array of `option` to set in the pool
 
@@ -1003,7 +1003,7 @@ Default value: ``undef``
 
 ##### <a name="parameters"></a>`parameters`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 Optional String or Array of manual parameters to set
 
@@ -1156,7 +1156,7 @@ Default value: ``undef``
 
 ##### <a name="options"></a>`options`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 
 
@@ -1164,7 +1164,7 @@ Default value: ``undef``
 
 ##### <a name="parameters"></a>`parameters`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 
 

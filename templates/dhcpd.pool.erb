@@ -33,11 +33,15 @@ subnet <%= @network %> netmask <%= @mask %> {
 <%   @options.each do |opt| -%>
   option <%= opt %>;
 <%   end -%>
+<% elsif @options -%>
+  option <%= @options %>;
 <% end -%>
 <% if @parameters.is_a? Array -%>
 <%   @parameters.each do |param| -%>
   <%= param %>;
 <%   end -%>
+<% elsif @parameters -%>
+  <%= @parameters %>;
 <% end -%>
 <% if @nameservers and @nameservers.is_a? Array -%>
   option domain-name-servers <%= @nameservers.join(', ') %>;
