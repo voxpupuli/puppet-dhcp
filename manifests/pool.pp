@@ -26,10 +26,10 @@
 #   Optional name of the DHCP-server to failover
 #
 # @param options
-#   Optional Array of `option` to set in the pool
+#   Optional String or Array of `option` to set in the pool
 #
 # @param parameters
-#   Optional Array of manual parameters to set
+#   Optional String or Array of manual parameters to set
 #
 # @param sharednetwork
 #   Optional String to group this pool into a shared-network
