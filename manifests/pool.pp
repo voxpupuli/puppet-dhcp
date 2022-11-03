@@ -1,7 +1,5 @@
-# == Define: dhcp::pool
-#
 # @summary
-#   defines a dhcp-pool for IPv4 networks
+#   Define a dhcp-pool for IPv4 networks
 #
 # @param network
 #   Base-IP-Address of the pool

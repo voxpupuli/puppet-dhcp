@@ -6,107 +6,112 @@
 
 ### Classes
 
-* [`dhcp`](#dhcp): == Class: dhcp
-* [`dhcp::disable`](#dhcpdisable): ---------- Remove and Disable the DHCP server ----------
-* [`dhcp::failover`](#dhcpfailover): == Class: dhcp::failover
-* [`dhcp::params`](#dhcpparams): == Class: dhcp::params
+#### Public Classes
+
+* [`dhcp`](#dhcp): Manage an ISC DHCP server
+* [`dhcp::disable`](#dhcp--disable): Remove and Disable the DHCP server
+* [`dhcp::failover`](#dhcp--failover): Manage a DHCP failover config
+
+#### Private Classes
+
+* `dhcp::params`: Parameter defaults
 
 ### Defined types
 
-* [`dhcp::dhcp_class`](#dhcpdhcp_class): == Define: dhcp::dhcp_class
-* [`dhcp::host`](#dhcphost): == Define: dhcp::host
-* [`dhcp::ignoredsubnet`](#dhcpignoredsubnet): == Define: dhcp::ignoredsubnet
-* [`dhcp::pool`](#dhcppool): defines a dhcp-pool for IPv4 networks
-* [`dhcp::pool6`](#dhcppool6): == Define: dhcp::pool6
-* [`dhcp::sharednetwork`](#dhcpsharednetwork): defines a sharednetwork-segment to wrap several pools together
+* [`dhcp::dhcp_class`](#dhcp--dhcp_class): Manage a DHCP class in the config
+* [`dhcp::host`](#dhcp--host): Manage a DHCP host
+* [`dhcp::ignoredsubnet`](#dhcp--ignoredsubnet): Manage an ignored subnet
+* [`dhcp::pool`](#dhcp--pool): Define a dhcp-pool for IPv4 networks
+* [`dhcp::pool6`](#dhcp--pool6): Define a dhcp-pool for IPv6 networks
+* [`dhcp::sharednetwork`](#dhcp--sharednetwork): defines a sharednetwork-segment to wrap several pools together
 
 ### Data types
 
-* [`Dhcp::Mac`](#dhcpmac)
-* [`Dhcp::Syslogfacility`](#dhcpsyslogfacility)
+* [`Dhcp::Mac`](#Dhcp--Mac)
+* [`Dhcp::Syslogfacility`](#Dhcp--Syslogfacility)
 
 ## Classes
 
 ### <a name="dhcp"></a>`dhcp`
 
-== Class: dhcp
+Manage an ISC DHCP server
 
 #### Parameters
 
 The following parameters are available in the `dhcp` class:
 
-* [`dnsdomain`](#dnsdomain)
-* [`nameservers`](#nameservers)
-* [`nameservers_ipv6`](#nameservers_ipv6)
-* [`ntpservers`](#ntpservers)
-* [`dnssearchdomains`](#dnssearchdomains)
-* [`dhcp_conf_header`](#dhcp_conf_header)
-* [`dhcp_conf_ddns`](#dhcp_conf_ddns)
-* [`dhcp_conf_ntp`](#dhcp_conf_ntp)
-* [`dhcp_conf_pxe`](#dhcp_conf_pxe)
-* [`dhcp_conf_extra`](#dhcp_conf_extra)
-* [`dhcp_conf_fragments`](#dhcp_conf_fragments)
-* [`interfaces`](#interfaces)
-* [`interface`](#interface)
-* [`dnsupdatekey`](#dnsupdatekey)
-* [`ddns_update_style`](#ddns_update_style)
-* [`dnskeyname`](#dnskeyname)
-* [`ddns_update_static`](#ddns_update_static)
-* [`ddns_update_optimize`](#ddns_update_optimize)
-* [`ddns_client_updates`](#ddns_client_updates)
-* [`pxeserver`](#pxeserver)
-* [`pxefilename`](#pxefilename)
-* [`mtu`](#mtu)
-* [`ipxe_filename`](#ipxe_filename)
-* [`ipxe_bootstrap`](#ipxe_bootstrap)
-* [`logfacility`](#logfacility)
-* [`default_lease_time`](#default_lease_time)
-* [`max_lease_time`](#max_lease_time)
-* [`service_ensure`](#service_ensure)
-* [`globaloptions`](#globaloptions)
-* [`omapi_port`](#omapi_port)
-* [`omapi_name`](#omapi_name)
-* [`omapi_algorithm`](#omapi_algorithm)
-* [`omapi_key`](#omapi_key)
-* [`authoritative`](#authoritative)
-* [`extra_config`](#extra_config)
-* [`dhcp_dir`](#dhcp_dir)
-* [`dhcpd_conf_filename`](#dhcpd_conf_filename)
-* [`packagename`](#packagename)
-* [`manage_package`](#manage_package)
-* [`servicename`](#servicename)
-* [`manage_service`](#manage_service)
-* [`package_provider`](#package_provider)
-* [`ldap_port`](#ldap_port)
-* [`ldap_server`](#ldap_server)
-* [`ldap_username`](#ldap_username)
-* [`ldap_password`](#ldap_password)
-* [`ldap_base_dn`](#ldap_base_dn)
-* [`ldap_method`](#ldap_method)
-* [`ldap_debug_file`](#ldap_debug_file)
-* [`use_ldap`](#use_ldap)
-* [`option_code150_label`](#option_code150_label)
-* [`option_code150_value`](#option_code150_value)
-* [`dhcp_classes`](#dhcp_classes)
-* [`hosts`](#hosts)
-* [`ignoredsubnets`](#ignoredsubnets)
-* [`pools`](#pools)
-* [`pools6`](#pools6)
-* [`sharednetworks`](#sharednetworks)
-* [`on_commit`](#on_commit)
-* [`on_release`](#on_release)
-* [`on_expiry`](#on_expiry)
-* [`dhcpd_binary`](#dhcpd_binary)
+* [`dnsdomain`](#-dhcp--dnsdomain)
+* [`nameservers`](#-dhcp--nameservers)
+* [`nameservers_ipv6`](#-dhcp--nameservers_ipv6)
+* [`ntpservers`](#-dhcp--ntpservers)
+* [`dnssearchdomains`](#-dhcp--dnssearchdomains)
+* [`dhcp_conf_header`](#-dhcp--dhcp_conf_header)
+* [`dhcp_conf_ddns`](#-dhcp--dhcp_conf_ddns)
+* [`dhcp_conf_ntp`](#-dhcp--dhcp_conf_ntp)
+* [`dhcp_conf_pxe`](#-dhcp--dhcp_conf_pxe)
+* [`dhcp_conf_extra`](#-dhcp--dhcp_conf_extra)
+* [`dhcp_conf_fragments`](#-dhcp--dhcp_conf_fragments)
+* [`interfaces`](#-dhcp--interfaces)
+* [`interface`](#-dhcp--interface)
+* [`dnsupdatekey`](#-dhcp--dnsupdatekey)
+* [`ddns_update_style`](#-dhcp--ddns_update_style)
+* [`dnskeyname`](#-dhcp--dnskeyname)
+* [`ddns_update_static`](#-dhcp--ddns_update_static)
+* [`ddns_update_optimize`](#-dhcp--ddns_update_optimize)
+* [`ddns_client_updates`](#-dhcp--ddns_client_updates)
+* [`pxeserver`](#-dhcp--pxeserver)
+* [`pxefilename`](#-dhcp--pxefilename)
+* [`mtu`](#-dhcp--mtu)
+* [`ipxe_filename`](#-dhcp--ipxe_filename)
+* [`ipxe_bootstrap`](#-dhcp--ipxe_bootstrap)
+* [`logfacility`](#-dhcp--logfacility)
+* [`default_lease_time`](#-dhcp--default_lease_time)
+* [`max_lease_time`](#-dhcp--max_lease_time)
+* [`service_ensure`](#-dhcp--service_ensure)
+* [`globaloptions`](#-dhcp--globaloptions)
+* [`omapi_port`](#-dhcp--omapi_port)
+* [`omapi_name`](#-dhcp--omapi_name)
+* [`omapi_algorithm`](#-dhcp--omapi_algorithm)
+* [`omapi_key`](#-dhcp--omapi_key)
+* [`authoritative`](#-dhcp--authoritative)
+* [`extra_config`](#-dhcp--extra_config)
+* [`dhcp_dir`](#-dhcp--dhcp_dir)
+* [`dhcpd_conf_filename`](#-dhcp--dhcpd_conf_filename)
+* [`packagename`](#-dhcp--packagename)
+* [`manage_package`](#-dhcp--manage_package)
+* [`servicename`](#-dhcp--servicename)
+* [`manage_service`](#-dhcp--manage_service)
+* [`package_provider`](#-dhcp--package_provider)
+* [`ldap_port`](#-dhcp--ldap_port)
+* [`ldap_server`](#-dhcp--ldap_server)
+* [`ldap_username`](#-dhcp--ldap_username)
+* [`ldap_password`](#-dhcp--ldap_password)
+* [`ldap_base_dn`](#-dhcp--ldap_base_dn)
+* [`ldap_method`](#-dhcp--ldap_method)
+* [`ldap_debug_file`](#-dhcp--ldap_debug_file)
+* [`use_ldap`](#-dhcp--use_ldap)
+* [`option_code150_label`](#-dhcp--option_code150_label)
+* [`option_code150_value`](#-dhcp--option_code150_value)
+* [`dhcp_classes`](#-dhcp--dhcp_classes)
+* [`hosts`](#-dhcp--hosts)
+* [`ignoredsubnets`](#-dhcp--ignoredsubnets)
+* [`pools`](#-dhcp--pools)
+* [`pools6`](#-dhcp--pools6)
+* [`sharednetworks`](#-dhcp--sharednetworks)
+* [`on_commit`](#-dhcp--on_commit)
+* [`on_release`](#-dhcp--on_release)
+* [`on_expiry`](#-dhcp--on_expiry)
+* [`dhcpd_binary`](#-dhcp--dhcpd_binary)
 
-##### <a name="dnsdomain"></a>`dnsdomain`
+##### <a name="-dhcp--dnsdomain"></a>`dnsdomain`
 
 Data type: `Optional[Array[String[1]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nameservers"></a>`nameservers`
+##### <a name="-dhcp--nameservers"></a>`nameservers`
 
 Data type: `Array[Stdlib::IP::Address::V4]`
 
@@ -114,7 +119,7 @@ Data type: `Array[Stdlib::IP::Address::V4]`
 
 Default value: `[]`
 
-##### <a name="nameservers_ipv6"></a>`nameservers_ipv6`
+##### <a name="-dhcp--nameservers_ipv6"></a>`nameservers_ipv6`
 
 Data type: `Array[Stdlib::IP::Address::V6]`
 
@@ -122,7 +127,7 @@ Data type: `Array[Stdlib::IP::Address::V6]`
 
 Default value: `[]`
 
-##### <a name="ntpservers"></a>`ntpservers`
+##### <a name="-dhcp--ntpservers"></a>`ntpservers`
 
 Data type: `Array[Variant[Stdlib::Fqdn,Stdlib::IP::Address]]`
 
@@ -130,7 +135,7 @@ Data type: `Array[Variant[Stdlib::Fqdn,Stdlib::IP::Address]]`
 
 Default value: `[]`
 
-##### <a name="dnssearchdomains"></a>`dnssearchdomains`
+##### <a name="-dhcp--dnssearchdomains"></a>`dnssearchdomains`
 
 Data type: `Array[String[1]]`
 
@@ -138,7 +143,7 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-##### <a name="dhcp_conf_header"></a>`dhcp_conf_header`
+##### <a name="-dhcp--dhcp_conf_header"></a>`dhcp_conf_header`
 
 Data type: `String`
 
@@ -146,7 +151,7 @@ Data type: `String`
 
 Default value: `'INTERNAL_TEMPLATE'`
 
-##### <a name="dhcp_conf_ddns"></a>`dhcp_conf_ddns`
+##### <a name="-dhcp--dhcp_conf_ddns"></a>`dhcp_conf_ddns`
 
 Data type: `String`
 
@@ -154,7 +159,7 @@ Data type: `String`
 
 Default value: `'INTERNAL_TEMPLATE'`
 
-##### <a name="dhcp_conf_ntp"></a>`dhcp_conf_ntp`
+##### <a name="-dhcp--dhcp_conf_ntp"></a>`dhcp_conf_ntp`
 
 Data type: `String`
 
@@ -162,7 +167,7 @@ Data type: `String`
 
 Default value: `'INTERNAL_TEMPLATE'`
 
-##### <a name="dhcp_conf_pxe"></a>`dhcp_conf_pxe`
+##### <a name="-dhcp--dhcp_conf_pxe"></a>`dhcp_conf_pxe`
 
 Data type: `String`
 
@@ -170,7 +175,7 @@ Data type: `String`
 
 Default value: `'INTERNAL_TEMPLATE'`
 
-##### <a name="dhcp_conf_extra"></a>`dhcp_conf_extra`
+##### <a name="-dhcp--dhcp_conf_extra"></a>`dhcp_conf_extra`
 
 Data type: `String`
 
@@ -178,7 +183,7 @@ Data type: `String`
 
 Default value: `'INTERNAL_TEMPLATE'`
 
-##### <a name="dhcp_conf_fragments"></a>`dhcp_conf_fragments`
+##### <a name="-dhcp--dhcp_conf_fragments"></a>`dhcp_conf_fragments`
 
 Data type: `Hash[String[1], Hash[String[1], String[1]]]`
 
@@ -186,15 +191,15 @@ Data type: `Hash[String[1], Hash[String[1], String[1]]]`
 
 Default value: `{}`
 
-##### <a name="interfaces"></a>`interfaces`
+##### <a name="-dhcp--interfaces"></a>`interfaces`
 
 Data type: `Optional[Array[String[1]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="interface"></a>`interface`
+##### <a name="-dhcp--interface"></a>`interface`
 
 Data type: `String[1]`
 
@@ -202,15 +207,15 @@ Data type: `String[1]`
 
 Default value: `'NOTSET'`
 
-##### <a name="dnsupdatekey"></a>`dnsupdatekey`
+##### <a name="-dhcp--dnsupdatekey"></a>`dnsupdatekey`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ddns_update_style"></a>`ddns_update_style`
+##### <a name="-dhcp--ddns_update_style"></a>`ddns_update_style`
 
 Data type: `String[1]`
 
@@ -218,23 +223,15 @@ Data type: `String[1]`
 
 Default value: `'interim'`
 
-##### <a name="dnskeyname"></a>`dnskeyname`
+##### <a name="-dhcp--dnskeyname"></a>`dnskeyname`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ddns_update_static"></a>`ddns_update_static`
-
-Data type: `String[1]`
-
-
-
-Default value: `'on'`
-
-##### <a name="ddns_update_optimize"></a>`ddns_update_optimize`
+##### <a name="-dhcp--ddns_update_static"></a>`ddns_update_static`
 
 Data type: `String[1]`
 
@@ -242,7 +239,15 @@ Data type: `String[1]`
 
 Default value: `'on'`
 
-##### <a name="ddns_client_updates"></a>`ddns_client_updates`
+##### <a name="-dhcp--ddns_update_optimize"></a>`ddns_update_optimize`
+
+Data type: `String[1]`
+
+
+
+Default value: `'on'`
+
+##### <a name="-dhcp--ddns_client_updates"></a>`ddns_client_updates`
 
 Data type: `Enum['allow', 'deny']`
 
@@ -250,47 +255,47 @@ Data type: `Enum['allow', 'deny']`
 
 Default value: `'allow'`
 
-##### <a name="pxeserver"></a>`pxeserver`
+##### <a name="-dhcp--pxeserver"></a>`pxeserver`
 
 Data type: `Optional[Stdlib::Host]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pxefilename"></a>`pxefilename`
+##### <a name="-dhcp--pxefilename"></a>`pxefilename`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mtu"></a>`mtu`
+##### <a name="-dhcp--mtu"></a>`mtu`
 
 Data type: `Optional[Integer[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ipxe_filename"></a>`ipxe_filename`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="ipxe_bootstrap"></a>`ipxe_bootstrap`
+##### <a name="-dhcp--ipxe_filename"></a>`ipxe_filename`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="logfacility"></a>`logfacility`
+##### <a name="-dhcp--ipxe_bootstrap"></a>`ipxe_bootstrap`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: `undef`
+
+##### <a name="-dhcp--logfacility"></a>`logfacility`
 
 Data type: `Dhcp::Syslogfacility`
 
@@ -298,7 +303,7 @@ Data type: `Dhcp::Syslogfacility`
 
 Default value: `'daemon'`
 
-##### <a name="default_lease_time"></a>`default_lease_time`
+##### <a name="-dhcp--default_lease_time"></a>`default_lease_time`
 
 Data type: `Integer[-1]`
 
@@ -306,7 +311,7 @@ Data type: `Integer[-1]`
 
 Default value: `43200`
 
-##### <a name="max_lease_time"></a>`max_lease_time`
+##### <a name="-dhcp--max_lease_time"></a>`max_lease_time`
 
 Data type: `Integer[-1]`
 
@@ -314,7 +319,7 @@ Data type: `Integer[-1]`
 
 Default value: `86400`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-dhcp--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -322,31 +327,31 @@ Data type: `Stdlib::Ensure::Service`
 
 Default value: `'running'`
 
-##### <a name="globaloptions"></a>`globaloptions`
+##### <a name="-dhcp--globaloptions"></a>`globaloptions`
 
 Data type: `Optional[Variant[String,Array[String[1]]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="omapi_port"></a>`omapi_port`
+##### <a name="-dhcp--omapi_port"></a>`omapi_port`
 
 Data type: `Optional[Stdlib::Port]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="omapi_name"></a>`omapi_name`
+##### <a name="-dhcp--omapi_name"></a>`omapi_name`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="omapi_algorithm"></a>`omapi_algorithm`
+##### <a name="-dhcp--omapi_algorithm"></a>`omapi_algorithm`
 
 Data type: `String[1]`
 
@@ -354,23 +359,23 @@ Data type: `String[1]`
 
 Default value: `'HMAC-MD5'`
 
-##### <a name="omapi_key"></a>`omapi_key`
+##### <a name="-dhcp--omapi_key"></a>`omapi_key`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="authoritative"></a>`authoritative`
+##### <a name="-dhcp--authoritative"></a>`authoritative`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="extra_config"></a>`extra_config`
+##### <a name="-dhcp--extra_config"></a>`extra_config`
 
 Data type: `Variant[Array[String[1]],String[1]]`
 
@@ -378,7 +383,7 @@ Data type: `Variant[Array[String[1]],String[1]]`
 
 Default value: `[]`
 
-##### <a name="dhcp_dir"></a>`dhcp_dir`
+##### <a name="-dhcp--dhcp_dir"></a>`dhcp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -386,7 +391,7 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: `$dhcp::params::dhcp_dir`
 
-##### <a name="dhcpd_conf_filename"></a>`dhcpd_conf_filename`
+##### <a name="-dhcp--dhcpd_conf_filename"></a>`dhcpd_conf_filename`
 
 Data type: `String[1]`
 
@@ -394,7 +399,7 @@ Data type: `String[1]`
 
 Default value: `'dhcpd.conf'`
 
-##### <a name="packagename"></a>`packagename`
+##### <a name="-dhcp--packagename"></a>`packagename`
 
 Data type: `String[1]`
 
@@ -402,15 +407,15 @@ Data type: `String[1]`
 
 Default value: `$dhcp::params::packagename`
 
-##### <a name="manage_package"></a>`manage_package`
+##### <a name="-dhcp--manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="servicename"></a>`servicename`
+##### <a name="-dhcp--servicename"></a>`servicename`
 
 Data type: `Variant[String[1],Array[String[1]]]`
 
@@ -418,15 +423,15 @@ Data type: `Variant[String[1],Array[String[1]]]`
 
 Default value: `$dhcp::params::servicename`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-dhcp--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="package_provider"></a>`package_provider`
+##### <a name="-dhcp--package_provider"></a>`package_provider`
 
 Data type: `Optional[String[1]]`
 
@@ -434,7 +439,7 @@ Data type: `Optional[String[1]]`
 
 Default value: `$dhcp::params::package_provider`
 
-##### <a name="ldap_port"></a>`ldap_port`
+##### <a name="-dhcp--ldap_port"></a>`ldap_port`
 
 Data type: `Stdlib::Port`
 
@@ -442,7 +447,7 @@ Data type: `Stdlib::Port`
 
 Default value: `389`
 
-##### <a name="ldap_server"></a>`ldap_server`
+##### <a name="-dhcp--ldap_server"></a>`ldap_server`
 
 Data type: `String[1]`
 
@@ -450,7 +455,7 @@ Data type: `String[1]`
 
 Default value: `'localhost'`
 
-##### <a name="ldap_username"></a>`ldap_username`
+##### <a name="-dhcp--ldap_username"></a>`ldap_username`
 
 Data type: `String[1]`
 
@@ -458,15 +463,15 @@ Data type: `String[1]`
 
 Default value: `'cn=root, dc=example, dc=com'`
 
-##### <a name="ldap_password"></a>`ldap_password`
+##### <a name="-dhcp--ldap_password"></a>`ldap_password`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_base_dn"></a>`ldap_base_dn`
+##### <a name="-dhcp--ldap_base_dn"></a>`ldap_base_dn`
 
 Data type: `String[1]`
 
@@ -474,7 +479,7 @@ Data type: `String[1]`
 
 Default value: `'dc=example, dc=com'`
 
-##### <a name="ldap_method"></a>`ldap_method`
+##### <a name="-dhcp--ldap_method"></a>`ldap_method`
 
 Data type: `Enum['dynamic', 'static']`
 
@@ -482,23 +487,23 @@ Data type: `Enum['dynamic', 'static']`
 
 Default value: `'dynamic'`
 
-##### <a name="ldap_debug_file"></a>`ldap_debug_file`
+##### <a name="-dhcp--ldap_debug_file"></a>`ldap_debug_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_ldap"></a>`use_ldap`
+##### <a name="-dhcp--use_ldap"></a>`use_ldap`
 
 Data type: `Boolean`
 
 
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="option_code150_label"></a>`option_code150_label`
+##### <a name="-dhcp--option_code150_label"></a>`option_code150_label`
 
 Data type: `String[1]`
 
@@ -506,7 +511,7 @@ Data type: `String[1]`
 
 Default value: `'pxegrub'`
 
-##### <a name="option_code150_value"></a>`option_code150_value`
+##### <a name="-dhcp--option_code150_value"></a>`option_code150_value`
 
 Data type: `String[1]`
 
@@ -514,7 +519,7 @@ Data type: `String[1]`
 
 Default value: `'text'`
 
-##### <a name="dhcp_classes"></a>`dhcp_classes`
+##### <a name="-dhcp--dhcp_classes"></a>`dhcp_classes`
 
 Data type: `Hash[String[1], Hash]`
 
@@ -522,7 +527,7 @@ Data type: `Hash[String[1], Hash]`
 
 Default value: `{}`
 
-##### <a name="hosts"></a>`hosts`
+##### <a name="-dhcp--hosts"></a>`hosts`
 
 Data type: `Hash[String[1], Hash]`
 
@@ -530,7 +535,7 @@ Data type: `Hash[String[1], Hash]`
 
 Default value: `{}`
 
-##### <a name="ignoredsubnets"></a>`ignoredsubnets`
+##### <a name="-dhcp--ignoredsubnets"></a>`ignoredsubnets`
 
 Data type: `Hash[String, Hash]`
 
@@ -538,7 +543,7 @@ Data type: `Hash[String, Hash]`
 
 Default value: `{}`
 
-##### <a name="pools"></a>`pools`
+##### <a name="-dhcp--pools"></a>`pools`
 
 Data type: `Hash[String, Hash]`
 
@@ -546,7 +551,7 @@ Data type: `Hash[String, Hash]`
 
 Default value: `{}`
 
-##### <a name="pools6"></a>`pools6`
+##### <a name="-dhcp--pools6"></a>`pools6`
 
 Data type: `Hash[String, Hash]`
 
@@ -554,7 +559,7 @@ Data type: `Hash[String, Hash]`
 
 Default value: `{}`
 
-##### <a name="sharednetworks"></a>`sharednetworks`
+##### <a name="-dhcp--sharednetworks"></a>`sharednetworks`
 
 Data type: `Hash[String, Hash]`
 
@@ -562,7 +567,7 @@ Data type: `Hash[String, Hash]`
 
 Default value: `{}`
 
-##### <a name="on_commit"></a>`on_commit`
+##### <a name="-dhcp--on_commit"></a>`on_commit`
 
 Data type: `Array[String[1]]`
 
@@ -570,7 +575,7 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-##### <a name="on_release"></a>`on_release`
+##### <a name="-dhcp--on_release"></a>`on_release`
 
 Data type: `Array[String[1]]`
 
@@ -578,7 +583,7 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-##### <a name="on_expiry"></a>`on_expiry`
+##### <a name="-dhcp--on_expiry"></a>`on_expiry`
 
 Data type: `Array[String[1]]`
 
@@ -586,7 +591,7 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-##### <a name="dhcpd_binary"></a>`dhcpd_binary`
+##### <a name="-dhcp--dhcpd_binary"></a>`dhcpd_binary`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -594,20 +599,18 @@ Data type: `Optional[Stdlib::Absolutepath]`
 
 Default value: `$dhcp::params::dhcpd_binary`
 
-### <a name="dhcpdisable"></a>`dhcp::disable`
+### <a name="dhcp--disable"></a>`dhcp::disable`
 
-----------
 Remove and Disable the DHCP server
-----------
 
 #### Parameters
 
 The following parameters are available in the `dhcp::disable` class:
 
-* [`packagename`](#packagename)
-* [`servicename`](#servicename)
+* [`packagename`](#-dhcp--disable--packagename)
+* [`servicename`](#-dhcp--disable--servicename)
 
-##### <a name="packagename"></a>`packagename`
+##### <a name="-dhcp--disable--packagename"></a>`packagename`
 
 Data type: `String[1]`
 
@@ -615,7 +618,7 @@ Data type: `String[1]`
 
 Default value: `$dhcp::params::packagename`
 
-##### <a name="servicename"></a>`servicename`
+##### <a name="-dhcp--disable--servicename"></a>`servicename`
 
 Data type: `String[1]`
 
@@ -623,34 +626,34 @@ Data type: `String[1]`
 
 Default value: `$dhcp::params::servicename`
 
-### <a name="dhcpfailover"></a>`dhcp::failover`
+### <a name="dhcp--failover"></a>`dhcp::failover`
 
-== Class: dhcp::failover
+Manage a DHCP failover config
 
 #### Parameters
 
 The following parameters are available in the `dhcp::failover` class:
 
-* [`peer_address`](#peer_address)
-* [`role`](#role)
-* [`address`](#address)
-* [`port`](#port)
-* [`max_response_delay`](#max_response_delay)
-* [`max_unacked_updates`](#max_unacked_updates)
-* [`mclt`](#mclt)
-* [`load_split`](#load_split)
-* [`load_balance`](#load_balance)
-* [`omapi_key`](#omapi_key)
-* [`dhcp_dir`](#dhcp_dir)
-* [`dhcpd_conf_filename`](#dhcpd_conf_filename)
+* [`peer_address`](#-dhcp--failover--peer_address)
+* [`role`](#-dhcp--failover--role)
+* [`address`](#-dhcp--failover--address)
+* [`port`](#-dhcp--failover--port)
+* [`max_response_delay`](#-dhcp--failover--max_response_delay)
+* [`max_unacked_updates`](#-dhcp--failover--max_unacked_updates)
+* [`mclt`](#-dhcp--failover--mclt)
+* [`load_split`](#-dhcp--failover--load_split)
+* [`load_balance`](#-dhcp--failover--load_balance)
+* [`omapi_key`](#-dhcp--failover--omapi_key)
+* [`dhcp_dir`](#-dhcp--failover--dhcp_dir)
+* [`dhcpd_conf_filename`](#-dhcp--failover--dhcpd_conf_filename)
 
-##### <a name="peer_address"></a>`peer_address`
+##### <a name="-dhcp--failover--peer_address"></a>`peer_address`
 
 Data type: `Any`
 
 
 
-##### <a name="role"></a>`role`
+##### <a name="-dhcp--failover--role"></a>`role`
 
 Data type: `Any`
 
@@ -658,7 +661,7 @@ Data type: `Any`
 
 Default value: `'primary'`
 
-##### <a name="address"></a>`address`
+##### <a name="-dhcp--failover--address"></a>`address`
 
 Data type: `Any`
 
@@ -666,7 +669,7 @@ Data type: `Any`
 
 Default value: `$facts['networking']['ip']`
 
-##### <a name="port"></a>`port`
+##### <a name="-dhcp--failover--port"></a>`port`
 
 Data type: `Any`
 
@@ -674,7 +677,7 @@ Data type: `Any`
 
 Default value: `'519'`
 
-##### <a name="max_response_delay"></a>`max_response_delay`
+##### <a name="-dhcp--failover--max_response_delay"></a>`max_response_delay`
 
 Data type: `Any`
 
@@ -682,7 +685,7 @@ Data type: `Any`
 
 Default value: `'30'`
 
-##### <a name="max_unacked_updates"></a>`max_unacked_updates`
+##### <a name="-dhcp--failover--max_unacked_updates"></a>`max_unacked_updates`
 
 Data type: `Any`
 
@@ -690,7 +693,7 @@ Data type: `Any`
 
 Default value: `'10'`
 
-##### <a name="mclt"></a>`mclt`
+##### <a name="-dhcp--failover--mclt"></a>`mclt`
 
 Data type: `Any`
 
@@ -698,7 +701,7 @@ Data type: `Any`
 
 Default value: `'300'`
 
-##### <a name="load_split"></a>`load_split`
+##### <a name="-dhcp--failover--load_split"></a>`load_split`
 
 Data type: `Any`
 
@@ -706,7 +709,7 @@ Data type: `Any`
 
 Default value: `'128'`
 
-##### <a name="load_balance"></a>`load_balance`
+##### <a name="-dhcp--failover--load_balance"></a>`load_balance`
 
 Data type: `Any`
 
@@ -714,15 +717,15 @@ Data type: `Any`
 
 Default value: `'3'`
 
-##### <a name="omapi_key"></a>`omapi_key`
+##### <a name="-dhcp--failover--omapi_key"></a>`omapi_key`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="dhcp_dir"></a>`dhcp_dir`
+##### <a name="-dhcp--failover--dhcp_dir"></a>`dhcp_dir`
 
 Data type: `Any`
 
@@ -730,7 +733,7 @@ Data type: `Any`
 
 Default value: `$dhcp::dhcp_dir`
 
-##### <a name="dhcpd_conf_filename"></a>`dhcpd_conf_filename`
+##### <a name="-dhcp--failover--dhcpd_conf_filename"></a>`dhcpd_conf_filename`
 
 Data type: `Any`
 
@@ -738,66 +741,62 @@ Data type: `Any`
 
 Default value: `$dhcp::dhcpd_conf_filename`
 
-### <a name="dhcpparams"></a>`dhcp::params`
-
-== Class: dhcp::params
-
 ## Defined types
 
-### <a name="dhcpdhcp_class"></a>`dhcp::dhcp_class`
+### <a name="dhcp--dhcp_class"></a>`dhcp::dhcp_class`
 
-== Define: dhcp::dhcp_class
+Manage a DHCP class in the config
 
 #### Parameters
 
 The following parameters are available in the `dhcp::dhcp_class` defined type:
 
-* [`parameters`](#parameters)
+* [`parameters`](#-dhcp--dhcp_class--parameters)
 
-##### <a name="parameters"></a>`parameters`
+##### <a name="-dhcp--dhcp_class--parameters"></a>`parameters`
 
 Data type: `Variant[Array[String[1]], String[1]]`
 
 
 
-### <a name="dhcphost"></a>`dhcp::host`
+### <a name="dhcp--host"></a>`dhcp::host`
 
-== Define: dhcp::host
+Manage a DHCP host
 
 #### Parameters
 
 The following parameters are available in the `dhcp::host` defined type:
 
-* [`ip`](#ip)
-* [`mac`](#mac)
-* [`ddns_hostname`](#ddns_hostname)
-* [`options`](#options)
-* [`comment`](#comment)
-* [`ignored`](#ignored)
-* [`default_lease_time`](#default_lease_time)
-* [`max_lease_time`](#max_lease_time)
-* [`ipxe_filename`](#ipxe_filename)
-* [`ipxe_bootstrap`](#ipxe_bootstrap)
-* [`filename`](#filename)
-* [`on_commit`](#on_commit)
-* [`on_release`](#on_release)
-* [`on_expiry`](#on_expiry)
+* [`ip`](#-dhcp--host--ip)
+* [`mac`](#-dhcp--host--mac)
+* [`ddns_hostname`](#-dhcp--host--ddns_hostname)
+* [`options`](#-dhcp--host--options)
+* [`comment`](#-dhcp--host--comment)
+* [`ignored`](#-dhcp--host--ignored)
+* [`default_lease_time`](#-dhcp--host--default_lease_time)
+* [`max_lease_time`](#-dhcp--host--max_lease_time)
+* [`ipxe_filename`](#-dhcp--host--ipxe_filename)
+* [`ipxe_bootstrap`](#-dhcp--host--ipxe_bootstrap)
+* [`filename`](#-dhcp--host--filename)
+* [`on_commit`](#-dhcp--host--on_commit)
+* [`on_release`](#-dhcp--host--on_release)
+* [`on_expiry`](#-dhcp--host--on_expiry)
 
-##### <a name="ip"></a>`ip`
+##### <a name="-dhcp--host--ip"></a>`ip`
 
 Data type: `Optional[Stdlib::IP::Address]`
 
 The ip address of the DHCP host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mac"></a>`mac`
+##### <a name="-dhcp--host--mac"></a>`mac`
 
 Data type: `Dhcp::Mac`
 
 The MAC address.
 
-##### <a name="ddns_hostname"></a>`ddns_hostname`
+##### <a name="-dhcp--host--ddns_hostname"></a>`ddns_hostname`
 
 Data type: `String`
 
@@ -807,7 +806,7 @@ algorithm that varies for each of the different update methods.
 
 Default value: `$name`
 
-##### <a name="options"></a>`options`
+##### <a name="-dhcp--host--options"></a>`options`
 
 Data type: `Hash`
 
@@ -815,63 +814,63 @@ A hash with key value pairs to go to the option lines. The word 'option' is not 
 
 Default value: `{}`
 
-##### <a name="comment"></a>`comment`
+##### <a name="-dhcp--host--comment"></a>`comment`
 
 Data type: `Optional[String[1]]`
 
 A comment added to the DHCP host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ignored"></a>`ignored`
+##### <a name="-dhcp--host--ignored"></a>`ignored`
 
 Data type: `Boolean`
 
 If set to true results in `ignore booting;` line in the DHCP host configuration.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="default_lease_time"></a>`default_lease_time`
+##### <a name="-dhcp--host--default_lease_time"></a>`default_lease_time`
 
 Data type: `Optional[Integer]`
 
 Default lease length.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_lease_time"></a>`max_lease_time`
+##### <a name="-dhcp--host--max_lease_time"></a>`max_lease_time`
 
 Data type: `Optional[Integer]`
 
 The maximum lease length.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ipxe_filename"></a>`ipxe_filename`
+##### <a name="-dhcp--host--ipxe_filename"></a>`ipxe_filename`
 
 Data type: `Optional[String[1]]`
 
 The ipxe filenme, e. g. ipxe.efi.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ipxe_bootstrap"></a>`ipxe_bootstrap`
+##### <a name="-dhcp--host--ipxe_bootstrap"></a>`ipxe_bootstrap`
 
 Data type: `Optional[String[1]]`
 
 The bootstrap file of UEFI PXE, e. g. winpe.ipxe
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="filename"></a>`filename`
+##### <a name="-dhcp--host--filename"></a>`filename`
 
 Data type: `Optional[String[1]]`
 
 The file to be loaded by TFTP.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="on_commit"></a>`on_commit`
+##### <a name="-dhcp--host--on_commit"></a>`on_commit`
 
 Data type: `Array[String[1]]`
 
@@ -879,7 +878,7 @@ An array with statements to go into the hook on commit.
 
 Default value: `[]`
 
-##### <a name="on_release"></a>`on_release`
+##### <a name="-dhcp--host--on_release"></a>`on_release`
 
 Data type: `Array[String[1]]`
 
@@ -887,7 +886,7 @@ An array with statements to go into the hook on release.
 
 Default value: `[]`
 
-##### <a name="on_expiry"></a>`on_expiry`
+##### <a name="-dhcp--host--on_expiry"></a>`on_expiry`
 
 Data type: `Array[String[1]]`
 
@@ -895,69 +894,69 @@ An array with statements to go into the hook on expiry.
 
 Default value: `[]`
 
-### <a name="dhcpignoredsubnet"></a>`dhcp::ignoredsubnet`
+### <a name="dhcp--ignoredsubnet"></a>`dhcp::ignoredsubnet`
 
-== Define: dhcp::ignoredsubnet
+Manage an ignored subnet
 
 #### Parameters
 
 The following parameters are available in the `dhcp::ignoredsubnet` defined type:
 
-* [`network`](#network)
-* [`mask`](#mask)
+* [`network`](#-dhcp--ignoredsubnet--network)
+* [`mask`](#-dhcp--ignoredsubnet--mask)
 
-##### <a name="network"></a>`network`
-
-Data type: `Any`
-
-
-
-##### <a name="mask"></a>`mask`
+##### <a name="-dhcp--ignoredsubnet--network"></a>`network`
 
 Data type: `Any`
 
 
 
-### <a name="dhcppool"></a>`dhcp::pool`
+##### <a name="-dhcp--ignoredsubnet--mask"></a>`mask`
 
-== Define: dhcp::pool
+Data type: `Any`
+
+
+
+### <a name="dhcp--pool"></a>`dhcp::pool`
+
+Define a dhcp-pool for IPv4 networks
 
 #### Parameters
 
 The following parameters are available in the `dhcp::pool` defined type:
 
-* [`network`](#network)
-* [`mask`](#mask)
-* [`host_mask`](#host_mask)
-* [`gateway`](#gateway)
-* [`range`](#range)
-* [`failover`](#failover)
-* [`options`](#options)
-* [`parameters`](#parameters)
-* [`sharednetwork`](#sharednetwork)
-* [`nameservers`](#nameservers)
-* [`nameservers_ipv6`](#nameservers_ipv6)
-* [`pxeserver`](#pxeserver)
-* [`mtu`](#mtu)
-* [`domain_name`](#domain_name)
-* [`ignore_unknown`](#ignore_unknown)
-* [`on_commit`](#on_commit)
-* [`on_release`](#on_release)
-* [`on_expiry`](#on_expiry)
+* [`network`](#-dhcp--pool--network)
+* [`mask`](#-dhcp--pool--mask)
+* [`host_mask`](#-dhcp--pool--host_mask)
+* [`gateway`](#-dhcp--pool--gateway)
+* [`range`](#-dhcp--pool--range)
+* [`failover`](#-dhcp--pool--failover)
+* [`options`](#-dhcp--pool--options)
+* [`parameters`](#-dhcp--pool--parameters)
+* [`sharednetwork`](#-dhcp--pool--sharednetwork)
+* [`nameservers`](#-dhcp--pool--nameservers)
+* [`nameservers_ipv6`](#-dhcp--pool--nameservers_ipv6)
+* [`pxeserver`](#-dhcp--pool--pxeserver)
+* [`mtu`](#-dhcp--pool--mtu)
+* [`domain_name`](#-dhcp--pool--domain_name)
+* [`ignore_unknown`](#-dhcp--pool--ignore_unknown)
+* [`on_commit`](#-dhcp--pool--on_commit)
+* [`on_release`](#-dhcp--pool--on_release)
+* [`on_expiry`](#-dhcp--pool--on_expiry)
 
-##### <a name="network"></a>`network`
+##### <a name="-dhcp--pool--network"></a>`network`
 
 Data type: `Stdlib::IP::Address::V4`
 
 Base-IP-Address of the pool
 
-##### <a name="mask"></a>`mask`
+##### <a name="-dhcp--pool--mask"></a>`mask`
 
 Data type: `Stdlib::IP::Address::V4`
 
 Networkmask of that pool
 
-##### <a name="host_mask"></a>`host_mask`
+##### <a name="-dhcp--pool--host_mask"></a>`host_mask`
 
 Data type: `Stdlib::IP::Address::V4`
 
@@ -967,15 +966,15 @@ mask to clients if needed
 
 Default value: `$mask`
 
-##### <a name="gateway"></a>`gateway`
+##### <a name="-dhcp--pool--gateway"></a>`gateway`
 
 Data type: `Optional[String[1]]`
 
 Optional IP-address for the gateway
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="range"></a>`range`
+##### <a name="-dhcp--pool--range"></a>`range`
 
 Data type: `Optional[Variant[Array[String[1],1],String[1]]]`
 
@@ -983,33 +982,33 @@ Optional IP-range to supply addresses from
 Specify as String with start- and end-IP-address
 separated by space
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="failover"></a>`failover`
+##### <a name="-dhcp--pool--failover"></a>`failover`
 
 Data type: `Optional[String[1]]`
 
 Optional name of the DHCP-server to failover
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="options"></a>`options`
+##### <a name="-dhcp--pool--options"></a>`options`
 
 Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 Optional String or Array of `option` to set in the pool
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parameters"></a>`parameters`
+##### <a name="-dhcp--pool--parameters"></a>`parameters`
 
 Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 Optional String or Array of manual parameters to set
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sharednetwork"></a>`sharednetwork`
+##### <a name="-dhcp--pool--sharednetwork"></a>`sharednetwork`
 
 Data type: `Optional[String[1]]`
 
@@ -1017,58 +1016,58 @@ Optional String to group this pool into a shared-network
 segment by the name `sharednetwork`. You need to define
 that segment by using `dhcp::sharednetwork`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nameservers"></a>`nameservers`
+##### <a name="-dhcp--pool--nameservers"></a>`nameservers`
 
 Data type: `Optional[Array[String]]`
 
 Optional set of IPv4-nameservers to supply to the client
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nameservers_ipv6"></a>`nameservers_ipv6`
+##### <a name="-dhcp--pool--nameservers_ipv6"></a>`nameservers_ipv6`
 
 Data type: `Optional[Array[String]]`
 
 Optional set of IPv6-nameservers to supply to the client
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pxeserver"></a>`pxeserver`
+##### <a name="-dhcp--pool--pxeserver"></a>`pxeserver`
 
 Data type: `Optional[String]`
 
 Optional name of a PXE-server to boot from
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mtu"></a>`mtu`
+##### <a name="-dhcp--pool--mtu"></a>`mtu`
 
 Data type: `Optional[Integer]`
 
 Optional size of the MTU to supply to the client
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="domain_name"></a>`domain_name`
+##### <a name="-dhcp--pool--domain_name"></a>`domain_name`
 
 Data type: `Optional[String[1]]`
 
 Optional domainname for the client
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ignore_unknown"></a>`ignore_unknown`
+##### <a name="-dhcp--pool--ignore_unknown"></a>`ignore_unknown`
 
 Data type: `Any`
 
 Set to true to disable leases for clients not
 explicitly defined by `dhcp::host`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="on_commit"></a>`on_commit`
+##### <a name="-dhcp--pool--on_commit"></a>`on_commit`
 
 Data type: `Array[String[1]]`
 
@@ -1076,7 +1075,7 @@ Set of statements to execute when providing a lease
 
 Default value: `[]`
 
-##### <a name="on_release"></a>`on_release`
+##### <a name="-dhcp--pool--on_release"></a>`on_release`
 
 Data type: `Array[String[1]]`
 
@@ -1084,7 +1083,7 @@ Set of statements to execute when a lease is released
 
 Default value: `[]`
 
-##### <a name="on_expiry"></a>`on_expiry`
+##### <a name="-dhcp--pool--on_expiry"></a>`on_expiry`
 
 Data type: `Array[String[1]]`
 
@@ -1092,149 +1091,141 @@ Set of statements to execute when a lease expires
 
 Default value: `[]`
 
-### <a name="dhcppool6"></a>`dhcp::pool6`
+### <a name="dhcp--pool6"></a>`dhcp::pool6`
 
-== Define: dhcp::pool6
+Define a dhcp-pool for IPv6 networks
 
 #### Parameters
 
 The following parameters are available in the `dhcp::pool6` defined type:
 
-* [`network`](#network)
-* [`prefix`](#prefix)
-* [`range`](#range)
-* [`range_temp`](#range_temp)
-* [`failover`](#failover)
-* [`options`](#options)
-* [`parameters`](#parameters)
-* [`sharednetwork`](#sharednetwork)
-* [`nameservers`](#nameservers)
-* [`nameservers_ipv6`](#nameservers_ipv6)
-* [`pxeserver`](#pxeserver)
-* [`mtu`](#mtu)
-* [`domain_name`](#domain_name)
-* [`ignore_unknown`](#ignore_unknown)
-* [`on_commit`](#on_commit)
-* [`on_release`](#on_release)
-* [`on_expiry`](#on_expiry)
+* [`network`](#-dhcp--pool6--network)
+* [`prefix`](#-dhcp--pool6--prefix)
+* [`range`](#-dhcp--pool6--range)
+* [`range_temp`](#-dhcp--pool6--range_temp)
+* [`failover`](#-dhcp--pool6--failover)
+* [`options`](#-dhcp--pool6--options)
+* [`parameters`](#-dhcp--pool6--parameters)
+* [`sharednetwork`](#-dhcp--pool6--sharednetwork)
+* [`nameservers`](#-dhcp--pool6--nameservers)
+* [`nameservers_ipv6`](#-dhcp--pool6--nameservers_ipv6)
+* [`pxeserver`](#-dhcp--pool6--pxeserver)
+* [`mtu`](#-dhcp--pool6--mtu)
+* [`domain_name`](#-dhcp--pool6--domain_name)
+* [`ignore_unknown`](#-dhcp--pool6--ignore_unknown)
+* [`on_commit`](#-dhcp--pool6--on_commit)
+* [`on_release`](#-dhcp--pool6--on_release)
+* [`on_expiry`](#-dhcp--pool6--on_expiry)
 
-##### <a name="network"></a>`network`
+##### <a name="-dhcp--pool6--network"></a>`network`
 
 Data type: `Stdlib::IP::Address::V6`
 
 
 
-##### <a name="prefix"></a>`prefix`
+##### <a name="-dhcp--pool6--prefix"></a>`prefix`
 
 Data type: `Integer`
 
 
 
-##### <a name="range"></a>`range`
+##### <a name="-dhcp--pool6--range"></a>`range`
 
 Data type: `Optional[Variant[Array[String[1],1],String[1]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="range_temp"></a>`range_temp`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="failover"></a>`failover`
+##### <a name="-dhcp--pool6--range_temp"></a>`range_temp`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="options"></a>`options`
+##### <a name="-dhcp--pool6--failover"></a>`failover`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: `undef`
+
+##### <a name="-dhcp--pool6--options"></a>`options`
 
 Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parameters"></a>`parameters`
+##### <a name="-dhcp--pool6--parameters"></a>`parameters`
 
 Data type: `Optional[Variant[Array[String[1]],String[1]]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sharednetwork"></a>`sharednetwork`
+##### <a name="-dhcp--pool6--sharednetwork"></a>`sharednetwork`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nameservers"></a>`nameservers`
-
-Data type: `Optional[Array[String]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="nameservers_ipv6"></a>`nameservers_ipv6`
+##### <a name="-dhcp--pool6--nameservers"></a>`nameservers`
 
 Data type: `Optional[Array[String]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pxeserver"></a>`pxeserver`
+##### <a name="-dhcp--pool6--nameservers_ipv6"></a>`nameservers_ipv6`
+
+Data type: `Optional[Array[String]]`
+
+
+
+Default value: `undef`
+
+##### <a name="-dhcp--pool6--pxeserver"></a>`pxeserver`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mtu"></a>`mtu`
+##### <a name="-dhcp--pool6--mtu"></a>`mtu`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="domain_name"></a>`domain_name`
+##### <a name="-dhcp--pool6--domain_name"></a>`domain_name`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ignore_unknown"></a>`ignore_unknown`
+##### <a name="-dhcp--pool6--ignore_unknown"></a>`ignore_unknown`
 
 Data type: `Any`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="on_commit"></a>`on_commit`
-
-Data type: `Array[String[1]]`
-
-
-
-Default value: `[]`
-
-##### <a name="on_release"></a>`on_release`
+##### <a name="-dhcp--pool6--on_commit"></a>`on_commit`
 
 Data type: `Array[String[1]]`
 
@@ -1242,7 +1233,7 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-##### <a name="on_expiry"></a>`on_expiry`
+##### <a name="-dhcp--pool6--on_release"></a>`on_release`
 
 Data type: `Array[String[1]]`
 
@@ -1250,18 +1241,26 @@ Data type: `Array[String[1]]`
 
 Default value: `[]`
 
-### <a name="dhcpsharednetwork"></a>`dhcp::sharednetwork`
+##### <a name="-dhcp--pool6--on_expiry"></a>`on_expiry`
 
-== Define: dhcp::sharednetwork
+Data type: `Array[String[1]]`
+
+
+
+Default value: `[]`
+
+### <a name="dhcp--sharednetwork"></a>`dhcp::sharednetwork`
+
+defines a sharednetwork-segment to wrap several pools together
 
 #### Parameters
 
 The following parameters are available in the `dhcp::sharednetwork` defined type:
 
-* [`sharednetwork`](#sharednetwork)
-* [`parameters`](#parameters)
+* [`sharednetwork`](#-dhcp--sharednetwork--sharednetwork)
+* [`parameters`](#-dhcp--sharednetwork--parameters)
 
-##### <a name="sharednetwork"></a>`sharednetwork`
+##### <a name="-dhcp--sharednetwork--sharednetwork"></a>`sharednetwork`
 
 Data type: `String`
 
@@ -1270,7 +1269,7 @@ defaults to the title of this resource
 
 Default value: `$title`
 
-##### <a name="parameters"></a>`parameters`
+##### <a name="-dhcp--sharednetwork--parameters"></a>`parameters`
 
 Data type: `Optional[Variant[Array[String[1]], String[1]]]`
 
@@ -1278,27 +1277,19 @@ optional defaults you can set for the shared-network
 can be either a single parameter-string, or an array of
 several parameters
 
-Default value: ``undef``
+Default value: `undef`
 
 ## Data types
 
-### <a name="dhcpmac"></a>`Dhcp::Mac`
+### <a name="Dhcp--Mac"></a>`Dhcp::Mac`
 
 The Dhcp::Mac data type.
 
-Alias of
+Alias of `Pattern[/^[0-9A-Fa-f]{1,2}(:[0-9A-Fa-f]{1,2}){5}$/]`
 
-```puppet
-Pattern[/^[0-9A-Fa-f]{1,2}(:[0-9A-Fa-f]{1,2}){5}$/]
-```
-
-### <a name="dhcpsyslogfacility"></a>`Dhcp::Syslogfacility`
+### <a name="Dhcp--Syslogfacility"></a>`Dhcp::Syslogfacility`
 
 The Dhcp::Syslogfacility data type.
 
-Alias of
-
-```puppet
-Enum['user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp', 'cron', 'authpriv', 'ftp', 'ntp', 'security', 'console', 'solaris-cron', 'local0', 'local1', 'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
-```
+Alias of `Enum['user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp', 'cron', 'authpriv', 'ftp', 'ntp', 'security', 'console', 'solaris-cron', 'local0', 'local1', 'local2', 'local3', 'local4', 'local5', 'local6', 'local7']`
 

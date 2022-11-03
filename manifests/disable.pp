@@ -1,6 +1,4 @@
-# ----------
-# Remove and Disable the DHCP server
-# ----------
+# @summary Remove and Disable the DHCP server
 class dhcp::disable (
   String[1] $packagename = $dhcp::params::packagename,
   String[1] $servicename = $dhcp::params::servicename,

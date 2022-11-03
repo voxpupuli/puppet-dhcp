@@ -1,4 +1,4 @@
-# == Class: dhcp::failover
+# @summary Manage a DHCP failover config
 #
 class dhcp::failover (
   $peer_address,

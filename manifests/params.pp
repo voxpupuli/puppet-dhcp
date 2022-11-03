@@ -1,5 +1,5 @@
-# == Class: dhcp::params
-#
+# @summary Parameter defaults
+# @api private
 class dhcp::params {
   case $facts['os']['family'] {
     'Debian': {

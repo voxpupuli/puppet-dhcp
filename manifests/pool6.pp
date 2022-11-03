@@ -1,4 +1,5 @@
-# == Define: dhcp::pool6
+# @summary
+#   Define a dhcp-pool for IPv6 networks
 #
 define dhcp::pool6 (
   Stdlib::IP::Address::V6 $network,

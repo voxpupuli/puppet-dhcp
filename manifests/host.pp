@@ -1,4 +1,4 @@
-# == Define: dhcp::host
+# @summary Manage a DHCP host
 #
 # @param ip
 #    The ip address of the DHCP host.

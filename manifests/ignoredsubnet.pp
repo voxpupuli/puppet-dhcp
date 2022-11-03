@@ -1,4 +1,4 @@
-# == Define: dhcp::ignoredsubnet
+# @summary Manage an ignored subnet
 #
 define dhcp::ignoredsubnet (
   $network,

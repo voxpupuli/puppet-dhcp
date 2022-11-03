@@ -1,4 +1,4 @@
-# == Class: dhcp
+# @summary Manage an ISC DHCP server
 #
 class dhcp (
   Optional[Array[String[1]]] $dnsdomain                            = undef,

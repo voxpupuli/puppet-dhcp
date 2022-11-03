@@ -1,5 +1,3 @@
-# == Define: dhcp::sharednetwork
-#
 # @summary
 #   defines a sharednetwork-segment to wrap several pools together
 #

@@ -1,5 +1,4 @@
-# == Define: dhcp::dhcp_class
-#
+# @summary Manage a DHCP class in the config
 define dhcp::dhcp_class (
   Variant[Array[String[1]], String[1]] $parameters,
 ) {
