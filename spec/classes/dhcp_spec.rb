@@ -24,7 +24,7 @@ describe 'dhcp', type: :class do
         os: {
           family: 'RedHat',
           name: 'RedHat',
-          release: { major: '6' }
+          release: { major: '7' }
         },
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -367,7 +367,7 @@ describe 'dhcp', type: :class do
   end
 
   context 'Systemd' do
-    context 'RedHat 7' do
+    context 'RedHat' do
       let :facts do
         {
           os: {
@@ -391,32 +391,6 @@ describe 'dhcp', type: :class do
       it do
         is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
           with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
-      end
-    end
-
-    context 'RedHat 6' do
-      let :facts do
-        {
-          os: {
-            family: 'RedHat',
-            name: 'RedHat',
-            release: {
-              full: '6',
-              major: '6'
-            }
-          },
-          concat_basedir: '/dne',
-          service_provider: 'systemd'
-        }
-      end
-      let :params do
-        default_params.merge(interface: 'eth0')
-      end
-
-      it { is_expected.to compile.with_all_deps }
-
-      it do
-        is_expected.not_to contain_file('/etc/systemd/system/dhcpd.service')
       end
     end
 
