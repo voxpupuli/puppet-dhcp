@@ -165,11 +165,7 @@ class dhcp (
 
   case $facts['os']['family'] {
     'RedHat': {
-      if $facts['os']['release']['major'] =~ /(7|8)/ {
-        $use_systemd_service_file = true
-      } else {
-        $use_systemd_service_file = false
-      }
+      $use_systemd_service_file = true
     }
     'ArchLinux': {
       $use_systemd_service_file = true
@@ -200,17 +196,6 @@ class dhcp (
           before  => Package[$packagename],
           notify  => $service_notify_real,
           content => template('dhcp/debian/default_isc-dhcp-server'),
-        }
-      }
-      'RedHat': {
-        file { '/etc/sysconfig/dhcpd':
-          ensure  => file,
-          owner   => 'root',
-          group   => 'root',
-          mode    => '0644',
-          before  => Package[$packagename],
-          notify  => $service_notify_real,
-          content => template('dhcp/redhat/sysconfig-dhcpd'),
         }
       }
       /^(FreeBSD|DragonFly)$/: {
