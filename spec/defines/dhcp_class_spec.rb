@@ -24,7 +24,7 @@ describe 'dhcp::dhcp_class', type: :define do
     it 'creates a class declaration' do
       content = catalogue.resource('concat::fragment', "dhcp_class_#{title}").send(:parameters)[:content]
       expected_lines = header + [
-        %(class "#{title}" \{),
+        %(class "#{title}" {),
         '  match option vendor-class-identifier;',
         '}'
       ]
@@ -42,7 +42,7 @@ describe 'dhcp::dhcp_class', type: :define do
     it 'creates a class declaration' do
       content = catalogue.resource('concat::fragment', "dhcp_class_#{title}").send(:parameters)[:content]
       expected_lines = header + [
-        %(class "#{title}" \{),
+        %(class "#{title}" {),
         '  match option vendor-class-identifier;',
         '  match option identifier-2;',
         '}'
