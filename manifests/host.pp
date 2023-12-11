@@ -44,8 +44,8 @@
 # @param on_expiry
 #    An array with statements to go into the hook on expiry.
 define dhcp::host (
-  Optional[Stdlib::IP::Address] $ip     = undef,
   Dhcp::Mac $mac,
+  Optional[Stdlib::IP::Address] $ip     = undef,
   String $ddns_hostname                 = $name,
   Hash $options                         = {},
   Optional[String[1]] $comment          = undef,
