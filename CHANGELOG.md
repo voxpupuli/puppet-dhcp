@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.1.0](https://github.com/voxpupuli/puppet-dhcp/tree/v6.1.0) (2024-01-19)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v6.0.0...v6.1.0)
+
+**Implemented enhancements:**
+
+- Add OracleLinux/Alma/Rocky support [\#281](https://github.com/voxpupuli/puppet-dhcp/pull/281) ([bastelfreak](https://github.com/bastelfreak))
+- Add Puppet 8 support [\#276](https://github.com/voxpupuli/puppet-dhcp/pull/276) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- README.md: Update badges [\#282](https://github.com/voxpupuli/puppet-dhcp/pull/282) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v6.0.0) (2023-12-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v5.0.1...v6.0.0)
