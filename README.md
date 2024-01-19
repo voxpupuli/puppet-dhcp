@@ -1,11 +1,13 @@
 # DHCP module for Puppet
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-dhcp.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-dhcp)
-[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-dhcp/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-dhcp)
+[![Build Status](https://github.com/voxpupuli/puppet-dhcp/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-dhcp/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-dhcp/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-dhcp/actions/workflows/release.yml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/dhcp.svg)](https://forge.puppetlabs.com/puppet/dhcp)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/puppet-dhcp)
+[![Apache-2.0 License](https://img.shields.io/github/license/voxpupuli/puppet-dhcp.svg)](LICENSE)
 
 ## Overview
 
