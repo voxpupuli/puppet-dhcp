@@ -21,8 +21,8 @@ describe 'dhcp class' do
       dhcp::pool{ 'ops.dc1.example.net':
         network => $facts['networking']['interfaces'][$facts['networking']['primary']]['network'],
         mask    => $facts['networking']['interfaces'][$facts['networking']['primary']]['netmask'],
-        range   => ['172.17.0.3 172.17.0.5'],
-        gateway => '172.17.0.1',
+        range   => ['10.88.0.3 10.88.0.5'],
+        gateway => '10.88.0.1',
       }
       EOS
 
@@ -47,8 +47,8 @@ describe 'dhcp class' do
       dhcp::pool{ 'ops.dc1.example.net':
         network => $facts['networking']['interfaces'][$facts['networking']['primary']]['network'],
         mask    => $facts['networking']['interfaces'][$facts['networking']['primary']]['netmask'],
-        range   => ['172.17.0.3 172.17.0.5'],
-        gateway => '172.17.0.1',
+        range   => ['10.88.0.3 10.88.0.5'],
+        gateway => '10.88.0.1',
       }
       EOS
 
