@@ -475,39 +475,14 @@ describe 'dhcp', type: :class do
       }
     end
 
-    context 'Debian < 9' do
+    context 'Debian' do
       let :facts do
         default_facts.merge(
           os: {
             name: 'Debian',
             family: 'Debian',
             release: {
-              major: '8'
-            }
-          }
-        )
-      end
-      let :params do
-        default_params.merge(interface: 'eth0')
-      end
-
-      it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_package('isc-dhcp-server') }
-
-      it do
-        is_expected.to contain_file('/etc/default/isc-dhcp-server'). \
-          with_content(%r{INTERFACES="eth0"})
-      end
-    end
-
-    context 'Debian > 9' do
-      let :facts do
-        default_facts.merge(
-          os: {
-            name: 'Debian',
-            family: 'Debian',
-            release: {
-              major: '9'
+              major: '12'
             }
           }
         )
