@@ -33,11 +33,7 @@ class dhcp::params {
     }
     'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
-      if Integer.new($facts['os']['release']['major']) >= 8 {
-        $packagename = 'dhcp-server'
-      } else {
-        $packagename = 'dhcp'
-      }
+      $packagename = 'dhcp-server'
       $servicename      = 'dhcpd'
       $package_provider = undef
       $dhcpd_binary     = '/usr/sbin/dhcpd'
