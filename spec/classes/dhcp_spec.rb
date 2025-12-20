@@ -24,7 +24,7 @@ describe 'dhcp', type: :class do
         os: {
           family: 'RedHat',
           name: 'RedHat',
-          release: { major: '7' }
+          release: { major: '8' }
         },
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -374,8 +374,8 @@ describe 'dhcp', type: :class do
             family: 'RedHat',
             name: 'RedHat',
             release: {
-              full: '7',
-              major: '7'
+              full: '8',
+              major: '8'
             }
           },
           concat_basedir: '/dne',
