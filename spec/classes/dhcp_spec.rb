@@ -470,15 +470,23 @@ describe 'dhcp', type: :class do
   context 'on a Debian based OS' do
     let :default_facts do
       {
-        os: {
-          name: 'Debian',
-          family: 'Debian',
-          release: {
-            major: '9'
-          },
+        os: { family: 'Debian' },
         concat_basedir: '/dne'
       }
+    end
 
+    context 'Debian' do
+      let :facts do
+        default_facts.merge(
+          os: {
+            name: 'Debian',
+            family: 'Debian',
+            release: {
+              major: '12'
+            }
+          }
+        )
+      end
       let :params do
         default_params.merge(interface: 'eth0')
       end
