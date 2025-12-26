@@ -4,12 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v7.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v7.0.0) (2025-12-20)
+## [v7.0.0](https://github.com/voxpupuli/puppet-dhcp/tree/v7.0.0) (2025-12-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-dhcp/compare/v6.1.0...v7.0.0)
 
 **Breaking changes:**
 
+- Drop EL7 support [\#305](https://github.com/voxpupuli/puppet-dhcp/pull/305) ([bastelfreak](https://github.com/bastelfreak))
+- Drop Debian 9 / Debian 10 code [\#304](https://github.com/voxpupuli/puppet-dhcp/pull/304) ([bastelfreak](https://github.com/bastelfreak))
 - Drop puppet, update openvox minimum version to 8.19 [\#298](https://github.com/voxpupuli/puppet-dhcp/pull/298) ([TheMeier](https://github.com/TheMeier))
 
 **Implemented enhancements:**
