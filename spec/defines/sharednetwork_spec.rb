@@ -11,13 +11,13 @@ describe 'dhcp::sharednetwork', type: :define do
       concat_basedir: '/dne',
       os: {
         family: 'RedHat',
-        release: { major: '8' }
-      }
+        release: { major: '8' },
+      },
     }
   end
   let :default_params do
     {
-      'sharednetwork' => 'shared1'
+      'sharednetwork' => 'shared1',
     }
   end
 
@@ -33,8 +33,8 @@ describe 'dhcp::sharednetwork', type: :define do
       default_params.merge(
         'parameters' => [
           'ddns-updates off',
-          'option routers 1.1.1.1'
-        ]
+          'option routers 1.1.1.1',
+        ],
       )
     end
 

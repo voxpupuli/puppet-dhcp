@@ -11,15 +11,15 @@ describe 'dhcp::pool6', type: :define do
       concat_basedir: '/dne',
       os: {
         family: 'RedHat',
-        release: { major: '8' }
-      }
+        release: { major: '8' },
+      },
     }
   end
   let :default_params do
     {
       'network' => '2001:db8::',
       'prefix' => 64,
-      'range' => '2001:db8::100 2001:db8::110'
+      'range' => '2001:db8::100 2001:db8::110',
     }
   end
 
@@ -34,16 +34,16 @@ describe 'dhcp::pool6', type: :define do
       default_params.merge(
         'on_commit' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+          'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)',
         ],
         'on_release' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'log(concat("Released IP: ", ClientIP))'
+          'log(concat("Released IP: ", ClientIP))',
         ],
         'on_expiry' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'log(concat("Expired IP: ", ClientIP))'
-        ]
+          'log(concat("Expired IP: ", ClientIP))',
+        ],
       )
     end
 

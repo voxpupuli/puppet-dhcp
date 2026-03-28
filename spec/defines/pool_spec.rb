@@ -11,8 +11,8 @@ describe 'dhcp::pool', type: :define do
       concat_basedir: '/dne',
       os: {
         family: 'RedHat',
-        release: { major: '8' }
-      }
+        release: { major: '8' },
+      },
     }
   end
   let :default_params do
@@ -21,7 +21,7 @@ describe 'dhcp::pool', type: :define do
       'mask' => '255.255.255.0',
       'host_mask' => '255.255.255.128',
       'network' => '1.1.1.0',
-      'range' => '1.1.1.100 1.1.1.110'
+      'range' => '1.1.1.100 1.1.1.110',
     }
   end
 
@@ -36,16 +36,16 @@ describe 'dhcp::pool', type: :define do
       default_params.merge(
         'on_commit' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+          'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)',
         ],
         'on_release' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'log(concat("Released IP: ", ClientIP))'
+          'log(concat("Released IP: ", ClientIP))',
         ],
         'on_expiry' => [
           'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-          'log(concat("Expired IP: ", ClientIP))'
-        ]
+          'log(concat("Expired IP: ", ClientIP))',
+        ],
       )
     end
 
