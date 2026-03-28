@@ -9,8 +9,8 @@ describe 'dhcp::dhcp_class', type: :define do
     {
       os: {
         family: 'RedHat',
-        release: { major: '8' }
-      }
+        release: { major: '8' },
+      },
     }
   end
 
@@ -26,7 +26,7 @@ describe 'dhcp::dhcp_class', type: :define do
       expected_lines = header + [
         %(class "#{title}" {),
         '  match option vendor-class-identifier;',
-        '}'
+        '}',
       ]
       expect(content.split("\n")).to match_array(expected_lines)
     end
@@ -45,7 +45,7 @@ describe 'dhcp::dhcp_class', type: :define do
         %(class "#{title}" {),
         '  match option vendor-class-identifier;',
         '  match option identifier-2;',
-        '}'
+        '}',
       ]
       expect(content.split("\n")).to match_array(expected_lines)
     end

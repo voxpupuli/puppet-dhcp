@@ -14,7 +14,7 @@ describe 'dhcp', type: :class do
       'dhcp_conf_fragments' => {},
       'logfacility' => 'daemon',
       'default_lease_time' => 43_200,
-      'max_lease_time' => 86_400
+      'max_lease_time' => 86_400,
     }
   end
 
@@ -24,11 +24,11 @@ describe 'dhcp', type: :class do
         os: {
           family: 'RedHat',
           name: 'RedHat',
-          release: { major: '8' }
+          release: { major: '8' },
         },
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
     let :params do
@@ -40,7 +40,7 @@ describe 'dhcp', type: :class do
         context "when #{arrays} is not an array" do
           let :params do
             super().merge(
-              arrays => 'BOGON'
+              arrays => 'BOGON',
             )
           end
 
@@ -86,7 +86,7 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interfaces: ['eth0'],
-            dnssearchdomains: ['example.com', 'example.org']
+            dnssearchdomains: ['example.com', 'example.org'],
           )
         end
 
@@ -98,7 +98,7 @@ describe 'dhcp', type: :class do
       context 'omitting dnssearchdomains param should not include option in config' do
         let :params do
           default_params.merge(
-            interfaces: ['eth0']
+            interfaces: ['eth0'],
           )
         end
 
@@ -111,7 +111,7 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interfaces: ['eth0'],
-            dnssearchdomains: 'string'
+            dnssearchdomains: 'string',
           )
         end
 
@@ -122,7 +122,7 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interfaces: ['eth0'],
-            omapi_port: 7911
+            omapi_port: 7911,
           )
         end
 
@@ -136,7 +136,7 @@ describe 'dhcp', type: :class do
               interfaces: ['eth0'],
               omapi_port: 7911,
               omapi_name: 'keyname',
-              omapi_key: 'keyvalue'
+              omapi_key: 'keyvalue',
             )
           end
 
@@ -155,7 +155,7 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interfaces: ['eth0'],
-            authoritative: false
+            authoritative: false,
           )
         end
 
@@ -171,15 +171,15 @@ describe 'dhcp', type: :class do
                              'pools' => { 'ops.dc1.example.net' => { 'network' => '10.0.1.0',
                                                                      'mask' => '255.255.255.0',
                                                                      'range' => ['10.0.1.10 10.0.1.100', '10.0.1.200 10.0.1.250'],
-                                                                     'gateway' => '10.0.1.1' } },
+                                                                     'gateway' => '10.0.1.1', } },
                              'pools6' => { 'ipv6.dc1.example.net' => { 'network' => '2001:db8::',
                                                                        'prefix' => 64,
-                                                                       'range' => '2001:db8::100 2001:db8::110' } },
+                                                                       'range' => '2001:db8::100 2001:db8::110', } },
                              'ignoredsubnets' => { 'eth0' => { 'network' => '10.0.0.0',
-                                                               'mask' => '255.255.255.0' } },
+                                                               'mask' => '255.255.255.0', } },
                              'hosts' => { 'server1' => { 'comment' => 'Optional descriptive comment',
                                                          'mac' => '00:50:56:00:00:01',
-                                                         'ip' => '10.0.1.51' } },
+                                                         'ip' => '10.0.1.51', } },
                              'dhcp_classes' => { 'vendor-class-identifier' => { 'parameters' => ['match option vendor-class-identifier'] } })
       end
 
@@ -205,7 +205,7 @@ describe 'dhcp', type: :class do
         let :params do
           default_params.merge(
             interfaces: ['eth0'],
-            ntpservers: ['time.sample.com']
+            ntpservers: ['time.sample.com'],
           )
         end
 
@@ -231,7 +231,7 @@ describe 'dhcp', type: :class do
             dnsupdatekey: '/etc/rndc.key',
             ddns_update_style: 'standard',
             ddns_update_static: 'on',
-            ddns_update_optimize: 'on'
+            ddns_update_optimize: 'on',
           )
         end
 
@@ -254,7 +254,7 @@ describe 'dhcp', type: :class do
             "  primary #{params['nameservers'].first};",
             "  primary6 #{params['nameservers_ipv6'].first};",
             '  key rndc.key;',
-            '}'
+            '}',
           ]
           expect(content.split("\n").grep_v(%r{^#|^$})).to match_array(expected_lines)
         end
@@ -264,7 +264,7 @@ describe 'dhcp', type: :class do
             default_params.merge(
               interface: 'eth0',
               dnsupdatekey: '/etc/rndc.key',
-              dnskeyname: 'rndc-key'
+              dnskeyname: 'rndc-key',
             )
           end
 
@@ -281,7 +281,7 @@ describe 'dhcp', type: :class do
           interface: 'eth0',
           use_ldap: true,
           ldap_password: 'passw0rd',
-          ldap_debug_file: '/var/log/dhcp-ldap-startup.log'
+          ldap_debug_file: '/var/log/dhcp-ldap-startup.log',
         )
       end
 
@@ -294,7 +294,7 @@ describe 'dhcp', type: :class do
           'ldap-password "passw0rd";',
           'ldap-base-dn "dc=example, dc=com";',
           'ldap-method dynamic;',
-          'ldap-debug-file "/var/log/dhcp-ldap-startup.log";'
+          'ldap-debug-file "/var/log/dhcp-ldap-startup.log";',
         ]
         expect(content.split("\n").grep_v(%r{^#|^$})).to match_array(expected_lines)
       end
@@ -305,7 +305,7 @@ describe 'dhcp', type: :class do
         default_params.merge(
           interface: 'eth0',
           use_ldap: true,
-          ldap_password: 'passw0rd'
+          ldap_password: 'passw0rd',
         )
       end
 
@@ -317,7 +317,7 @@ describe 'dhcp', type: :class do
           'ldap-username "cn=root, dc=example, dc=com";',
           'ldap-password "passw0rd";',
           'ldap-base-dn "dc=example, dc=com";',
-          'ldap-method dynamic;'
+          'ldap-method dynamic;',
         ]
         expect(content.split("\n").grep_v(%r{^#|^$})).to match_array(expected_lines)
       end
@@ -327,7 +327,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(
           interface: 'eth0',
-          mtu: 9000
+          mtu: 9000,
         )
       end
 
@@ -342,9 +342,9 @@ describe 'dhcp', type: :class do
       {
         os: {
           family: 'Solaris',
-          name: 'SmartOS'
+          name: 'SmartOS',
         },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
     let :params do
@@ -375,11 +375,11 @@ describe 'dhcp', type: :class do
             name: 'RedHat',
             release: {
               full: '8',
-              major: '8'
-            }
+              major: '8',
+            },
           },
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
         }
       end
       let :params do
@@ -389,8 +389,8 @@ describe 'dhcp', type: :class do
       it { is_expected.to compile.with_all_deps }
 
       it do
-        is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
-          with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
+        is_expected.to contain_file('/etc/systemd/system/dhcpd.service')
+          .with_content(%r{ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
       end
     end
 
@@ -402,11 +402,11 @@ describe 'dhcp', type: :class do
             name: 'Ubuntu',
             release: {
               full: '16.04',
-              major: '16.04'
-            }
+              major: '16.04',
+            },
           },
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
         }
       end
       let :params do
@@ -425,10 +425,10 @@ describe 'dhcp', type: :class do
         {
           os: {
             family: 'Archlinux',
-            name: 'ArchLinux'
+            name: 'ArchLinux',
           },
           concat_basedir: '/dne',
-          service_provider: 'systemd'
+          service_provider: 'systemd',
         }
       end
       let :params do
@@ -438,8 +438,8 @@ describe 'dhcp', type: :class do
       it { is_expected.to compile.with_all_deps }
 
       it do
-        is_expected.to contain_file('/etc/systemd/system/dhcpd.service'). \
-          with_content(%r{ExecStart=/usr/bin/dhcpd -f -cf /etc/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
+        is_expected.to contain_file('/etc/systemd/system/dhcpd.service')
+          .with_content(%r{ExecStart=/usr/bin/dhcpd -f -cf /etc/dhcpd.conf -user dhcpd -group dhcpd --no-pid eth0})
       end
     end
   end
@@ -448,7 +448,7 @@ describe 'dhcp', type: :class do
     let :facts do
       {
         os: { family: 'Darwin' },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
     let :params do
@@ -458,8 +458,8 @@ describe 'dhcp', type: :class do
     it { is_expected.to compile.with_all_deps }
 
     it do
-      is_expected.to contain_package('dhcp'). \
-        with_provider('macports')
+      is_expected.to contain_package('dhcp')
+        .with_provider('macports')
     end
 
     ['/opt/local/etc/dhcp/dhcpd.hosts', '/opt/local/etc/dhcp/dhcpd.conf', '/opt/local/etc/dhcp/dhcpd.ignoredsubnets', '/opt/local/etc/dhcp/dhcpd.pools'].each do |file|
@@ -471,7 +471,7 @@ describe 'dhcp', type: :class do
     let :default_facts do
       {
         os: { family: 'Debian' },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
 
@@ -482,9 +482,9 @@ describe 'dhcp', type: :class do
             name: 'Debian',
             family: 'Debian',
             release: {
-              major: '12'
-            }
-          }
+              major: '12',
+            },
+          },
         )
       end
       let :params do
@@ -495,8 +495,8 @@ describe 'dhcp', type: :class do
       it { is_expected.to contain_package('isc-dhcp-server') }
 
       it do
-        is_expected.to contain_file('/etc/default/isc-dhcp-server'). \
-          with_content(%r{INTERFACESv4="eth0"})
+        is_expected.to contain_file('/etc/default/isc-dhcp-server')
+          .with_content(%r{INTERFACESv4="eth0"})
       end
     end
 
@@ -512,9 +512,9 @@ describe 'dhcp', type: :class do
               family: 'Debian',
               name: 'Ubuntu',
               release: {
-                full: '12.04'
-              }
-            }
+                full: '12.04',
+              },
+            },
           )
         end
 
@@ -532,9 +532,9 @@ describe 'dhcp', type: :class do
               family: 'Debian',
               name: 'Ubuntu',
               release: {
-                full: '10.04'
-              }
-            }
+                full: '10.04',
+              },
+            },
           )
         end
 
@@ -553,9 +553,9 @@ describe 'dhcp', type: :class do
         os: {
           family: 'Debian',
           name: 'Ubuntu',
-          release: { full: '12.04' }
+          release: { full: '12.04' },
         },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
 
@@ -563,7 +563,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(
           interface: 'eth0',
-          globaloptions: 'root-path "/opt/ltsp/i386"'
+          globaloptions: 'root-path "/opt/ltsp/i386"',
         )
       end
 
@@ -574,7 +574,7 @@ describe 'dhcp', type: :class do
       let :params do
         default_params.merge(
           interface: 'eth0',
-          globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"']
+          globaloptions: ['tftp-server-name "1.2.3.4"', 'root-path "/opt/ltsp/i386"'],
         )
       end
 
@@ -589,15 +589,15 @@ describe 'dhcp', type: :class do
         os: {
           family: 'Debian',
           name: 'Ubuntu',
-          release: { full: '14.04' }
+          release: { full: '14.04' },
         },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
     let :params do
       default_params.merge(
         interface: 'eth0',
-        dhcpd_conf_filename: 'dhcpd6.conf'
+        dhcpd_conf_filename: 'dhcpd6.conf',
       )
     end
 
@@ -610,16 +610,16 @@ describe 'dhcp', type: :class do
         os: {
           family: 'Debian',
           name: 'Ubuntu',
-          release: { full: '12.04' }
+          release: { full: '12.04' },
         },
-        concat_basedir: '/dne'
+        concat_basedir: '/dne',
       }
     end
     let :params do
       default_params.merge(
         pxeserver: '1.2.3.4',
         pxefilename: 'pxelinux.0',
-        interface: 'eth0'
+        interface: 'eth0',
       )
     end
 
@@ -634,7 +634,7 @@ describe 'dhcp', type: :class do
         default_params.merge(
           ipxe_filename: 'undionly-20140116.kpxe',
           ipxe_bootstrap: 'bootstrap.kpxe',
-          interface: 'eth0'
+          interface: 'eth0',
         )
       end
 
@@ -645,7 +645,7 @@ describe 'dhcp', type: :class do
           '      filename "bootstrap.kpxe";',
           '} else {',
           '      filename "undionly-20140116.kpxe";',
-          '}'
+          '}',
         ]
         expect(content.split("\n").grep_v(%r{^#|^$})).to match_array(expected_lines)
       end
@@ -657,16 +657,16 @@ describe 'dhcp', type: :class do
           'interface' => 'eth0',
           'on_commit' => [
             'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-            'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)'
+            'execute("/usr/local/bin/my_dhcp_helper.sh", ClientIP)',
           ],
           'on_release' => [
             'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-            'log(concat("Released IP: ", ClientIP))'
+            'log(concat("Released IP: ", ClientIP))',
           ],
           'on_expiry' => [
             'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)',
-            'log(concat("Expired IP: ", ClientIP))'
-          ]
+            'log(concat("Expired IP: ", ClientIP))',
+          ],
         )
       end
 

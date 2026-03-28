@@ -11,14 +11,14 @@ describe 'dhcp::ignoredsubnet' do
       concat_basedir: '/dne',
       os: {
         family: 'RedHat',
-        release: { major: '8' }
-      }
+        release: { major: '8' },
+      },
     }
   end
   let :default_params do
     {
       'network' => '10.1.2.0',
-      'mask' => '255.255.255.0'
+      'mask' => '255.255.255.0',
     }
   end
   let(:params) { default_params }
@@ -33,7 +33,7 @@ describe 'dhcp::ignoredsubnet' do
       '#################################',
       'subnet 10.1.2.0 netmask 255.255.255.0 {',
       '  not authoritative;',
-      '}'
+      '}',
     ]
     expect(content.split("\n")).to match_array(expected_lines)
   end
