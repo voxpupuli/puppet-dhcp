@@ -20,6 +20,8 @@ class dhcp (
   String[1] $ddns_update_static                                    = 'on',
   String[1] $ddns_update_optimize                                  = 'on',
   Enum['allow', 'deny'] $ddns_client_updates                       = 'allow',
+  Array[Stdlib::IP::Address::V4] $ddns_zone_nameservers            = $nameservers,
+  Array[Stdlib::IP::Address::V6] $ddns_zone_nameservers_ipv6       = $nameservers_ipv6,
   Optional[Stdlib::Host] $pxeserver                                = undef,
   Optional[String[1]] $pxefilename                                 = undef,
   Optional[Integer[1]] $mtu                                        = undef,
